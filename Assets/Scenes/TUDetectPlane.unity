@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 159110365}
   - component: {fileID: 159110364}
   - component: {fileID: 159110366}
+  - component: {fileID: 159110367}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -187,6 +188,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlanePrefab: {fileID: 5512473232003785206}
   m_DetectionMode: 1
+--- !u!114 &159110367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159110363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa17d122634046b4a8e23048891fafc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RaycastPrefab: {fileID: 0}
 --- !u!1 &198088571
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0683859b6ed4645b4cef351ceecd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastManager: {fileID: 0}
 --- !u!4 &325075244
 Transform:
   m_ObjectHideFlags: 0
@@ -396,6 +411,7 @@ GameObject:
   - component: {fileID: 979930422}
   - component: {fileID: 979930421}
   - component: {fileID: 979930420}
+  - component: {fileID: 979930426}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -654,6 +670,23 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &979930426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979930418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Camera: {fileID: 0}
+  m_OriginBaseGameObject: {fileID: 979930418}
+  m_CameraFloorOffsetObject: {fileID: 0}
+  m_RequestedTrackingOriginMode: 0
+  m_CameraYOffset: 1.1176
 --- !u!1 &1293396752
 GameObject:
   m_ObjectHideFlags: 0

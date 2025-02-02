@@ -11,7 +11,7 @@ public class TUDebugPlaneDetection : MonoBehaviour
     private ARPlane? _lockedPlane = null;    // Nullable
 
     [SerializeField]
-    private ARRaycastManager _raycastManager;    // Where is ARRaycastManager in this scene?
+    private ARRaycastManager? _raycastManager;    // Where is ARRaycastManager in this scene?
                                                 // --> It is usually set to XROrigin
     private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();  // Why don't it use var declaration?
                                                                         // `var` keyword is only avaialble in local variables.
@@ -29,8 +29,7 @@ public class TUDebugPlaneDetection : MonoBehaviour
         }
 
         // Get ARRaycastManager
-//        _raycastManager ??= FindObjectOfType<ARRaycastManager>();   // ??= means assigning only when the variable is null
-        _raycastManager = FindObjectOfType<ARRaycastManager>();   // ??= means assigning only when the variable is null
+        _raycastManager ??= FindObjectOfType<ARRaycastManager>();   // ??= means assigning only when the variable is null
                                                                     // Why ??= only for raycastManager? It's because raycastManager is a [SerializedField].
                                                                     // and it could be already assigned in the Inspector.
 
@@ -60,43 +59,42 @@ public class TUDebugPlaneDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check for touch input
-        if(Input.touchCount > 0)    // Input.touchCount should be cummulative, right?
+        if(Input.touchCount == 0)
         {
-            Touch touch = Input.GetTouch(0);    // Touch is strcut defined in UnityEngine namespace.
-                                                // GetTouch(0) means the first touch.
+            return;
+        }
 
-            if (touch.phase == TouchPhase.Began)    //TouchPhase is a enum.
+        Touch touch = Input.GetTouch(0);    // Touch is strcut defined in UnityEngine namespace.
+                                            // GetTouch(0) means the first touch.
+
+        if(touch.phase != TouchPhase.Began)
+        {
+            MyDebugLog("touch.phase == TouchPhase.Began --> false");
+            return;
+        }
+        MyDebugLog($"touch.phase == TouchPhase.Began --> true ");
+
+        // Perform a raycast from the screen point
+        // bool Raycast(Vector2 screenPoint, List<ARRaycastHit> hitResults, TrackableType that raycast should interact with)
+        // Raycast() returns true when it successfully hits one or more trackables.
+        MyDebugLog($"touch.position : {touch.position}");
+        if(_raycastManager.Raycast(touch.position, _raycastHits, TrackableType.PlaneWithinPolygon))
+        {
+            MyDebugLog($"Raycast was emitted and hit {_raycastHits.Count} objects."); // Count is property.
+            // Get the fist hit
+            var hit = _raycastHits[0];
+
+            // Get the corresponding ARPlane
+            ARPlane hitPlane = _planeManager!.GetPlane(hit.trackableId);  // hit has trackableId of hit object?
+
+            if(hitPlane != null)
             {
-                MyDebugLog($"touch.phase == TouchPhase.Began --> true ");
-
-                // Perform a raycast from the screen point
-                // bool Raycast(Vector2 screenPoint, List<ARRaycastHit> hitResults, TrackableType that raycast should interact with)
-                // Raycast() returns true when it successfully hits one or more trackables.
-                MyDebugLog($"touch.position : {touch.position}");
-                if(_raycastManager.Raycast(touch.position, _raycastHits, TrackableType.PlaneWithinPolygon))
-                {
-                    MyDebugLog($"Raycast was emitted and hit {_raycastHits.Count} objects."); // Count is property.
-                    // Get the fist hit
-                    var hit = _raycastHits[0];
-
-                    // Get the corresponding ARPlane
-                    ARPlane hitPlane = _planeManager.GetPlane(hit.trackableId);  // hit has trackableId of hit object?
-
-                    if(hitPlane != null)
-                    {
-                        MyDebugLog($"Hit plane detected: {hitPlane.trackableId}");
-                        KeepOnlyThisPlane(hitPlane);
-                    }
-                    else
-                    {
-                        MyDebugLog("No corresponding plane found for the raycast hit.");
-                    }
-                }
-                else{
-                    MyDebugLog("Raycast did not hit any planes.");
-                }
-                MyDebugLog("touch.phase == TouchPhase.Began --> false");
+                MyDebugLog($"Hit plane detected: {hitPlane.trackableId}");
+                KeepOnlyThisPlane(hitPlane);
+            }
+            else
+            {
+                MyDebugLog("No corresponding plane found for the raycast hit.");
             }
         }
     }
@@ -112,7 +110,10 @@ public class TUDebugPlaneDetection : MonoBehaviour
         _lockedPlane = planeToKeep;
 
         // Disable all other planes
-        foreach (ARPlane plane in _planeManager.trackables)
+        // The following code does not work as TrackableCollection<ARPlane> does not support LINQ methods.
+//        foreach (var plane in _planeManager!.trackables.Where(plane => plane != planeToKeep))    // The exclamation mark at the end of _planeManager tells the compiler
+//                                                                                                 // that it won't be null and supress the warning message.
+        foreach (var plane in _planeManager.trackables)
         {
             if (plane != planeToKeep)
             {
@@ -130,7 +131,7 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
 
     // The method to stop detecting new planes
-    private void OnPlanesChanged(ARPlanesChangedEventArgs args)
+    void OnPlanesChanged(ARPlanesChangedEventArgs args)
     {
         // Immediately return if the _lockedPlane already exists
         if(_lockedPlane != null) return;

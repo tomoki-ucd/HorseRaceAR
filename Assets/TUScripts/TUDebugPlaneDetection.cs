@@ -7,21 +7,21 @@ using System.Collections.Generic;
 
 public class TUDebugPlaneDetection : MonoBehaviour
 {
-    private ARPlaneManager? planeManager;
-    private ARPlane? lockedPlane = null;    // Nullable
+    private ARPlaneManager? _planeManager;
+    private ARPlane? _lockedPlane = null;    // Nullable
 
     [SerializeField]
-    private ARRaycastManager raycastManager;    // Where is ARRaycastManager in this scene?
+    private ARRaycastManager _raycastManager;    // Where is ARRaycastManager in this scene?
                                                 // --> It is usually set to XROrigin
-    private List<ARRaycastHit> raycastHits = new List<ARRaycastHit>();  // Why don't it use var declaration?
+    private List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();  // Why don't it use var declaration?
                                                                         // `var` keyword is only avaialble in local variables.
 
     // Start is called before the first frame update
     void Start()
     {
         // Get ARPlaneManager
-        planeManager = FindObjectOfType<ARPlaneManager>();  // <T> is Generics
-        if (planeManager == null)
+        _planeManager = FindObjectOfType<ARPlaneManager>();  // <T> is Generics
+        if (_planeManager == null)
         {
             Debug.LogError("ARlaneManger not found in the scene");
             enabled = false;    // Disable the script if no ARPlaneManager is found. Property in MonoBehavior class
@@ -29,17 +29,17 @@ public class TUDebugPlaneDetection : MonoBehaviour
         }
 
         // Get ARRaycastManager
-        raycastManager = FindObjectOfType<ARRaycastManager>();
+        _raycastManager = FindObjectOfType<ARRaycastManager>();
 
         // Check ARRaycastManager
-        if(raycastManager != null)
+        if(_raycastManager != null)
             Debug.Log("ARRaycastManager successfully asssigned.") ;
         else
             Debug.Log("ARCastManager is still null.");
 
 
         // Subscribe to plane detection event
-        planeManager.planesChanged += OnPlanesChanged;
+        _planeManager.planesChanged += OnPlanesChanged;
 
     }
 
@@ -47,9 +47,9 @@ public class TUDebugPlaneDetection : MonoBehaviour
     // The default of OnDestroy() method is empty.
     void OnDestroy()
     {
-        if (planeManager != null)
+        if (_planeManager != null)
         {
-            planeManager.planesChanged -= OnPlanesChanged;
+            _planeManager.planesChanged -= OnPlanesChanged;
         }
     }
 
@@ -71,14 +71,14 @@ public class TUDebugPlaneDetection : MonoBehaviour
                 // bool Raycast(Vector2 screenPoint, List<ARRaycastHit> hitResults, TrackableType that raycast should interact with)
                 // Raycast() returns true when it successfully hits one or more trackables.
                 Debug.Log($"touch.position : {touch.position}");
-                if(raycastManager.Raycast(touch.position, raycastHits, TrackableType.PlaneWithinPolygon))
+                if(_raycastManager.Raycast(touch.position, _raycastHits, TrackableType.PlaneWithinPolygon))
                 {
-                    Debug.Log($"Raycast was emitted and hit {raycastHits.Count} objects."); // Count is property.
+                    Debug.Log($"Raycast was emitted and hit {_raycastHits.Count} objects."); // Count is property.
                     // Get the fist hit
-                    var hit = raycastHits[0];
+                    var hit = _raycastHits[0];
 
                     // Get the corresponding ARPlane
-                    ARPlane hitPlane = planeManager.GetPlane(hit.trackableId);  // hit has trackableId of hit object?
+                    ARPlane hitPlane = _planeManager.GetPlane(hit.trackableId);  // hit has trackableId of hit object?
 
                     if(hitPlane != null)
                     {
@@ -101,10 +101,10 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
     private void KeepOnlyThisPlane(ARPlane planeToKeep)
     {
-        lockedPlane = planeToKeep;
+        _lockedPlane = planeToKeep;
 
         // Disable all other planes
-        foreach (ARPlane plane in planeManager.trackables)
+        foreach (ARPlane plane in _planeManager.trackables)
         {
             if (plane != planeToKeep)
             {
@@ -114,9 +114,9 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
         Debug.Log($"Kept plane: {planeToKeep.trackableId}");
 
-        if (lockedPlane != null)
+        if (_lockedPlane != null)
         {
-            planeManager.enabled = false;
+            _planeManager.enabled = false;
         }
     }
 
@@ -124,11 +124,11 @@ public class TUDebugPlaneDetection : MonoBehaviour
     // The method to stop detecting new planes
     private void OnPlanesChanged(ARPlanesChangedEventArgs args)
     {
-        // Immediately return if the lockedPlane already exists
-        if(lockedPlane != null) return;
+        // Immediately return if the _lockedPlane already exists
+        if(_lockedPlane != null) return;
 
-        Debug.Log($"planeManager.trackables.count : {planeManager.trackables.count}");
-        if(planeManager.trackables.count == 0)
+        Debug.Log($"_planeManager.trackables.count : {_planeManager.trackables.count}");
+        if(_planeManager.trackables.count == 0)
             Debug.Log("No planes detected by ARPlaneManager.");
     }
 }

@@ -103,7 +103,7 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
     private void MyDebugLog(string message)
     {
-        MyDebugLog($"[TUDebugPlaneDetection] {message}");
+        Debug.Log($"[TUDebugPlaneDetection] {message}");
     }
 
 

@@ -13,7 +13,7 @@ public class TUDebugPlaneDetection : MonoBehaviour
     [SerializeField]
     private ARRaycastManager _raycastManager;    // Where is ARRaycastManager in this scene?
                                                 // --> It is usually set to XROrigin
-    private List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();  // Why don't it use var declaration?
+    private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();  // Why don't it use var declaration?
                                                                         // `var` keyword is only avaialble in local variables.
 
     // Start is called before the first frame update
@@ -23,19 +23,22 @@ public class TUDebugPlaneDetection : MonoBehaviour
         _planeManager = FindObjectOfType<ARPlaneManager>();  // <T> is Generics
         if (_planeManager == null)
         {
-            Debug.LogError("ARlaneManger not found in the scene");
+            MyDebugLog("ARlaneManger not found in the scene");
             enabled = false;    // Disable the script if no ARPlaneManager is found. Property in MonoBehavior class
             return;
         }
 
         // Get ARRaycastManager
-        _raycastManager = FindObjectOfType<ARRaycastManager>();
+//        _raycastManager ??= FindObjectOfType<ARRaycastManager>();   // ??= means assigning only when the variable is null
+        _raycastManager = FindObjectOfType<ARRaycastManager>();   // ??= means assigning only when the variable is null
+                                                                    // Why ??= only for raycastManager? It's because raycastManager is a [SerializedField].
+                                                                    // and it could be already assigned in the Inspector.
 
         // Check ARRaycastManager
         if(_raycastManager != null)
-            Debug.Log("ARRaycastManager successfully asssigned.") ;
+            MyDebugLog("ARRaycastManager successfully asssigned.") ;
         else
-            Debug.Log("ARCastManager is still null.");
+            MyDebugLog("ARCastManager is still null.");
 
 
         // Subscribe to plane detection event
@@ -65,15 +68,15 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began)    //TouchPhase is a enum.
             {
-                Debug.Log($"touch.phase == TouchPhase.Began --> true ");
+                MyDebugLog($"touch.phase == TouchPhase.Began --> true ");
 
                 // Perform a raycast from the screen point
                 // bool Raycast(Vector2 screenPoint, List<ARRaycastHit> hitResults, TrackableType that raycast should interact with)
                 // Raycast() returns true when it successfully hits one or more trackables.
-                Debug.Log($"touch.position : {touch.position}");
+                MyDebugLog($"touch.position : {touch.position}");
                 if(_raycastManager.Raycast(touch.position, _raycastHits, TrackableType.PlaneWithinPolygon))
                 {
-                    Debug.Log($"Raycast was emitted and hit {_raycastHits.Count} objects."); // Count is property.
+                    MyDebugLog($"Raycast was emitted and hit {_raycastHits.Count} objects."); // Count is property.
                     // Get the fist hit
                     var hit = _raycastHits[0];
 
@@ -82,20 +85,25 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
                     if(hitPlane != null)
                     {
-                        Debug.Log($"Hit plane detected: {hitPlane.trackableId}");
+                        MyDebugLog($"Hit plane detected: {hitPlane.trackableId}");
                         KeepOnlyThisPlane(hitPlane);
                     }
                     else
                     {
-                        Debug.Log("No corresponding plane found for the raycast hit.");
+                        MyDebugLog("No corresponding plane found for the raycast hit.");
                     }
                 }
                 else{
-                    Debug.Log("Raycast did not hit any planes.");
+                    MyDebugLog("Raycast did not hit any planes.");
                 }
-                Debug.Log("touch.phase == TouchPhase.Began --> false");
+                MyDebugLog("touch.phase == TouchPhase.Began --> false");
             }
         }
+    }
+
+    private void MyDebugLog(string message)
+    {
+        MyDebugLog($"[TUDebugPlaneDetection] {message}");
     }
 
 
@@ -112,7 +120,7 @@ public class TUDebugPlaneDetection : MonoBehaviour
             }
         }
 
-        Debug.Log($"Kept plane: {planeToKeep.trackableId}");
+        MyDebugLog($"Kept plane: {planeToKeep.trackableId}");
 
         if (_lockedPlane != null)
         {
@@ -127,8 +135,8 @@ public class TUDebugPlaneDetection : MonoBehaviour
         // Immediately return if the _lockedPlane already exists
         if(_lockedPlane != null) return;
 
-        Debug.Log($"_planeManager.trackables.count : {_planeManager.trackables.count}");
+        MyDebugLog($"_planeManager.trackables.count : {_planeManager.trackables.count}");
         if(_planeManager.trackables.count == 0)
-            Debug.Log("No planes detected by ARPlaneManager.");
+            MyDebugLog("No planes detected by ARPlaneManager.");
     }
 }

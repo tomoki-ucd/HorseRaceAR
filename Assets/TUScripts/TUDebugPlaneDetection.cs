@@ -15,6 +15,8 @@ public class TUDebugPlaneDetection : MonoBehaviour
                                                 // --> It is usually set to XROrigin
     private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();  // Why don't it use var declaration?
                                                                         // `var` keyword is only avaialble in local variables.
+    [SerializeField]
+    public GameObject racetrackPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -99,6 +101,22 @@ public class TUDebugPlaneDetection : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn a racetrack on a tapped position on a plane.
+    /// </summary>
+    private void SpawnRacetrack(ARPlane plane)
+    {
+        Renderer renderer = racetrackPrefab.GetComponent<Renderer>();
+        Vector3 objectSize = renderer.bounds.size;
+        float height = objectSize.y;
+        MyDebugLog($"Cube height : {height}");
+        float heightAdjustment = height / 2;
+        Vector3 position = plane.transform.position;
+        position.y = position.y + heightAdjustment;
+        Instantiate(racetrackPrefab, position, Quaternion.identity);
+        MyDebugLog("Racetrack Spawned.");
+    }
+
     private void MyDebugLog(string message)
     {
         Debug.Log($"[TUDebugPlaneDetection] {message}");
@@ -123,10 +141,9 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
         MyDebugLog($"Kept plane: {planeToKeep.trackableId}");
 
-        if (_lockedPlane != null)
-        {
-            _planeManager.enabled = false;
-        }
+        _planeManager.enabled = false;
+
+        SpawnRacetrack(planeToKeep);
     }
 
 

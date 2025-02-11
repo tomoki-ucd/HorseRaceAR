@@ -4,19 +4,22 @@ using UnityEngine;  // Defines Touch and Input
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;  // Defins TrackableType
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class TUDebugPlaneDetection : MonoBehaviour
 {
     private ARPlaneManager? _planeManager;
     private ARPlane? _lockedPlane = null;    // Nullable
 
-    [SerializeField]
-    private ARRaycastManager? _raycastManager;    // Where is ARRaycastManager in this scene?
+    [SerializeField] private ARRaycastManager? _raycastManager;    // Where is ARRaycastManager in this scene?
                                                 // --> It is usually set to XROrigin
     private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();  // Why don't it use var declaration?
                                                                         // `var` keyword is only avaialble in local variables.
-    [SerializeField]
-    public GameObject racetrackPrefab;
+    [SerializeField] public GameObject racetrackPrefab;
+//    [SerializeField] public Transform _targetObject;  // Setting gameObject to this field is supopsed to work
+
+    // UI components
+    [SerializeField] public Slider _YAxisRotationSlider;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +48,12 @@ public class TUDebugPlaneDetection : MonoBehaviour
         // Subscribe to plane detection event
         _planeManager.planesChanged += OnPlanesChanged;
 
+
+        // Initialize UI values
+        _YAxisRotationSlider.minValue = -180f;
+        _YAxisRotationSlider.maxValue = 180f;
+        _YAxisRotationSlider.value = 0f;    // Set its default value to 0
+        _YAxisRotationSlider.onValueChanged.AddListener(UpdateRotation); // Make UpdateRotation method to subscribe
     }
 
 
@@ -101,9 +110,21 @@ public class TUDebugPlaneDetection : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Spawn a racetrack on a tapped position on a plane.
-    /// </summary>
+    ///<summary>
+    /// Rotate the racetrack according to the input from the slider
+    /// The slider ranges from -180 to 180. The default value is 0.
+    /// TODO: How can I set OnDestroy() for this subscriber although this class is not specific to the slider instance
+    ///</summary>
+    private void UpdateRotation(float angle)
+    {
+        // The first one is supposed to work
+//        _targetObject.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
+        racetrackPrefab.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
+    }
+
+    
+   
+   
     private void SpawnRacetrack(ARPlane plane)
     {
         Renderer renderer = racetrackPrefab.GetComponent<Renderer>();

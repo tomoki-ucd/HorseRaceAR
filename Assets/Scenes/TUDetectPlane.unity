@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _raycastManager: {fileID: 159110367}
-  racetrackPrefab: {fileID: 7031509761838481907, guid: d7b57ccdd9364410c980824a4637a7c7,
+  racetrackPrefab: {fileID: 3327669893061687941, guid: 3b5d9088b3edb44d0a7467628cb3966e,
     type: 3}
 --- !u!4 &325075244
 Transform:

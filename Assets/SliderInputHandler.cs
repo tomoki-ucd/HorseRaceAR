@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class SliderInputHandler : MonoBehaviour
 {
     // UI components
-    [SerializeField] public Slider _YAxisRotationSlider;
+    public Slider _YAxisRotationSlider;
+
+    public TUDebugPlaneDetection planeDetectionHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,7 @@ public class SliderInputHandler : MonoBehaviour
         
     }
 
-    /// Rotate the racetrack according to the input from the slider
+    /// Rotate the racetrackPrefab according to the input from the slider
     /// The slider ranges from -180 to 180. The default value is 0.
     /// TODO: How can I set OnDestroy() for this subscriber although this class is not specific to the slider instance
     ///</summary>
@@ -38,7 +40,7 @@ public class SliderInputHandler : MonoBehaviour
     {
         // The first one is supposed to work
 //        _targetObject.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
-//        racetrackPrefab.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
+        planeDetectionHandler.racetrackPrefab.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
     }
 
 }

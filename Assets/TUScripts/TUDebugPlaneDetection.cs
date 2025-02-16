@@ -17,6 +17,14 @@ public class TUDebugPlaneDetection : MonoBehaviour
                                                                         // `var` keyword is only avaialble in local variables.
     [SerializeField] public GameObject racetrackPrefab;
 //    [SerializeField] public Transform _targetObject;  // Setting gameObject to this field is supopsed to work
+    private GameObject? _spawnedRacetrack;
+    public GameObject? SpawnedRacetrack
+    {
+        get{return _spawnedRacetrack;}
+        set{
+            _spawnedRacetrack = value;
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -44,8 +52,8 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
 
         // Subscribe to plane detection event
+        // My Note: "+=" can be used for C# standard event system, not UnityEvent type.
         _planeManager.planesChanged += OnPlanesChanged;
-
 
     }
 
@@ -116,7 +124,7 @@ public class TUDebugPlaneDetection : MonoBehaviour
         float heightAdjustment = height / 2;
         Vector3 position = plane.transform.position;
         position.y = position.y + heightAdjustment;
-        Instantiate(racetrackPrefab, position, Quaternion.identity);
+        _spawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
         MyDebugLog("Racetrack Spawned.");
     }
 

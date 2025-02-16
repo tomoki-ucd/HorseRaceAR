@@ -40,7 +40,7 @@ public class SliderInputHandler : MonoBehaviour
     {
         // The first one is supposed to work
 //        _targetObject.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
-        planeDetectionHandler.racetrackPrefab.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
+        planeDetectionHandler.SpawnedRacetrack.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
     }
 
 }

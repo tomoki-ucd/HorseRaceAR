@@ -30,8 +30,10 @@ public class TUDebugPlaneDetection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         // Get ARPlaneManager
         _planeManager = FindObjectOfType<ARPlaneManager>();  // <T> is Generics
+
         if (_planeManager == null)
         {
             MyDebugLog("ARlaneManger not found in the scene");
@@ -71,6 +73,10 @@ public class TUDebugPlaneDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_lockedPlane != null){
+            return;
+        }
+
         if(Input.touchCount == 0)
         {
             return;

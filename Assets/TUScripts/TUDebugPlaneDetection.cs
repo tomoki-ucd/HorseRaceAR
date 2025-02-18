@@ -18,6 +18,7 @@ public class TUDebugPlaneDetection : MonoBehaviour
     [SerializeField] public GameObject racetrackPrefab;
 //    [SerializeField] public Transform _targetObject;  // Setting gameObject to this field is supopsed to work
     private GameObject? _spawnedRacetrack;
+
     public GameObject? SpawnedRacetrack
     {
         get{return _spawnedRacetrack;}
@@ -136,7 +137,8 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
     private void MyDebugLog(string message)
     {
-        Debug.Log($"[TUDebugPlaneDetection] {message}");
+//        Debug.Log($"[TUDebugPlaneDetection] {message}");
+        Debug.Log($"[{this.GetType().Name}] {message}");
     }
 
 

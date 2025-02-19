@@ -14,9 +14,6 @@ public class ButtonInputHandler : MonoBehaviour
     void Start()
     {
         _upButton.onClick.AddListener(RaiseRacetrack);
-
-        _spawnedRacetrack = _tUDebugPlaneDetection.SpawnedRacetrack;
-        
     }
 
     // Update is called once per frame
@@ -38,6 +35,8 @@ public class ButtonInputHandler : MonoBehaviour
     /// <returns></return>
     private void RaiseRacetrack()
     {
+        _spawnedRacetrack = _tUDebugPlaneDetection.SpawnedRacetrack;
+
         if(_spawnedRacetrack == null)
         {
             MyDebugLog("_spawnedRacetrack is null.");

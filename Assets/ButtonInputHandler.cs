@@ -43,7 +43,7 @@ public class ButtonInputHandler : MonoBehaviour
             return;
         }
         Vector3 pos = _spawnedRacetrack.transform.position;
-        pos.y += 1;
+        pos.y += 0.1f;
         _spawnedRacetrack.transform.position = pos;
     }
 

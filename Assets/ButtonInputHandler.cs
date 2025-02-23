@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class ButtonInputHandler : MonoBehaviour
 {
     [SerializeField] private Button _upButton;
-//    [SerializeField] private Button _downButton;
+    [SerializeField] private Button _downButton;
     [SerializeField] private TUDebugPlaneDetection _tUDebugPlaneDetection;
-    private GameObject _spawnedRacetrack;
 
     // Start is called before the first frame update
     void Start()
     {
         _upButton.onClick.AddListener(RaiseRacetrack);
+        _downButton.onClick.AddListener(LowerRacetrack);
     }
 
     // Update is called once per frame
@@ -35,6 +35,7 @@ public class ButtonInputHandler : MonoBehaviour
     /// <returns></return>
     private void RaiseRacetrack()
     {
+        GameObject _spawnedRacetrack;
         _spawnedRacetrack = _tUDebugPlaneDetection.SpawnedRacetrack;
 
         if(_spawnedRacetrack == null)
@@ -47,4 +48,24 @@ public class ButtonInputHandler : MonoBehaviour
         _spawnedRacetrack.transform.position = pos;
     }
 
+
+    /// <summary>
+    /// Lower the position of Racetrack object.
+    /// </summary>
+    /// <param name=""></param>
+    /// <returns></return>
+    private void LowerRacetrack()
+    {
+        GameObject _spawnedRacetrack;
+        _spawnedRacetrack = _tUDebugPlaneDetection.SpawnedRacetrack;
+
+        if(_spawnedRacetrack == null)
+        {
+            MyDebugLog("_spawnedRacetrack is null.");
+            return;
+        }
+        Vector3 pos = _spawnedRacetrack.transform.position;
+        pos.y -= 0.1f;
+        _spawnedRacetrack.transform.position = pos;
+    }
 }

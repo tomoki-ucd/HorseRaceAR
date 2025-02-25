@@ -12,15 +12,19 @@ public class AddHorses : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _fixToggle.onValueChanged.AddListener(AddHorsesOnRacetrack);
-        _fixToggle.onValueChanged.AddListener(DisableRacetrackControlUIs);
-        
+        _fixToggle.onValueChanged.AddListener(OnToggleValueChanged);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void OnToggleValueChanged(bool isOn)
+    {
+        AddHorsesOnRacetrack(isOn);
+        DisableRacetrackControlUIs(isOn);
     }
 
     private void AddHorsesOnRacetrack(bool toggle)
@@ -34,7 +38,6 @@ public class AddHorses : MonoBehaviour
             }
 
             GameObject _racetrack = _TUDebugPlaneDetection.SpawnedRacetrack;
-
             Renderer _renderer = _horsePrefab.GetComponent<Renderer>();
             Vector3 _objectSize = _renderer.bounds.size;
             float _halfHeight = _objectSize.y / 2;
@@ -48,11 +51,11 @@ public class AddHorses : MonoBehaviour
     {
         GameObject _upButton = GameObject.Find("UpButton");
         GameObject _downButton = GameObject.Find("DownButton");
-        GameObject _toggle = GameObject.Find("Toggle");
+        GameObject _slider = GameObject.Find("Slider");
 
         _upButton.SetActive(isOn);
         _downButton.SetActive(isOn);
-        _toggle.SetActive(isOn);
+        _slider.SetActive(isOn);
                                   
     }                             
 

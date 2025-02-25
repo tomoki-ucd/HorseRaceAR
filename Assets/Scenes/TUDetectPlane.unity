@@ -548,8 +548,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 156, y: -1091}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: 131, y: -1091}
+  m_SizeDelta: {x: 130, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &373603976
 MonoBehaviour:
@@ -1905,7 +1905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2055,7 +2055,7 @@ MonoBehaviour:
   _TUDebugPlaneDetection: {fileID: 325075243}
   _horsePrefab: {fileID: 1652567498351406170, guid: 3b1af35ba0322411184f9edda3598ec8,
     type: 3}
-  _fixToggle: {fileID: 0}
+  _fixToggle: {fileID: 373603976}
 --- !u!1 &1694990944
 GameObject:
   m_ObjectHideFlags: 0

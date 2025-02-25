@@ -12,6 +12,19 @@ public class AddHorses : MonoBehaviour
     GameObject _downButton;
     GameObject _slider;
 
+    private GameObject _spawnedHorse;
+    public GameObject SpawnedHorse
+    {
+        get
+        {
+            return _spawnedHorse;
+        }
+        private set
+        {
+            _spawnedHorse = value;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,9 +46,9 @@ public class AddHorses : MonoBehaviour
         AddHorsesOnRacetrack(isOn);
     }
 
-    private void AddHorsesOnRacetrack(bool toggle)
+    private void AddHorsesOnRacetrack(bool isOn)
     {
-        if(toggle == false)
+        if(isOn == false)
         {
             if (_TUDebugPlaneDetection == null)
             {
@@ -49,7 +62,7 @@ public class AddHorses : MonoBehaviour
             float _halfHeight = _objectSize.y / 2;
             Vector3 _position = _racetrack.transform.position;
             _position.y += _halfHeight;
-            Instantiate(_horsePrefab, _position, Quaternion.identity);
+            _spawnedHorse = Instantiate(_horsePrefab, _position, Quaternion.identity);
         }
     }
 

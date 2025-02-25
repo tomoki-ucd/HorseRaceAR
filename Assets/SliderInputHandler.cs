@@ -10,6 +10,8 @@ public class SliderInputHandler : MonoBehaviour
 
     public TUDebugPlaneDetection planeDetectionHandler;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +43,29 @@ public class SliderInputHandler : MonoBehaviour
         // The first one is supposed to work
 //        _targetObject.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
         planeDetectionHandler.SpawnedRacetrack.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
+
+        // Rotate the horses in accordance with the racetrack
+//        GameObject _horse = GameObject.Find("Horse(Clone)");    // This is not recommended way to get the access.
+//        GameObject _horse = GameObject.FindWithTag("Horse");    // Use Tag to find the object. But using property(getter) is better.
+        AddHorses addHorses = FindObjectOfType<AddHorses>();
+        if(addHorses == null)
+        {
+            MyDebugLog("addHorses is null.");
+            return;
+        } 
+
+        GameObject _horse = addHorses.SpawnedHorse;
+        if(_horse == null)
+        {
+            MyDebugLog($"_horse is null.");
+            return;
+        }
+        _horse.transform.rotation = Quaternion.Euler(0f, angle, 0f); 
+    }
+
+    private void MyDebugLog(string message)
+    {
+        Debug.Log($"[{this.GetType().Name}] {message}");
     }
 
 }

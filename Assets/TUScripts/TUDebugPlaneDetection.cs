@@ -21,8 +21,12 @@ public class TUDebugPlaneDetection : MonoBehaviour
 
     public GameObject? SpawnedRacetrack
     {
-        get{return _spawnedRacetrack;}
-        set{
+        get
+        {
+            return _spawnedRacetrack;
+        }
+        set
+        {
             _spawnedRacetrack = value;
         }
     }

@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AddHorses : MonoBehaviour
 {
     [SerializeField] private TUDebugPlaneDetection _TUDebugPlaneDetection;
     [SerializeField] private GameObject _horsePrefab;
-    // TO DO
-    // Add a UI to spawn horses
+    [SerializeField] private Toggle _fixToggle;
 
     // Start is called before the first frame update
     void Start()
     {
-        // TO DO
-        // Add a event listener to the UI element
+        _fixToggle.onValueChanged.AddListener(AddHorsesOnRacetrack);
+        _fixToggle.onValueChanged.AddListener(DisableRacetrackControlUIs);
         
     }
 
@@ -23,23 +23,38 @@ public class AddHorses : MonoBehaviour
         
     }
 
-    private void AddHorsesOnRacetrack()
+    private void AddHorsesOnRacetrack(bool toggle)
     {
-        if (_TUDebugPlaneDetection == null)
+        if(toggle == false)
         {
-            MyDebugLog("_TUDebugPlaneDetection is null");
-            return;
+            if (_TUDebugPlaneDetection == null)
+            {
+                MyDebugLog("_TUDebugPlaneDetection is null");
+                return;
+            }
+
+            GameObject _racetrack = _TUDebugPlaneDetection.SpawnedRacetrack;
+
+            Renderer _renderer = _horsePrefab.GetComponent<Renderer>();
+            Vector3 _objectSize = _renderer.bounds.size;
+            float _halfHeight = _objectSize.y / 2;
+            Vector3 _position = _racetrack.transform.position;
+            _position.y += _halfHeight;
+            Instantiate(_horsePrefab, _position, Quaternion.identity);
         }
-
-        GameObject _racetrack = _TUDebugPlaneDetection.SpawnedRacetrack;
-
-        Renderer _renderer = _horsePrefab.GetComponent<Renderer>();
-        Vector3 _objectSize = _renderer.bounds.size;
-        float _halfHeight = _objectSize.y / 2;
-        Vector3 _position = _racetrack.transform.position;
-        _position.y += _halfHeight;
-        Instantiate(_horsePrefab, _position, Quaternion.identity);
     }
+
+    private void DisableRacetrackControlUIs(bool isOn)
+    {
+        GameObject _upButton = GameObject.Find("UpButton");
+        GameObject _downButton = GameObject.Find("DownButton");
+        GameObject _toggle = GameObject.Find("Toggle");
+
+        _upButton.SetActive(isOn);
+        _downButton.SetActive(isOn);
+        _toggle.SetActive(isOn);
+                                  
+    }                             
 
 
     private void MyDebugLog(string message)

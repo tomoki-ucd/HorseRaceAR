@@ -8,10 +8,16 @@ public class AddHorses : MonoBehaviour
     [SerializeField] private TUDebugPlaneDetection _TUDebugPlaneDetection;
     [SerializeField] private GameObject _horsePrefab;
     [SerializeField] private Toggle _fixToggle;
+    GameObject _upButton;
+    GameObject _downButton;
+    GameObject _slider;
 
     // Start is called before the first frame update
     void Start()
     {
+        _upButton = GameObject.Find("UpButton");
+        _downButton = GameObject.Find("DownButton");
+        _slider = GameObject.Find("Slider");
         _fixToggle.onValueChanged.AddListener(OnToggleValueChanged);
     }
 
@@ -23,8 +29,8 @@ public class AddHorses : MonoBehaviour
 
     private void OnToggleValueChanged(bool isOn)
     {
+        DisableRacetrackControlUIs(isOn);   // If DisableRacetrackControlUIs() is executed after AddHorsesOnRacetarck(), it does not disable the UIs.
         AddHorsesOnRacetrack(isOn);
-        DisableRacetrackControlUIs(isOn);
     }
 
     private void AddHorsesOnRacetrack(bool toggle)
@@ -49,14 +55,9 @@ public class AddHorses : MonoBehaviour
 
     private void DisableRacetrackControlUIs(bool isOn)
     {
-        GameObject _upButton = GameObject.Find("UpButton");
-        GameObject _downButton = GameObject.Find("DownButton");
-        GameObject _slider = GameObject.Find("Slider");
-
         _upButton.SetActive(isOn);
         _downButton.SetActive(isOn);
         _slider.SetActive(isOn);
-                                  
     }                             
 
 

@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SliderInputHandler : MonoBehaviour
+public class ObjectRotationEventHandler : MonoBehaviour
 {
-    // UI components
-    public Slider _YAxisRotationSlider;
-
-    public TUDebugPlaneDetection planeDetectionHandler;
-
-
+    [SerializeField] private Slider _YAxisRotationSlider;
+    [SerializeField] private ARPlaneController _arPlaneController;
 
     // Start is called before the first frame update
     void Start()
@@ -19,13 +15,16 @@ public class SliderInputHandler : MonoBehaviour
         _YAxisRotationSlider.minValue = -180f;
         _YAxisRotationSlider.maxValue = 180f;
         _YAxisRotationSlider.value = 0f;    // Set its default value to 0
-        _YAxisRotationSlider.onValueChanged.AddListener(UpdateRotation); // Make UpdateRotation method to subscribe
-        
+        _YAxisRotationSlider.onValueChanged.AddListener(RotateObject); // Make RotateObject method to subscribe
     }
 
     void OnDestroy()
     {
-//        _YAxisRotationSlider.onValueChanged -= UpdateRotation;
+        if(_YAxisRotationSlider != null)
+        {
+            // TO DO: Identify why this line cause an error
+//            _YAxisRotationSlider.onValueChanged -= RotateObject;
+        }
     }
 
     // Update is called once per frame
@@ -34,27 +33,26 @@ public class SliderInputHandler : MonoBehaviour
         
     }
 
-    /// Rotate the racetrackPrefab according to the input from the slider
+    /// <summary>
+    /// Rotate the racetrackPrefab according to the input from the slider.
     /// The slider ranges from -180 to 180. The default value is 0.
-    /// TODO: How can I set OnDestroy() for this subscriber although this class is not specific to the slider instance
     ///</summary>
-    private void UpdateRotation(float angle)
+    private void RotateObject(float angle)
     {
-        // The first one is supposed to work
 //        _targetObject.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
-        planeDetectionHandler.SpawnedRacetrack.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
+        _arPlaneController.SpawnedRacetrack.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
 
         // Rotate the horses in accordance with the racetrack
 //        GameObject _horse = GameObject.Find("Horse(Clone)");    // This is not recommended way to get the access.
-//        GameObject _horse = GameObject.FindWithTag("Horse");    // Use Tag to find the object. But using property(getter) is better.
-        AddHorses addHorses = FindObjectOfType<AddHorses>();
-        if(addHorses == null)
+//        GameObject _horse = GameObject.FindWithTag("Horse");    // Use Tag to find the object.
+        ObjectPlacementEventHandler _objectPlacementEventHandler = FindObjectOfType<ObjectPlacementEventHandler>();
+        if(_objectPlacementEventHandler == null)
         {
-            MyDebugLog("addHorses is null.");
+            MyDebugLog("_objectPlacementEventHandler is null.");
             return;
         } 
 
-        GameObject _horse = addHorses.SpawnedHorse;
+        GameObject _horse = _objectPlacementEventHandler.SpawnedHorse;
         if(_horse == null)
         {
             MyDebugLog($"_horse is null.");
@@ -67,5 +65,4 @@ public class SliderInputHandler : MonoBehaviour
     {
         Debug.Log($"[{this.GetType().Name}] {message}");
     }
-
 }

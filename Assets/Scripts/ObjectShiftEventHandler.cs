@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonInputHandler : MonoBehaviour
+public class ObjectShiftEventHandler: MonoBehaviour
 {
     [SerializeField] private Button _upButton;
     [SerializeField] private Button _downButton;
-    [SerializeField] private TUDebugPlaneDetection _tUDebugPlaneDetection;
+    [SerializeField] private ARPlaneController _arPlaneController;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class ButtonInputHandler : MonoBehaviour
 
     private void MyDebugLog(string message)
     {
-//        Debug.Log($"[TUDebugPlaneDetection] {message}");
+//        Debug.Log($"[ARPlaneController] {message}");
         Debug.Log($"[{this.GetType().Name}] {message}");
     }
 
@@ -36,7 +36,7 @@ public class ButtonInputHandler : MonoBehaviour
     private void RaiseRacetrack()
     {
         GameObject _spawnedRacetrack;
-        _spawnedRacetrack = _tUDebugPlaneDetection.SpawnedRacetrack;
+        _spawnedRacetrack = _arPlaneController.SpawnedRacetrack;
 
         if(_spawnedRacetrack == null)
         {
@@ -57,7 +57,7 @@ public class ButtonInputHandler : MonoBehaviour
     private void LowerRacetrack()
     {
         GameObject _spawnedRacetrack;
-        _spawnedRacetrack = _tUDebugPlaneDetection.SpawnedRacetrack;
+        _spawnedRacetrack = _arPlaneController.SpawnedRacetrack;
 
         if(_spawnedRacetrack == null)
         {

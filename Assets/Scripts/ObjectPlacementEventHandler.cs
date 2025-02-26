@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AddHorses : MonoBehaviour
+public class ObjectPlacementEventHandler: MonoBehaviour
 {
-    [SerializeField] private TUDebugPlaneDetection _TUDebugPlaneDetection;
+    [SerializeField] private ARPlaneController _arPlaneController;
     [SerializeField] private GameObject _horsePrefab;
     [SerializeField] private Toggle _fixToggle;
     GameObject _upButton;
@@ -50,13 +50,13 @@ public class AddHorses : MonoBehaviour
     {
         if(isOn == false)
         {
-            if (_TUDebugPlaneDetection == null)
+            if (_arPlaneController == null)
             {
-                MyDebugLog("_TUDebugPlaneDetection is null");
+                MyDebugLog("_arPlaneController is null");
                 return;
             }
 
-            GameObject _racetrack = _TUDebugPlaneDetection.SpawnedRacetrack;
+            GameObject _racetrack = _arPlaneController.SpawnedRacetrack;
             Renderer _renderer = _horsePrefab.GetComponent<Renderer>();
             Vector3 _objectSize = _renderer.bounds.size;
             float _halfHeight = _objectSize.y / 2;

@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 325075244}
   - component: {fileID: 325075243}
   m_Layer: 0
-  m_Name: _TUPlaneDetectionHandler
+  m_Name: ARPlaneContoller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1542,7 +1542,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1090105403}
   m_Layer: 0
-  m_Name: _ScriptManager
+  m_Name: ScriptManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1578,7 +1578,7 @@ GameObject:
   - component: {fileID: 1209589026}
   - component: {fileID: 1209589025}
   m_Layer: 0
-  m_Name: _SliderInputHandler
+  m_Name: ObjectRotationEventrHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1597,7 +1597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _YAxisRotationSlider: {fileID: 698154928}
-  planeDetectionHandler: {fileID: 325075243}
+  _arPlaneController: {fileID: 0}
 --- !u!4 &1209589026
 Transform:
   m_ObjectHideFlags: 0
@@ -1818,7 +1818,7 @@ GameObject:
   - component: {fileID: 1322542117}
   - component: {fileID: 1322542118}
   m_Layer: 0
-  m_Name: _ButtonsInputHandler
+  m_Name: ObjectShiftEventHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upButton: {fileID: 1694990946}
   _downButton: {fileID: 563105451}
-  _tUDebugPlaneDetection: {fileID: 325075243}
+  _arPlaneController: {fileID: 0}
 --- !u!1 &1322588823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,7 +2019,7 @@ GameObject:
   - component: {fileID: 1605113286}
   - component: {fileID: 1605113287}
   m_Layer: 0
-  m_Name: _AddHorsesHandler
+  m_Name: ObjectPlacementEventHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2052,7 +2052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555c4d86a6f924d04b0cc4989b9081a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _TUDebugPlaneDetection: {fileID: 325075243}
+  _arPlaneController: {fileID: 0}
   _horsePrefab: {fileID: 1652567498351406170, guid: 3b1af35ba0322411184f9edda3598ec8,
     type: 3}
   _fixToggle: {fileID: 373603976}

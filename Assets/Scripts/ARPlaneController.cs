@@ -6,19 +6,21 @@ using UnityEngine.XR.ARSubsystems;  // Defins TrackableType
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class TUDebugPlaneDetection : MonoBehaviour
+/// <summary>
+/// Provides the functionality of detecting and selecting ARplanes.
+/// </summary>
+public class ARPlaneController: MonoBehaviour
 {
     private ARPlaneManager? _planeManager;
     private ARPlane? _lockedPlane = null;    // Nullable
 
-    [SerializeField] private ARRaycastManager? _raycastManager;    // Where is ARRaycastManager in this scene?
-                                                // --> It is usually set to XROrigin
-    private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();  // Why don't it use var declaration?
-                                                                        // `var` keyword is only avaialble in local variables.
+    [SerializeField] private ARRaycastManager? _raycastManager;    // ARRaycastManager is attached to XROrign.
+    private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();
+
     [SerializeField] public GameObject racetrackPrefab;
 //    [SerializeField] public Transform _targetObject;  // Setting gameObject to this field is supopsed to work
-    private GameObject? _spawnedRacetrack;
 
+    private GameObject? _spawnedRacetrack;
     public GameObject? SpawnedRacetrack
     {
         get
@@ -35,9 +37,8 @@ public class TUDebugPlaneDetection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         // Get ARPlaneManager
-        _planeManager = FindObjectOfType<ARPlaneManager>();  // <T> is Generics
+        _planeManager = FindObjectOfType<ARPlaneManager>();
 
         if (_planeManager == null)
         {
@@ -121,11 +122,8 @@ public class TUDebugPlaneDetection : MonoBehaviour
             }
         }
     }
-
-
-    
    
-   
+
     private void SpawnRacetrack(ARPlane plane)
     {
         Renderer renderer = racetrackPrefab.GetComponent<Renderer>();

@@ -48,21 +48,16 @@ public class ObjectRotationEventHandler : MonoBehaviour
         ObjectPlacementEventHandler _objectPlacementEventHandler = FindObjectOfType<ObjectPlacementEventHandler>();
         if(_objectPlacementEventHandler == null)
         {
-            MyDebugLog("_objectPlacementEventHandler is null.");
+            CustomLogger.Print(this, "_objectPlacementEventHandler is null.");
             return;
         } 
 
         GameObject _horse = _objectPlacementEventHandler.SpawnedHorse;
         if(_horse == null)
         {
-            MyDebugLog($"_horse is null.");
+            CustomLogger.Print(this, $"_horse is null.");
             return;
         }
         _horse.transform.rotation = Quaternion.Euler(0f, angle, 0f); 
-    }
-
-    private void MyDebugLog(string message)
-    {
-        Debug.Log($"[{this.GetType().Name}] {message}");
     }
 }

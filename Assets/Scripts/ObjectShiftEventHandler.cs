@@ -22,11 +22,6 @@ public class ObjectShiftEventHandler: MonoBehaviour
         
     }
 
-    private void MyDebugLog(string message)
-    {
-//        Debug.Log($"[ARPlaneController] {message}");
-        Debug.Log($"[{this.GetType().Name}] {message}");
-    }
 
     /// <summary>
     /// Raise the position of Racetrack object.
@@ -40,7 +35,7 @@ public class ObjectShiftEventHandler: MonoBehaviour
 
         if(_spawnedRacetrack == null)
         {
-            MyDebugLog("_spawnedRacetrack is null.");
+            CustomLogger.Print(this, "_spawnedRacetrack is null.");
             return;
         }
         Vector3 pos = _spawnedRacetrack.transform.position;
@@ -61,7 +56,7 @@ public class ObjectShiftEventHandler: MonoBehaviour
 
         if(_spawnedRacetrack == null)
         {
-            MyDebugLog("_spawnedRacetrack is null.");
+            CustomLogger.Print(this, "_spawnedRacetrack is null.");
             return;
         }
         Vector3 pos = _spawnedRacetrack.transform.position;

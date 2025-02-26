@@ -42,7 +42,7 @@ public class ARPlaneController: MonoBehaviour
 
         if (_planeManager == null)
         {
-            MyDebugLog("ARlaneManger not found in the scene");
+            CustomLogger.Print(this, "ARlaneManger not found in the scene");
             enabled = false;    // Disable the script if no ARPlaneManager is found. Property in MonoBehavior class
             return;
         }
@@ -54,9 +54,9 @@ public class ARPlaneController: MonoBehaviour
 
         // Check ARRaycastManager
         if(_raycastManager != null)
-            MyDebugLog("ARRaycastManager successfully asssigned.") ;
+            CustomLogger.Print(this, "ARRaycastManager successfully asssigned.") ;
         else
-            MyDebugLog("ARCastManager is still null.");
+            CustomLogger.Print(this, "ARCastManager is still null.");
 
 
         // Subscribe to plane detection event
@@ -93,18 +93,18 @@ public class ARPlaneController: MonoBehaviour
 
         if(touch.phase != TouchPhase.Began)
         {
-            MyDebugLog("touch.phase == TouchPhase.Began --> false");
+            CustomLogger.Print(this, "touch.phase == TouchPhase.Began --> false");
             return;
         }
-        MyDebugLog($"touch.phase == TouchPhase.Began --> true ");
+        CustomLogger.Print(this, $"touch.phase == TouchPhase.Began --> true ");
 
         // Perform a raycast from the screen point
         // bool Raycast(Vector2 screenPoint, List<ARRaycastHit> hitResults, TrackableType that raycast should interact with)
         // Raycast() returns true when it successfully hits one or more trackables.
-        MyDebugLog($"touch.position : {touch.position}");
+        CustomLogger.Print(this, $"touch.position : {touch.position}");
         if(_raycastManager.Raycast(touch.position, _raycastHits, TrackableType.PlaneWithinPolygon))
         {
-            MyDebugLog($"Raycast was emitted and hit {_raycastHits.Count} objects."); // Count is property.
+            CustomLogger.Print(this, $"Raycast was emitted and hit {_raycastHits.Count} objects."); // Count is property.
             // Get the fist hit
             var hit = _raycastHits[0];
 
@@ -113,12 +113,12 @@ public class ARPlaneController: MonoBehaviour
 
             if(hitPlane != null)
             {
-                MyDebugLog($"Hit plane detected: {hitPlane.trackableId}");
+                CustomLogger.Print(this, $"Hit plane detected: {hitPlane.trackableId}");
                 KeepOnlyThisPlane(hitPlane);
             }
             else
             {
-                MyDebugLog("No corresponding plane found for the raycast hit.");
+                CustomLogger.Print(this, "No corresponding plane found for the raycast hit.");
             }
         }
     }
@@ -129,18 +129,12 @@ public class ARPlaneController: MonoBehaviour
         Renderer renderer = racetrackPrefab.GetComponent<Renderer>();
         Vector3 objectSize = renderer.bounds.size;
         float height = objectSize.y;
-        MyDebugLog($"Cube height : {height}");
+        CustomLogger.Print(this, $"Cube height : {height}");
         float heightAdjustment = height / 2;
         Vector3 position = plane.transform.position;
         position.y = position.y + heightAdjustment;
         _spawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
-        MyDebugLog("Racetrack Spawned.");
-    }
-
-    private void MyDebugLog(string message)
-    {
-//        Debug.Log($"[TUDebugPlaneDetection] {message}");
-        Debug.Log($"[{this.GetType().Name}] {message}");
+        CustomLogger.Print(this, "Racetrack Spawned.");
     }
 
 
@@ -160,7 +154,7 @@ public class ARPlaneController: MonoBehaviour
             }
         }
 
-        MyDebugLog($"Kept plane: {planeToKeep.trackableId}");
+        CustomLogger.Print(this, $"Kept plane: {planeToKeep.trackableId}");
 
         _planeManager.enabled = false;
 
@@ -174,8 +168,8 @@ public class ARPlaneController: MonoBehaviour
         // Immediately return if the _lockedPlane already exists
         if(_lockedPlane != null) return;
 
-        MyDebugLog($"_planeManager.trackables.count : {_planeManager.trackables.count}");
+        CustomLogger.Print(this, $"_planeManager.trackables.count : {_planeManager.trackables.count}");
         if(_planeManager.trackables.count == 0)
-            MyDebugLog("No planes detected by ARPlaneManager.");
+            CustomLogger.Print(this, "No planes detected by ARPlaneManager.");
     }
 }

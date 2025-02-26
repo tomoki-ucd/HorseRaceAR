@@ -52,7 +52,7 @@ public class ObjectPlacementEventHandler: MonoBehaviour
         {
             if (_arPlaneController == null)
             {
-                MyDebugLog("_arPlaneController is null");
+                CustomLogger.Print(this, "_arPlaneController is null");
                 return;
             }
 
@@ -72,10 +72,4 @@ public class ObjectPlacementEventHandler: MonoBehaviour
         _downButton.SetActive(isOn);
         _slider.SetActive(isOn);
     }                             
-
-
-    private void MyDebugLog(string message)
-    {
-        Debug.Log($"[{this.GetType().Name}] {message}");
-    }
 }

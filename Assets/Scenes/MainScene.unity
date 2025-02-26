@@ -1597,7 +1597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _YAxisRotationSlider: {fileID: 698154928}
-  _arPlaneController: {fileID: 0}
+  _arPlaneController: {fileID: 325075243}
 --- !u!4 &1209589026
 Transform:
   m_ObjectHideFlags: 0
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upButton: {fileID: 1694990946}
   _downButton: {fileID: 563105451}
-  _arPlaneController: {fileID: 0}
+  _arPlaneController: {fileID: 325075243}
 --- !u!1 &1322588823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2052,7 +2052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555c4d86a6f924d04b0cc4989b9081a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _arPlaneController: {fileID: 0}
+  _arPlaneController: {fileID: 325075243}
   _horsePrefab: {fileID: 1652567498351406170, guid: 3b1af35ba0322411184f9edda3598ec8,
     type: 3}
   _fixToggle: {fileID: 373603976}

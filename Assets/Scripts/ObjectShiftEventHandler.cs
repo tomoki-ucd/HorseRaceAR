@@ -7,11 +7,17 @@ public class ObjectShiftEventHandler: MonoBehaviour
 {
     [SerializeField] private Button _upButton;
     [SerializeField] private Button _downButton;
-    [SerializeField] private ARPlaneController _arPlaneController;
+    private ARPlaneController _arPlaneController;
+    private ObjectPlacementEventHandler _objectPlacementEventHandler;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Initialize objects
+        _arPlaneController = FindObjectOfType<ARPlaneController>();
+        _objectPlacementEventHandler = FindObjectOfType<ObjectPlacementEventHandler>();
+
+        // Register methods to events
         _upButton.onClick.AddListener(RaiseRacetrack);
         _downButton.onClick.AddListener(LowerRacetrack);
     }
@@ -24,23 +30,35 @@ public class ObjectShiftEventHandler: MonoBehaviour
 
 
     /// <summary>
-    /// Raise the position of Racetrack object.
+    /// Raise the position of the objects.
     /// </summary>
-    /// <param name=""></param>
+    /// <param name=></param>
     /// <returns></return>
     private void RaiseRacetrack()
     {
-        GameObject _spawnedRacetrack;
-        _spawnedRacetrack = _arPlaneController.SpawnedRacetrack;
+        GameObject racetrack = _arPlaneController.SpawnedRacetrack;
+        GameObject horse = _objectPlacementEventHandler.SpawnedHorse;
 
-        if(_spawnedRacetrack == null)
+        if(racetrack == null)
         {
-            CustomLogger.Print(this, "_spawnedRacetrack is null.");
+            CustomLogger.Print(this, "racetrack is null.");
             return;
         }
-        Vector3 pos = _spawnedRacetrack.transform.position;
-        pos.y += 0.1f;
-        _spawnedRacetrack.transform.position = pos;
+        Vector3 racetrackPos = racetrack.transform.position;
+        racetrackPos.y += 0.1f;
+        racetrack.transform.position = racetrackPos;
+
+        if(horse == null)
+        {
+            CustomLogger.Print(this, "horse is null.");
+        }
+        else
+        {
+            Vector3 horsePos = horse.transform.position;
+            horsePos.y += 0.1f;
+            // TO DO: Consider to attach horse as a child GameObject to racetrack
+            horse.transform.position = horsePos;
+        }
     }
 
 
@@ -51,16 +69,28 @@ public class ObjectShiftEventHandler: MonoBehaviour
     /// <returns></return>
     private void LowerRacetrack()
     {
-        GameObject _spawnedRacetrack;
-        _spawnedRacetrack = _arPlaneController.SpawnedRacetrack;
+        GameObject racetrack = _arPlaneController.SpawnedRacetrack;
+        GameObject horse = _objectPlacementEventHandler.SpawnedHorse;
 
-        if(_spawnedRacetrack == null)
+        if(racetrack == null)
         {
-            CustomLogger.Print(this, "_spawnedRacetrack is null.");
+            CustomLogger.Print(this, "racetrack is null.");
             return;
         }
-        Vector3 pos = _spawnedRacetrack.transform.position;
-        pos.y -= 0.1f;
-        _spawnedRacetrack.transform.position = pos;
+        Vector3 racetrackPos = racetrack.transform.position;
+        racetrackPos.y -= 0.1f;
+        racetrack.transform.position = racetrackPos;
+
+        if(horse == null)
+        {
+            CustomLogger.Print(this, "horse is null.");
+        }
+        else
+        {
+            Vector3 horsePos = horse.transform.position;
+            horsePos.y -= 0.1f;
+            // TO DO: Consider to attach horse as a child GameObject to racetrack
+            horse.transform.position = horsePos;
+        }
     }
 }

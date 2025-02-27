@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Provides the functionality of placing objects and disabling/enabling UI elements.
+/// </summary>
 public class ObjectPlacementEventHandler: MonoBehaviour
 {
     [SerializeField] private ARPlaneController _arPlaneController;

@@ -1,5 +1,3 @@
-#nullable enable
-
 using UnityEngine;  // Defines Touch and Input
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;  // Defins TrackableType
@@ -11,17 +9,17 @@ using UnityEngine.UI;
 /// </summary>
 public class ARPlaneController: MonoBehaviour
 {
-    private ARPlaneManager? _planeManager;
-    private ARPlane? _lockedPlane = null;    // Nullable
+    private ARPlaneManager _planeManager;
+    private ARPlane _lockedPlane = null;    // Nullable
 
-    [SerializeField] private ARRaycastManager? _raycastManager;    // ARRaycastManager is attached to XROrign.
+    [SerializeField] private ARRaycastManager _raycastManager;    // ARRaycastManager is attached to XROrign.
     private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();
 
     [SerializeField] public GameObject racetrackPrefab;
 //    [SerializeField] public Transform _targetObject;  // Setting gameObject to this field is supopsed to work
 
-    private GameObject? _spawnedRacetrack;
-    public GameObject? SpawnedRacetrack
+    private GameObject _spawnedRacetrack;
+    public GameObject SpawnedRacetrack
     {
         get
         {
@@ -48,7 +46,7 @@ public class ARPlaneController: MonoBehaviour
         }
 
         // Get ARRaycastManager
-        _raycastManager ??= FindObjectOfType<ARRaycastManager>();   // ??= means assigning only when the variable is null
+        _raycastManager ??= FindObjectOfType<ARRaycastManager>();   // ??= means assigning only when the destination variable is null
                                                                     // Why ??= only for raycastManager? It's because raycastManager is a [SerializedField].
                                                                     // and it could be already assigned in the Inspector.
 

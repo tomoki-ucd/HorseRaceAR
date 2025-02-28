@@ -15,7 +15,7 @@ public class ObjectPlacementEventHandler: MonoBehaviour
     GameObject _downButton;
     GameObject _slider;
 
-    private GameObject _spawnedHorse;
+    private GameObject _spawnedHorse = null;
     public GameObject SpawnedHorse
     {
         get
@@ -56,6 +56,10 @@ public class ObjectPlacementEventHandler: MonoBehaviour
             if (_arPlaneController == null)
             {
                 CustomLogger.Print(this, "_arPlaneController is null");
+                return;
+            }
+            if (_spawnedHorse != null)
+            {
                 return;
             }
 

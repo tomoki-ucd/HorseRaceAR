@@ -91,15 +91,12 @@ public class ARPlaneController: MonoBehaviour
 
         if(touch.phase != TouchPhase.Began)
         {
-            CustomLogger.Print(this, "touch.phase == TouchPhase.Began --> false");
             return;
         }
-        CustomLogger.Print(this, $"touch.phase == TouchPhase.Began --> true ");
 
         // Perform a raycast from the screen point
         // bool Raycast(Vector2 screenPoint, List<ARRaycastHit> hitResults, TrackableType that raycast should interact with)
         // Raycast() returns true when it successfully hits one or more trackables.
-        CustomLogger.Print(this, $"touch.position : {touch.position}");
         if(_raycastManager.Raycast(touch.position, _raycastHits, TrackableType.PlaneWithinPolygon))
         {
             CustomLogger.Print(this, $"Raycast was emitted and hit {_raycastHits.Count} objects."); // Count is property.
@@ -165,9 +162,6 @@ public class ARPlaneController: MonoBehaviour
     {
         // Immediately return if the _lockedPlane already exists
         if(_lockedPlane != null) return;
-
-        CustomLogger.Print(this, $"_planeManager.trackables.count : {_planeManager.trackables.count}");
-        if(_planeManager.trackables.count == 0)
-            CustomLogger.Print(this, "No planes detected by ARPlaneManager.");
+//        CustomLogger.Print(this, $"_planeManager.trackables.count : {_planeManager.trackables.count}");
     }
 }

@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _raycastManager: {fileID: 159110367}
-  racetrackPrefab: {fileID: 3327669893061687941, guid: 3b5d9088b3edb44d0a7467628cb3966e,
+  racetrackPrefab: {fileID: 4282607024800737498, guid: 8bfc8f6eaf620422ca4564afdab5e658,
     type: 3}
 --- !u!4 &325075244
 Transform:
@@ -507,7 +507,7 @@ Transform:
   m_GameObject: {fileID: 325075242}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -951.0221, y: -530.5076, z: -5.670919}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1652,7 +1652,7 @@ Transform:
   m_GameObject: {fileID: 1209589024}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -951.0221, y: -530.5076, z: -5.670919}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2097,7 +2097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arPlaneController: {fileID: 325075243}
-  _horsePrefab: {fileID: 1652567498351406170, guid: 3b1af35ba0322411184f9edda3598ec8,
+  _horsePrefab: {fileID: 7816176222336471951, guid: d7b57ccdd9364410c980824a4637a7c7,
     type: 3}
   _fixToggle: {fileID: 373603976}
 --- !u!1 &1694990944

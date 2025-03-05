@@ -121,13 +121,13 @@ public class ARPlaneController: MonoBehaviour
 
     private void SpawnRacetrack(ARPlane plane)
     {
-        Renderer renderer = racetrackPrefab.GetComponent<Renderer>();
-        Vector3 objectSize = renderer.bounds.size;
-        float height = objectSize.y;
-        CustomLogger.Print(this, $"Cube height : {height}");
-        float heightAdjustment = height / 2;
+//        Renderer renderer = racetrackPrefab.GetComponent<Renderer>();
+//        Vector3 objectSize = renderer.bounds.size;
+//        float height = objectSize.y;
+//        CustomLogger.Print(this, $"Cube height : {height}");
+//        float heightAdjustment = height / 2;
         Vector3 position = plane.transform.position;
-        position.y = position.y + heightAdjustment;
+//        position.y = position.y + heightAdjustment;
         _spawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
         CustomLogger.Print(this, "Racetrack Spawned.");
     }

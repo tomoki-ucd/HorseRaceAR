@@ -7,7 +7,7 @@ using System;   // For Math
 /// <summary>
 /// Scale the object as per the finger pinch input
 /// </summary>
-public class ObjectScaleEventHandler : MonoBehaviour
+public class ObjectScaler: MonoBehaviour
 {
     // Brainstrom
     // Premise : 

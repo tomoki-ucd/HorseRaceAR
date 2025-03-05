@@ -63,13 +63,15 @@ public class ObjectPlacementEventHandler: MonoBehaviour
                 return;
             }
 
+            // To place the object on the racetrack, add the height of the ractrack to the position
+            // as the pivot of the racetrack is at its bottom.
             GameObject _racetrack = _arPlaneController.SpawnedRacetrack;
-            Renderer _renderer = _horsePrefab.GetComponent<Renderer>();
+            Renderer _renderer = _racetrack.GetComponent<Renderer>();
             Vector3 _objectSize = _renderer.bounds.size;
-            float _halfHeight = _objectSize.y / 2;
+            float _halfHeight = _objectSize.y;
             Vector3 _position = _racetrack.transform.position;
             _position.y += _halfHeight;
-            _spawnedHorse = Instantiate(_horsePrefab, _position, Quaternion.identity);
+            _spawnedHorse = Instantiate(_horsePrefab, _position, Quaternion.identity, _racetrack.transform);
         }
     }
 

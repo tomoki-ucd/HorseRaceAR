@@ -47,18 +47,6 @@ public class ObjectShiftEventHandler: MonoBehaviour
         Vector3 racetrackPos = racetrack.transform.position;
         racetrackPos.y += 0.1f;
         racetrack.transform.position = racetrackPos;
-
-        if(horse == null)
-        {
-            CustomLogger.Print(this, "horse is null.");
-        }
-        else
-        {
-            Vector3 horsePos = horse.transform.position;
-            horsePos.y += 0.1f;
-            // TO DO: Consider to attach horse as a child GameObject to racetrack
-            horse.transform.position = horsePos;
-        }
     }
 
 
@@ -80,17 +68,5 @@ public class ObjectShiftEventHandler: MonoBehaviour
         Vector3 racetrackPos = racetrack.transform.position;
         racetrackPos.y -= 0.1f;
         racetrack.transform.position = racetrackPos;
-
-        if(horse == null)
-        {
-            CustomLogger.Print(this, "horse is null.");
-        }
-        else
-        {
-            Vector3 horsePos = horse.transform.position;
-            horsePos.y -= 0.1f;
-            // TO DO: Consider to attach horse as a child GameObject to racetrack
-            horse.transform.position = horsePos;
-        }
     }
 }

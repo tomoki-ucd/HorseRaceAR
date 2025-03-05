@@ -42,7 +42,9 @@ public class ObjectScaler: MonoBehaviour
     void Update()
     {
         // Has the racetrack already been spawned?
-        if(_arPlaneController.SpawnedRacetrack == null)
+        GameObject spawnedRacetrack = _arPlaneController.SpawnedRacetrack;
+//        if(_arPlaneController.SpawnedRacetrack == null)
+        if(spawnedRacetrack == null)
         {
             return;
         }
@@ -76,18 +78,25 @@ public class ObjectScaler: MonoBehaviour
         CustomLogger.Print(this, $"newScaleRatio: {newScaleRatio}");
 
         // Scale object per the increased ratio from the original to the new distance.
-        Vector3 currentScale = _arPlaneController.SpawnedRacetrack.transform.localScale;
+//        Vector3 currentScale = _arPlaneController.SpawnedRacetrack.transform.localScale;
+        Vector3 currentScale = spawnedRacetrack.transform.localScale;
         if(currentScale.x < 0.5 || currentScale.x > 2.0)
         {
             return;
         }
-        Vector3 newScale = currentScale;
-        newScale.x *= newScaleRatio;
-        newScale.z *= newScaleRatio;
+//        Vector3 newScale = currentScale;
+//        newScale.x *= newScaleRatio;
+//        newScale.z *= newScaleRatio;
+        var newScale = new Vector3(currentScale.x * newScaleRatio, 1f, currentScale.z * newScaleRatio);
         if(newScale.x < 0.5 || newScale.x > 2.0)
         {
             return;
         }
         _arPlaneController.SpawnedRacetrack.transform.localScale = newScale;
+
+        // Scale horses also in Y direction.
+        GameObject horse = spawnedRacetrack.transform.GetChild(0).gameObject;
+        Vector3 horseScale = horse.transform.localScale;
+        horse.transform.localScale = new Vector3(horseScale.x, horseScale.y * newScaleRatio, horseScale.z);
     }
 }

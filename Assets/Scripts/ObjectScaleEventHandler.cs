@@ -21,7 +21,11 @@ public class ObjectScaler: MonoBehaviour
     // - The new distance 
     // - The min and max scale (Tentative: The min : 0.5, The max : 2.0)
 
-    // Static members
+    // Constants
+    private const float SCALE_MIN = 0.5f;
+    private const float SCALE_MAX = 2.0f;
+
+    // instant members
     private ARPlaneController _arPlaneController = null;
     private float _pinch_dist_orig = 0;
 
@@ -43,7 +47,6 @@ public class ObjectScaler: MonoBehaviour
     {
         // Has the racetrack already been spawned?
         GameObject spawnedRacetrack = _arPlaneController.SpawnedRacetrack;
-//        if(_arPlaneController.SpawnedRacetrack == null)
         if(spawnedRacetrack == null)
         {
             return;
@@ -78,17 +81,13 @@ public class ObjectScaler: MonoBehaviour
         CustomLogger.Print(this, $"newScaleRatio: {newScaleRatio}");
 
         // Scale object per the increased ratio from the original to the new distance.
-//        Vector3 currentScale = _arPlaneController.SpawnedRacetrack.transform.localScale;
         Vector3 currentScale = spawnedRacetrack.transform.localScale;
-        if(currentScale.x < 0.5 || currentScale.x > 2.0)
+        if(currentScale.x < SCALE_MIN || currentScale.x > SCALE_MAX)
         {
             return;
         }
-//        Vector3 newScale = currentScale;
-//        newScale.x *= newScaleRatio;
-//        newScale.z *= newScaleRatio;
         var newScale = new Vector3(currentScale.x * newScaleRatio, 1f, currentScale.z * newScaleRatio);
-        if(newScale.x < 0.5 || newScale.x > 2.0)
+        if(newScale.x < SCALE_MIN || newScale.x > SCALE_MAX)
         {
             return;
         }

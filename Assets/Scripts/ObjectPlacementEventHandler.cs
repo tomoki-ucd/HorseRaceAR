@@ -68,16 +68,16 @@ public class ObjectPlacementEventHandler: MonoBehaviour
         }
     }
 
-    ///<summary>
-    /// Spawn Horse on the racetrack.
-    ///<param name=horsePrefab> Horse Prefab </param>
-    ///<param name=racetrack> Racetrack </param>
-    ///<return> Spawned Horse </return>
-    ///</summary>
-    ///<remarks>
-    /// To place the object on the racetrack, add the height of the ractrack to the position
-    /// as the pivot of the racetrack is at its bottom.
-    ///</remarks>
+    /// <summary>
+    ///  Spawn Horse on the racetrack.
+    /// </summary>
+    /// <param name="horsePrefab"> Horse Prefab </param>
+    /// <param name="racetrack"> Racetrack </param>
+    /// <returns> Spawned Horse </returns>
+    /// <remarks>
+    ///  To place the object on the racetrack, add the height of the ractrack to the position
+    ///  as the pivot of the racetrack is at its bottom.
+    /// </remarks>
     private GameObject SpawnHorse(GameObject horsePrefab, GameObject racetrack)
     {
             // Get the heigh offset btw the racetrack and the horse.

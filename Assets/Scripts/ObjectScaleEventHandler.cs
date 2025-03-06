@@ -78,7 +78,6 @@ public class ObjectScaler: MonoBehaviour
 
         // Compute the increased ratio from the original to the new distance.
         float newScaleRatio = pinch_dist / _pinch_dist_orig;
-        CustomLogger.Print(this, $"newScaleRatio: {newScaleRatio}");
 
         // Scale object per the increased ratio from the original to the new distance.
 //        Vector3 currentScale = spawnedRacetrack.transform.localScale;

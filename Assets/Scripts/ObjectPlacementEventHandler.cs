@@ -76,10 +76,9 @@ public class ObjectPlacementEventHandler: MonoBehaviour
     {
             // To place the object on the racetrack, add the height of the ractrack to the position
             // as the pivot of the racetrack is at its bottom.
-            Renderer renderer = racetrack.GetComponent<Renderer>();
-            Vector3 objectSize = renderer.bounds.size;
-            CustomLogger.Print(this, $"_objectSize of Racetrack : {objectSize}");
-            float halfHeight = objectSize.y;
+            Mesh mesh = racetrack.GetComponent<MeshFilter>().mesh;
+            Vector3 meshSize = mesh.bounds.size;
+            float halfHeight = meshSize.y;
             Vector3 position = racetrack.transform.position;
             position.y += halfHeight;
             GameObject spawnedHorse = Instantiate(horsePrefab, position, Quaternion.identity, racetrack.transform);

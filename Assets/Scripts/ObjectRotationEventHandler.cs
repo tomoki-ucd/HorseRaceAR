@@ -55,7 +55,6 @@ public class ObjectRotationEventHandler : MonoBehaviour
         GameObject _horse = _objectPlacementEventHandler.SpawnedHorse;
         if(_horse == null)
         {
-            CustomLogger.Print(this, $"_horse is null.");
             return;
         }
         _horse.transform.rotation = Quaternion.Euler(0f, angle, 0f); 

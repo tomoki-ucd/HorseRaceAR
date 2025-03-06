@@ -58,21 +58,32 @@ public class ObjectPlacementEventHandler: MonoBehaviour
                 CustomLogger.Print(this, "_arPlaneController is null");
                 return;
             }
-            if (_spawnedHorse != null)
+            if (SpawnedHorse != null)
             {
                 return;
             }
+            SpawnedHorse = SpawnHorse(_horsePrefab, _arPlaneController.SpawnedRacetrack);
+        }
+    }
 
+    ///<summary>
+    /// Spawn Horse on the racetrack.
+    ///<param name=horsePrefab> Horse Prefab </param>
+    ///<param name=racetrack> Racetrack </param>
+    ///<return> Spawned Horse </return>
+    ///</summary>
+    private GameObject SpawnHorse(GameObject horsePrefab, GameObject racetrack)
+    {
             // To place the object on the racetrack, add the height of the ractrack to the position
             // as the pivot of the racetrack is at its bottom.
-            GameObject _racetrack = _arPlaneController.SpawnedRacetrack;
-            Renderer _renderer = _racetrack.GetComponent<Renderer>();
-            Vector3 _objectSize = _renderer.bounds.size;
-            float _halfHeight = _objectSize.y;
-            Vector3 _position = _racetrack.transform.position;
-            _position.y += _halfHeight;
-            _spawnedHorse = Instantiate(_horsePrefab, _position, Quaternion.identity, _racetrack.transform);
-        }
+            Renderer renderer = racetrack.GetComponent<Renderer>();
+            Vector3 objectSize = renderer.bounds.size;
+            CustomLogger.Print(this, $"_objectSize of Racetrack : {objectSize}");
+            float halfHeight = objectSize.y;
+            Vector3 position = racetrack.transform.position;
+            position.y += halfHeight;
+            GameObject spawnedHorse = Instantiate(horsePrefab, position, Quaternion.identity, racetrack.transform);
+            return spawnedHorse;
     }
 
     private void DisableRacetrackControlUIs(bool isOn)

@@ -15,6 +15,8 @@ public class ObjectPlacementEventHandler: MonoBehaviour
     GameObject _downButton;
     GameObject _slider;
 
+    private const float START_LINE = 0.2f;
+
     private GameObject _spawnedHorse = null;
     public GameObject SpawnedHorse
     {
@@ -72,16 +74,26 @@ public class ObjectPlacementEventHandler: MonoBehaviour
     ///<param name=racetrack> Racetrack </param>
     ///<return> Spawned Horse </return>
     ///</summary>
+    ///<remarks>
+    /// To place the object on the racetrack, add the height of the ractrack to the position
+    /// as the pivot of the racetrack is at its bottom.
+    ///</remarks>
     private GameObject SpawnHorse(GameObject horsePrefab, GameObject racetrack)
     {
-            // To place the object on the racetrack, add the height of the ractrack to the position
-            // as the pivot of the racetrack is at its bottom.
+            // Get the heigh offset btw the racetrack and the horse.
             Mesh mesh = racetrack.GetComponent<MeshFilter>().mesh;
             Vector3 meshSize = mesh.bounds.size;
-            float halfHeight = meshSize.y;
-            Vector3 position = racetrack.transform.position;
-            position.y += halfHeight;
-            GameObject spawnedHorse = Instantiate(horsePrefab, position, Quaternion.identity, racetrack.transform);
+            float meshHeight = meshSize.y;
+
+            // Calculate the start line
+            float startLineOffset = (-1) * ((meshSize.x / 2) - START_LINE);
+            
+            // Compute the spawned object's world position
+            Vector3 localPosition = new Vector3(startLineOffset, meshHeight, 0.0f);
+            Vector3 worldPosition = racetrack.transform.TransformPoint(localPosition);
+
+            GameObject spawnedHorse = Instantiate(horsePrefab, worldPosition, Quaternion.identity, racetrack.transform);
+
             return spawnedHorse;
     }
 

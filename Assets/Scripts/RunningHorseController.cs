@@ -14,6 +14,7 @@ public class RunningHorseController : MonoBehaviour
     private GameObject _racetrack;
     [SerializeField] private Toggle _toggle;
     [SerializeField] private Button _startButton;
+    private bool _isRaceStarted = false;
 
 
     // Start is called before the first frame update
@@ -23,19 +24,20 @@ public class RunningHorseController : MonoBehaviour
         if(_horseSpawner == null) 
         {
             CustomLogger.Print(this, $"_horseSpawner is null.");
-        }   
+        } 
 
         if(_arPlaneController == null)
         {
             CustomLogger.Print(this, $"_arPlaneController is null.");
         }
-        else{
-            _racetrack = _arPlaneController.SpawnedRacetrack;
-        }
 
         if(_startButton == null)
         {
             CustomLogger.Print(this, $"_startButto is null.");
+        }
+        else
+        {
+            _startButton.onClick.AddListener(StartRace);
         }
 
         // Subscribe to Start Button
@@ -51,7 +53,10 @@ public class RunningHorseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(_isRaceStarted)    
+        {
+            RunHorse();
+        }
     }
 
     /// <summary>
@@ -60,5 +65,40 @@ public class RunningHorseController : MonoBehaviour
     private void ToggleStartButtonVisibility(bool isOn)
     {
         _startButton.gameObject.SetActive(isOn);
+    }
+
+    /// <summary>
+    /// Start the race.
+    /// </summary>
+    private void StartRace()
+    {
+        if(_isRaceStarted)
+        {
+            return;
+        }
+        _racetrack = _arPlaneController.SpawnedRacetrack;
+        _horse = _horseSpawner.SpawnedHorse;
+
+        if(_racetrack == null)
+        {
+            CustomLogger.Print(this, "_racetrack is null.");
+        }
+        else if(_horse == null)
+        {
+            CustomLogger.Print(this, "_horse is null.");
+        }
+        _isRaceStarted = true;
+    }
+
+
+    /// <summary>
+    /// Ran Horses.
+    /// </summary>
+    private void RunHorse()
+    {
+        Vector3 currentPosition = _racetrack.transform.GetChild(0).transform.localPosition;
+        Vector3 newPosition = currentPosition;
+        newPosition.x += 0.01f;
+        _horse.transform.position = newPosition;
     }
 }

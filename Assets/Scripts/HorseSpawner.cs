@@ -18,6 +18,8 @@ public class HorseSpawner: MonoBehaviour
     private const float START_LINE = 0.2f;
 
     private GameObject _spawnedHorse = null;
+    public float racetrackMeshHeight;
+
     public GameObject SpawnedHorse
     {
         get
@@ -92,13 +94,14 @@ public class HorseSpawner: MonoBehaviour
             // Get the heigh offset btw the racetrack and the horse.
             Mesh mesh = racetrack.GetComponent<MeshFilter>().mesh;
             Vector3 meshSize = mesh.bounds.size;
-            float meshHeight = meshSize.y;
+            // TO DO : racetrackMeshHeight shoud be defined in ARPlaneController.
+            racetrackMeshHeight = meshSize.y;
 
             // Calculate the start line
             float startLineOffset = (-1) * ((meshSize.x / 2) - START_LINE);
             
             // Compute the spawned object's world position
-            Vector3 localPosition = new Vector3(startLineOffset, meshHeight, 0.0f);
+            Vector3 localPosition = new Vector3(startLineOffset, racetrackMeshHeight, 0.0f);
             Vector3 worldPosition = racetrack.transform.TransformPoint(localPosition);
 
             GameObject spawnedHorse = Instantiate(horsePrefab, worldPosition, Quaternion.identity, racetrack.transform);

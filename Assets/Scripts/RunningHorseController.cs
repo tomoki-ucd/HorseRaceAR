@@ -96,9 +96,9 @@ public class RunningHorseController : MonoBehaviour
     /// </summary>
     private void RunHorse()
     {
-        Vector3 currentPosition = _racetrack.transform.GetChild(0).transform.localPosition;
-        Vector3 newPosition = currentPosition;
-        newPosition.x += 0.01f;
-        _horse.transform.position = newPosition;
+        Vector3 incremental= new Vector3(0.01f, 0, 0);
+        Vector3 newLocalPosition = _horse.transform.localPosition + incremental;
+        Vector3 newWorldPosition = _racetrack.transform.TransformPoint(newLocalPosition);
+        _horse.transform.position = newWorldPosition;
     }
 }

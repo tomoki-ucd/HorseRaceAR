@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectShiftEventHandler: MonoBehaviour
+
+/// <summary>
+/// Provides the functionality of shifting objects vertically.
+/// </summary>
+public class VerticalShiftController: MonoBehaviour
 {
     [SerializeField] private Button _upButton;
     [SerializeField] private Button _downButton;
     private ARPlaneController _arPlaneController;
-    private ObjectPlacementEventHandler _objectPlacementEventHandler;
+    private HorseSpawner _horseSpawner;
 
     // Start is called before the first frame update
     void Start()
     {
         // Initialize objects
         _arPlaneController = FindObjectOfType<ARPlaneController>();
-        _objectPlacementEventHandler = FindObjectOfType<ObjectPlacementEventHandler>();
+        _horseSpawner = FindObjectOfType<HorseSpawner>();
 
         // Register methods to events
         _upButton.onClick.AddListener(RaiseRacetrack);
@@ -37,7 +41,7 @@ public class ObjectShiftEventHandler: MonoBehaviour
     private void RaiseRacetrack()
     {
         GameObject racetrack = _arPlaneController.SpawnedRacetrack;
-        GameObject horse = _objectPlacementEventHandler.SpawnedHorse;
+        GameObject horse = _horseSpawner.SpawnedHorse;
 
         if(racetrack == null)
         {
@@ -58,7 +62,7 @@ public class ObjectShiftEventHandler: MonoBehaviour
     private void LowerRacetrack()
     {
         GameObject racetrack = _arPlaneController.SpawnedRacetrack;
-        GameObject horse = _objectPlacementEventHandler.SpawnedHorse;
+        GameObject horse = _horseSpawner.SpawnedHorse;
 
         if(racetrack == null)
         {

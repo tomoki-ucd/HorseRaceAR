@@ -51,14 +51,14 @@ public class RotationController : MonoBehaviour
         // Rotate the horses in accordance with the racetrack
 //        GameObject _horse = GameObject.Find("Horse(Clone)");    // This is not recommended way to get the access.
 //        GameObject _horse = GameObject.FindWithTag("Horse");    // Use Tag to find the object.
-        ObjectPlacementEventHandler _objectPlacementEventHandler = FindObjectOfType<ObjectPlacementEventHandler>();
-        if(_objectPlacementEventHandler == null)
+        HorseSpawner _horseSpawner = FindObjectOfType<HorseSpawner>();
+        if(_horseSpawner == null)
         {
-            CustomLogger.Print(this, "_objectPlacementEventHandler is null.");
+            CustomLogger.Print(this, "_horseSpawner is null.");
             return;
         } 
 
-        GameObject _horse = _objectPlacementEventHandler.SpawnedHorse;
+        GameObject _horse = _horseSpawner.SpawnedHorse;
         if(_horse == null)
         {
             return;

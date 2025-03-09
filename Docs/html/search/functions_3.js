@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['update_0',['Update',['../class_object_scaler.html#a4ae838c5ba112b21f42e78c407e38184',1,'ObjectScaler']]]
+  ['spawnhorse_0',['SpawnHorse',['../class_horse_spawner.html#a35dced955bae575f744a614d0194cd7a',1,'HorseSpawner']]],
+  ['spawnhorsewhentoggleison_1',['SpawnHorseWhenToggleIsOn',['../class_horse_spawner.html#a30e3ef0f85ab1bb6a44ff8c1aea8106a',1,'HorseSpawner']]]
 ];

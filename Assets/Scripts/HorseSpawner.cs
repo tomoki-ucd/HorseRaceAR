@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Provides the functionality of placing objects and disabling/enabling UI elements.
+/// Provides the functionality of spawning horse objects (and disabling/enabling UI elements).
 /// </summary>
-public class ObjectPlacementEventHandler: MonoBehaviour
+public class HorseSpawner: MonoBehaviour
 {
     [SerializeField] private ARPlaneController _arPlaneController;
     [SerializeField] private GameObject _horsePrefab;
-    [SerializeField] private Toggle _fixToggle;
+    [SerializeField] private Toggle _toggle;
     GameObject _upButton;
     GameObject _downButton;
     GameObject _slider;
@@ -36,7 +36,7 @@ public class ObjectPlacementEventHandler: MonoBehaviour
         _upButton = GameObject.Find("UpButton");
         _downButton = GameObject.Find("DownButton");
         _slider = GameObject.Find("Slider");
-        _fixToggle.onValueChanged.AddListener(OnToggleValueChanged);
+        _toggle.onValueChanged.AddListener(OnToggleValueChanged);
     }
 
     // Update is called once per frame
@@ -47,13 +47,22 @@ public class ObjectPlacementEventHandler: MonoBehaviour
 
     private void OnToggleValueChanged(bool isOn)
     {
-        DisableRacetrackControlUIs(isOn);   // If DisableRacetrackControlUIs() is executed after AddHorsesOnRacetarck(), it does not disable the UIs.
-        AddHorsesOnRacetrack(isOn);
+        ControlUIVisibility(isOn);   // If ControlUIVisibility() is executed after AddHorsesOnRacetarck(), it does not disable the UIs.
+        SpawnHorseWhenToggleIsOn(isOn);
     }
 
-    private void AddHorsesOnRacetrack(bool isOn)
+    /// <summary>
+    /// Spawn horse objects when Toggle is checked.
+    /// </summary>
+    /// <param name="isOn">
+    /// Toggle state
+    /// </param>
+    /// <remarks>
+    /// Calls SpawnHorse()
+    /// </remakrs>
+    private void SpawnHorseWhenToggleIsOn(bool isOn)
     {
-        if(isOn == false)
+        if(isOn)
         {
             if (_arPlaneController == null)
             {
@@ -75,7 +84,7 @@ public class ObjectPlacementEventHandler: MonoBehaviour
     /// <param name="racetrack"> Racetrack </param>
     /// <returns> Spawned Horse </returns>
     /// <remarks>
-    ///  To place the object on the racetrack, add the height of the ractrack to the position
+    ///  To place the object on the racetrack, add the height of the ractrack to the object's position
     ///  as the pivot of the racetrack is at its bottom.
     /// </remarks>
     private GameObject SpawnHorse(GameObject horsePrefab, GameObject racetrack)
@@ -97,10 +106,19 @@ public class ObjectPlacementEventHandler: MonoBehaviour
             return spawnedHorse;
     }
 
-    private void DisableRacetrackControlUIs(bool isOn)
+    /// <summary>
+    /// Controls UI visibility in accordance with the toggle state.
+    /// </summary>
+    /// <param name="isOn">
+    /// Toggle state
+    /// </param>
+    /// <remarks>
+    /// When toggle is checked, hide UI elements.
+    /// </remarks>
+    private void ControlUIVisibility(bool isOn)
     {
-        _upButton.SetActive(isOn);
-        _downButton.SetActive(isOn);
-        _slider.SetActive(isOn);
+        _upButton.SetActive(!isOn);
+        _downButton.SetActive(!isOn);
+        _slider.SetActive(!isOn);
     }                             
 }

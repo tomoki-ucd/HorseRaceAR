@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['readsize_0',['ReadSize',['../class_read_size.html',1,'']]]
+  ['rotationcontroller_0',['RotationController',['../class_rotation_controller.html',1,'']]]
 ];

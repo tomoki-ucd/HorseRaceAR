@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['lowerracetrack_0',['LowerRacetrack',['../class_object_shift_event_handler.html#ababda8b8be9b354bff90c8ae42ac2adb',1,'ObjectShiftEventHandler']]]
+  ['computepinchdistance_0',['ComputePinchDistance',['../class_scale_controller.html#a284934142638107d10e2e47aab5b8cd2',1,'ScaleController']]],
+  ['controluivisibility_1',['ControlUIVisibility',['../class_horse_spawner.html#af8fb7f526bee97565184d62df43aa8bc',1,'HorseSpawner']]]
 ];

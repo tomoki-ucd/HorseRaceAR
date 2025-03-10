@@ -36,3 +36,8 @@ sysinfo.txt
 *.apk
 *.aab
 *.unitypackage
+
+# Unit Asset Store imported objects
+Assets/Version_2_31*
+
+

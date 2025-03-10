@@ -2402,7 +2402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arPlaneController: {fileID: 325075243}
-  _horsePrefab: {fileID: 919132149155446097, guid: 2f9a1f64c56b649b8bfa651fff9a3cf8,
+  _horsePrefab: {fileID: 2786038517413069943, guid: da1038113c6a547859d6fe77115f3517,
     type: 3}
   _toggle: {fileID: 373603976}
   racetrackMeshHeight: 0

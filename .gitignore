@@ -40,4 +40,5 @@ sysinfo.txt
 # Unit Asset Store imported objects
 Assets/Version_2_31*
 
-
+# VS code
+.vs

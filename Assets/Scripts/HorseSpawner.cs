@@ -104,7 +104,12 @@ public class HorseSpawner: MonoBehaviour
             Vector3 localPosition = new Vector3(startLineOffset, racetrackMeshHeight, 0.0f);
             Vector3 worldPosition = racetrack.transform.TransformPoint(localPosition);
 
-            GameObject spawnedHorse = Instantiate(horsePrefab, worldPosition, Quaternion.identity, racetrack.transform);
+            CustomLogger.Print(this, $"racetrack.transform.rotation : {racetrack.transform.rotation}");
+//            GameObject spawnedHorse = Instantiate(horsePrefab, worldPosition, Quaternion.identity, racetrack.transform);
+            Vector3 eulerAngles = racetrack.transform.eulerAngles;
+            eulerAngles.y += 90;
+            Quaternion newRotation = Quaternion.Euler(eulerAngles);
+            GameObject spawnedHorse = Instantiate(horsePrefab, worldPosition, newRotation, racetrack.transform);
 
             return spawnedHorse;
     }

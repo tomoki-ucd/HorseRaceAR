@@ -45,24 +45,6 @@ public class RotationController : MonoBehaviour
     /// </param>
     private void RotateObject(float angle)
     {
-//        _targetObject.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
         _arPlaneController.SpawnedRacetrack.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
-
-        // Rotate the horses in accordance with the racetrack
-//        GameObject _horse = GameObject.Find("Horse(Clone)");    // This is not recommended way to get the access.
-//        GameObject _horse = GameObject.FindWithTag("Horse");    // Use Tag to find the object.
-        HorseSpawner _horseSpawner = FindObjectOfType<HorseSpawner>();
-        if(_horseSpawner == null)
-        {
-            CustomLogger.Print(this, "_horseSpawner is null.");
-            return;
-        } 
-
-        GameObject _horse = _horseSpawner.SpawnedHorse;
-        if(_horse == null)
-        {
-            return;
-        }
-        _horse.transform.rotation = Quaternion.Euler(0f, angle, 0f); 
     }
 }

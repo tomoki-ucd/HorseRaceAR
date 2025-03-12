@@ -9,7 +9,6 @@ using UnityEngine.UI;
 // TO DO : Change the naming to RaceController 
 public class RaceController : MonoBehaviour
 {
-    public HorseSpawner _horseSpawner;
     public ARPlaneController _arPlaneController;
     [SerializeField] private Toggle _toggle;
     [SerializeField] private Button _startStopButton;

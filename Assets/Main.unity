@@ -675,7 +675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f13536a1958b4c478e04379749fd0e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _horseSpawner: {fileID: 1605113287}
   _arPlaneController: {fileID: 325075243}
   _toggle: {fileID: 373603976}
   _startStopButton: {fileID: 1128380488}
@@ -2406,7 +2405,6 @@ MonoBehaviour:
   _horsePrefab: {fileID: 2786038517413069943, guid: da1038113c6a547859d6fe77115f3517,
     type: 3}
   _toggle: {fileID: 373603976}
-  racetrackMeshHeight: 0
 --- !u!1 &1694990944
 GameObject:
   m_ObjectHideFlags: 0

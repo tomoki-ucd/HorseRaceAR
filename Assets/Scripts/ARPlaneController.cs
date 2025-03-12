@@ -119,7 +119,6 @@ public class ARPlaneController: MonoBehaviour
         Vector3 position = plane.transform.position;
 //        position.y = position.y + heightAdjustment;
         SpawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
-        CustomLogger.Print(this, "Racetrack Spawned.");
     }
 
 

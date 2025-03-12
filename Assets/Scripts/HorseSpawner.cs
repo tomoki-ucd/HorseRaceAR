@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,12 @@ using UnityEngine.UI;
 /// </summary>
 public class HorseSpawner: MonoBehaviour
 {
+    // Static fields
+    private const float START_LINE = 0.2f;
+    private const float GROUND_HEIGHT = 0.06f;
+    private const float Z_POS_ADJUST = 0.0f;
+
+    // Instant fields
     [SerializeField] private ARPlaneController _arPlaneController;
     [SerializeField] private GameObject _horsePrefab;
     [SerializeField] private Toggle _toggle;
@@ -15,23 +22,7 @@ public class HorseSpawner: MonoBehaviour
     GameObject _downButton;
     GameObject _slider;
 
-    private const float START_LINE = 0.2f;
-    private const float GROUND_HEIGHT = 0.06f;
-
-    private GameObject _spawnedHorse = null;
-    public float racetrackMeshHeight;
-
-    public GameObject SpawnedHorse
-    {
-        get
-        {
-            return _spawnedHorse;
-        }
-        private set
-        {
-            _spawnedHorse = value;
-        }
-    }
+    public GameObject[] SpawnedHorses{ get; set;}
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +42,7 @@ public class HorseSpawner: MonoBehaviour
     private void OnToggleValueChanged(bool isOn)
     {
         ControlUIVisibility(isOn);   // If ControlUIVisibility() is executed after AddHorsesOnRacetarck(), it does not disable the UIs.
-        SpawnHorseWhenToggleIsOn(isOn);
+        SpawnHorsesWhenToggleIsOn(isOn);
     }
 
     /// <summary>
@@ -59,9 +50,9 @@ public class HorseSpawner: MonoBehaviour
     /// </summary>
     /// <param name="isOn"> Toggle state </param>
     /// <remarks>
-    /// Calls SpawnHorse()
+    /// Calls SpawnHorses()
     /// </remakrs>
-    private void SpawnHorseWhenToggleIsOn(bool isOn)
+    private void SpawnHorsesWhenToggleIsOn(bool isOn)
     {
         if(isOn)
         {
@@ -70,54 +61,67 @@ public class HorseSpawner: MonoBehaviour
                 CustomLogger.Print(this, "_arPlaneController is null");
                 return;
             }
-            if (SpawnedHorse != null)
+            if (SpawnedHorses != null)
             {
                 return;
             }
-            SpawnedHorse = SpawnHorse(_horsePrefab, _arPlaneController.SpawnedRacetrack);
+            SpawnedHorses = SpawnHorses(_horsePrefab);
         }
     }
 
     /// <summary>
-    ///  Spawn Horse on the racetrack.
+    ///  Spawn horses on the racetrack.
     /// </summary>
     /// <param name="horsePrefab"> Horse Prefab </param>
-    /// <param name="racetrack"> Racetrack </param>
     /// <returns> Spawned Horse </returns>
     /// <remarks>
     ///  To place the object on the racetrack, add the height of the ractrack to the object's position
     ///  as the pivot of the racetrack is at its bottom.
     /// </remarks>
-    private GameObject SpawnHorse(GameObject horsePrefab, GameObject racetrack)
+    private GameObject[] SpawnHorses(GameObject horsePrefab)
     {
-            // Get the heigh offset btw the racetrack and the horse.
-            Mesh mesh = racetrack.GetComponent<MeshFilter>().mesh;
-            Vector3 meshSize = mesh.bounds.size;
+        Racetrack racetrack = FindObjectOfType<Racetrack>();
 
-//            // TO DO : racetrackMeshHeight shoud be defined in ARPlaneController.
-//            racetrackMeshHeight = meshSize.y;
+        // Determine the horse's rotation to direct forward alongside the race course.
+        Vector3 eulerAngles = racetrack.transform.eulerAngles;
+        eulerAngles.y -= 90;
+        Quaternion rotation = Quaternion.Euler(eulerAngles);
 
-            // Calculate the start line
-//            float startLineOffset = (-1) * ((meshSize.x / 2) - START_LINE);
-            float startLineOffset = (meshSize.x / 2) - START_LINE;
-            
-            // Compute the spawned object's world position
-            Vector3 localPosition = new Vector3(startLineOffset, GROUND_HEIGHT, 0.0f);
-            Vector3 worldPosition = racetrack.transform.TransformPoint(localPosition);
+        // Determine the horse's position
+        Mesh mesh = racetrack.GetComponent<MeshFilter>().mesh;
+        Vector3 meshSize = mesh.bounds.size;
 
-            CustomLogger.Print(this, $"racetrack.transform.rotation : {racetrack.transform.rotation}");
-            Vector3 eulerAngles = racetrack.transform.eulerAngles;
-            eulerAngles.y -= 90;
-            Quaternion newRotation = Quaternion.Euler(eulerAngles);
+        // x position (at the start line)
+        float xPosition = (meshSize.x / 2) - START_LINE;
+        
+        // y position
+        float yPosition = GROUND_HEIGHT;
 
-//            for (int i = 0; i < Horse.NUM_OF_HORSES; i++)
-//            {
-//
-//            }
-            GameObject spawnedHorse = Instantiate(horsePrefab, worldPosition, newRotation, racetrack.transform);
+        // z position (Devides the width of the racetrack by the number of horses)
+        float[] zPositions = new float[Horse.NUM_OF_HORSES];
+        for(int i = 0; i < zPositions.Length; i++)
+        {
+            zPositions[i] = meshSize.z * (-(1.0f / 2) + ((1.0f / zPositions.Length) * (i + 1) + Z_POS_ADJUST));
+            CustomLogger.Print(this, $"zPosition[{i}] : {zPositions[i]}");
+        }
 
-            return spawnedHorse;
+        GameObject[] horses = new GameObject[Horse.NUM_OF_HORSES];
+        for (int i = 0; i < horses.Length; i++)
+        {
+            // First, make a local position relative to the racetrack
+            Vector3 posRelativeToRacetrack = new Vector3(xPosition, yPosition, zPositions[i]);
+//            CustomLogger.Print(this, $"{posRelativeToRacetrack}");
+
+            // Then, convert the local position to the world position
+            Vector3 worldPosition = racetrack.transform.TransformPoint(posRelativeToRacetrack);
+
+            horses[i] = Instantiate(horsePrefab, worldPosition, rotation, racetrack.transform);
+            horses[i].name = $"HorseNo{i}";
+        }
+
+        return horses;
     }
+
 
     /// <summary>
     /// Controls UI visibility in accordance with the toggle state.

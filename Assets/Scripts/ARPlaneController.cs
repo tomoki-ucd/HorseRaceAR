@@ -19,17 +19,7 @@ public class ARPlaneController: MonoBehaviour
 //    [SerializeField] public Transform _targetObject;  // Setting gameObject to this field is supopsed to work
 
     private GameObject _spawnedRacetrack;
-    public GameObject SpawnedRacetrack
-    {
-        get
-        {
-            return _spawnedRacetrack;
-        }
-        set
-        {
-            _spawnedRacetrack = value;
-        }
-    }
+    public GameObject SpawnedRacetrack{get; set;}
 
 
     // Start is called before the first frame update
@@ -128,7 +118,7 @@ public class ARPlaneController: MonoBehaviour
 //        float heightAdjustment = height / 2;
         Vector3 position = plane.transform.position;
 //        position.y = position.y + heightAdjustment;
-        _spawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
+        SpawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
         CustomLogger.Print(this, "Racetrack Spawned.");
     }
 

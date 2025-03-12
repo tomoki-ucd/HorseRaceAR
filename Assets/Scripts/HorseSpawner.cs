@@ -16,6 +16,7 @@ public class HorseSpawner: MonoBehaviour
     GameObject _slider;
 
     private const float START_LINE = 0.2f;
+    private const float GROUND_HEIGHT = 0.07f;
 
     private GameObject _spawnedHorse = null;
     public float racetrackMeshHeight;
@@ -94,14 +95,15 @@ public class HorseSpawner: MonoBehaviour
             // Get the heigh offset btw the racetrack and the horse.
             Mesh mesh = racetrack.GetComponent<MeshFilter>().mesh;
             Vector3 meshSize = mesh.bounds.size;
-            // TO DO : racetrackMeshHeight shoud be defined in ARPlaneController.
-            racetrackMeshHeight = meshSize.y;
+
+//            // TO DO : racetrackMeshHeight shoud be defined in ARPlaneController.
+//            racetrackMeshHeight = meshSize.y;
 
             // Calculate the start line
             float startLineOffset = (-1) * ((meshSize.x / 2) - START_LINE);
             
             // Compute the spawned object's world position
-            Vector3 localPosition = new Vector3(startLineOffset, racetrackMeshHeight, 0.0f);
+            Vector3 localPosition = new Vector3(startLineOffset, GROUND_HEIGHT, 0.0f);
             Vector3 worldPosition = racetrack.transform.TransformPoint(localPosition);
 
             CustomLogger.Print(this, $"racetrack.transform.rotation : {racetrack.transform.rotation}");

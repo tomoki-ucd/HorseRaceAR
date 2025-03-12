@@ -6,14 +6,15 @@ using UnityEngine.UI;
 /// <summary>
 /// Make horses run.
 /// </summary>
+// TO DO : Change the naming to RaceController 
 public class RunningHorseController : MonoBehaviour
 {
     public HorseSpawner _horseSpawner;
     public ARPlaneController _arPlaneController;
-    private GameObject _horse;
     private GameObject _racetrack;
     [SerializeField] private Toggle _toggle;
     [SerializeField] private Button _startButton;
+    [SerializeField] Horse[] horses;
     private bool _isRaceStarted = false;
 
 
@@ -21,10 +22,13 @@ public class RunningHorseController : MonoBehaviour
     void Start()
     {
         // Set horse and racetrack objects.
-        if(_horseSpawner == null) 
-        {
-            CustomLogger.Print(this, $"_horseSpawner is null.");
-        } 
+//        if(_horseSpawner == null) 
+//        {
+//            CustomLogger.Print(this, $"_horseSpawner is null.");
+//        } 
+        // Check Horse assignment.
+
+
 
         if(_arPlaneController == null)
         {
@@ -76,16 +80,25 @@ public class RunningHorseController : MonoBehaviour
         {
             return;
         }
+
+        // Assign available Horse(s) to `horses` array
         _racetrack = _arPlaneController.SpawnedRacetrack;
-        _horse = _horseSpawner.SpawnedHorse;
+//        _horse = _horseSpawner.SpawnedHorse;
+        horses = FindObjectsOfType<Horse>();
 
         if(_racetrack == null)
         {
             CustomLogger.Print(this, "_racetrack is null.");
         }
-        else if(_horse == null)
+        else if(horses == null)
         {
             CustomLogger.Print(this, "_horse is null.");
+        }
+        // Debug log
+        int horseNum = 1;
+        foreach(Horse horse in horses)
+        {
+            CustomLogger.Print(this, $"horse {horseNum} : {horse}");
         }
         _isRaceStarted = true;
     }
@@ -96,9 +109,14 @@ public class RunningHorseController : MonoBehaviour
     /// </summary>
     private void RunHorse()
     {
-        Vector3 incremental= new Vector3(0.01f, 0, 0);
-        Vector3 newLocalPosition = _horse.transform.localPosition + incremental;
-        Vector3 newWorldPosition = _racetrack.transform.TransformPoint(newLocalPosition);
-        _horse.transform.position = newWorldPosition;
+//        Vector3 incremental= new Vector3(0.01f, 0, 0);
+//        Vector3 newLocalPosition = _horse.transform.localPosition + incremental;
+//        Vector3 newWorldPosition = _racetrack.transform.TransformPoint(newLocalPosition);
+//        _horse.transform.position = newWorldPosition;
+        for(int i = 0; i < horses.Length; i++)
+        {
+            Horse horse = horses[i];
+            horse.Run();
+        }
     }
 }

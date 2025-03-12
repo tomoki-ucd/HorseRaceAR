@@ -85,6 +85,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
@@ -103,6 +104,12 @@ Inheritance diagram for HorseSpawner:</div>
   <img src="class_horse_spawner.png" alt=""/>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a81c52a2f99b2e8ca79310a35ba758e40" id="r_a81c52a2f99b2e8ca79310a35ba758e40"><td class="memItemLeft" align="right" valign="top"><a id="a81c52a2f99b2e8ca79310a35ba758e40" name="a81c52a2f99b2e8ca79310a35ba758e40"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>racetrackMeshHeight</b></td></tr>
+<tr class="separator:a81c52a2f99b2e8ca79310a35ba758e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:aa69e17d5c5384baa31bd6644cacf60a0" id="r_aa69e17d5c5384baa31bd6644cacf60a0"><td class="memItemLeft" align="right" valign="top"><a id="aa69e17d5c5384baa31bd6644cacf60a0" name="aa69e17d5c5384baa31bd6644cacf60a0"></a>
@@ -124,7 +131,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>OnToggleValueChanged<
 <tr class="memdesc:a30e3ef0f85ab1bb6a44ff8c1aea8106a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawn horse objects when Toggle is checked.  <br /></td></tr>
 <tr class="separator:a30e3ef0f85ab1bb6a44ff8c1aea8106a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35dced955bae575f744a614d0194cd7a" id="r_a35dced955bae575f744a614d0194cd7a"><td class="memItemLeft" align="right" valign="top">GameObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35dced955bae575f744a614d0194cd7a">SpawnHorse</a> (GameObject horsePrefab, GameObject racetrack)</td></tr>
-<tr class="memdesc:a35dced955bae575f744a614d0194cd7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawn Horse on the racetrack.  <br /></td></tr>
+<tr class="memdesc:a35dced955bae575f744a614d0194cd7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spawn <a class="el" href="class_horse.html" title="Represents a horse.">Horse</a> on the racetrack.  <br /></td></tr>
 <tr class="separator:a35dced955bae575f744a614d0194cd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8fb7f526bee97565184d62df43aa8bc" id="r_af8fb7f526bee97565184d62df43aa8bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8fb7f526bee97565184d62df43aa8bc">ControlUIVisibility</a> (bool isOn)</td></tr>
 <tr class="memdesc:af8fb7f526bee97565184d62df43aa8bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls UI visibility in accordance with the toggle state.  <br /></td></tr>
@@ -159,6 +166,9 @@ Static Private Attributes</h2></td></tr>
 <tr class="memitem:af3cee76b2663930e0dde4f1c0270b2cb" id="r_af3cee76b2663930e0dde4f1c0270b2cb"><td class="memItemLeft" align="right" valign="top"><a id="af3cee76b2663930e0dde4f1c0270b2cb" name="af3cee76b2663930e0dde4f1c0270b2cb"></a>
 const float&#160;</td><td class="memItemRight" valign="bottom"><b>START_LINE</b> = 0.2f</td></tr>
 <tr class="separator:af3cee76b2663930e0dde4f1c0270b2cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05b0bd72c32bc124a79e79826b4b0bb3" id="r_a05b0bd72c32bc124a79e79826b4b0bb3"><td class="memItemLeft" align="right" valign="top"><a id="a05b0bd72c32bc124a79e79826b4b0bb3" name="a05b0bd72c32bc124a79e79826b4b0bb3"></a>
+const float&#160;</td><td class="memItemRight" valign="bottom"><b>GROUND_HEIGHT</b> = 0.07f</td></tr>
+<tr class="separator:a05b0bd72c32bc124a79e79826b4b0bb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides the functionality of spawning horse objects (and disabling/enabling UI elements). </p>
@@ -224,15 +234,15 @@ const float&#160;</td><td class="memItemRight" valign="bottom"><b>START_LINE</b>
 </table>
 </div><div class="memdoc">
 
-<p>Spawn Horse on the racetrack. </p>
+<p>Spawn <a class="el" href="class_horse.html" title="Represents a horse.">Horse</a> on the racetrack. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">horsePrefab</td><td>Horse Prefab </td></tr>
+    <tr><td class="paramname">horsePrefab</td><td><a class="el" href="class_horse.html" title="Represents a horse.">Horse</a> Prefab </td></tr>
     <tr><td class="paramname">racetrack</td><td>Racetrack </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Spawned Horse </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Spawned <a class="el" href="class_horse.html" title="Represents a horse.">Horse</a> </dd></dl>
 <p>To place the object on the racetrack, add the height of the ractrack to the object's position as the pivot of the racetrack is at its bottom. </p>
 
 </div>
@@ -267,6 +277,7 @@ const float&#160;</td><td class="memItemRight" valign="bottom"><b>START_LINE</b>
   </table>
   </dd>
 </dl>
+<p>Calls <a class="el" href="#a35dced955bae575f744a614d0194cd7a" title="Spawn Horse on the racetrack.">SpawnHorse()</a> &lt;/remakrs&gt; </p>
 
 </div>
 </div>

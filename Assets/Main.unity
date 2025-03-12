@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 547759109}
   - component: {fileID: 547759110}
   m_Layer: 0
-  m_Name: RunningHorseController
+  m_Name: RaceController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -678,7 +678,8 @@ MonoBehaviour:
   _horseSpawner: {fileID: 1605113287}
   _arPlaneController: {fileID: 325075243}
   _toggle: {fileID: 373603976}
-  _startButton: {fileID: 1128380488}
+  _startStopButton: {fileID: 1128380488}
+  horses: []
 --- !u!1 &548563009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,7 +1273,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: START !
+  m_text: Start/Stop!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1765,7 +1766,7 @@ GameObject:
   - component: {fileID: 1128380489}
   - component: {fileID: 1128380488}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: StartStopButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

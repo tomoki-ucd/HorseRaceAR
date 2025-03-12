@@ -7,41 +7,32 @@ using UnityEngine.UI;
 /// Make horses run.
 /// </summary>
 // TO DO : Change the naming to RaceController 
-public class RunningHorseController : MonoBehaviour
+public class RaceController : MonoBehaviour
 {
     public HorseSpawner _horseSpawner;
     public ARPlaneController _arPlaneController;
-    private GameObject _racetrack;
     [SerializeField] private Toggle _toggle;
-    [SerializeField] private Button _startButton;
+    [SerializeField] private Button _startStopButton;
     [SerializeField] Horse[] horses;
     private bool _isRaceStarted = false;
+    bool _isRunning = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // Set horse and racetrack objects.
-//        if(_horseSpawner == null) 
-//        {
-//            CustomLogger.Print(this, $"_horseSpawner is null.");
-//        } 
-        // Check Horse assignment.
-
-
-
         if(_arPlaneController == null)
         {
             CustomLogger.Print(this, $"_arPlaneController is null.");
         }
 
-        if(_startButton == null)
+        if(_startStopButton == null)
         {
             CustomLogger.Print(this, $"_startButto is null.");
         }
         else
         {
-            _startButton.onClick.AddListener(StartRace);
+            _startStopButton.onClick.AddListener(StartStopRace);
         }
 
         // Subscribe to Start Button
@@ -54,53 +45,65 @@ public class RunningHorseController : MonoBehaviour
         }
     }
 
+
     // Update is called once per frame
     void Update()
     {
         if(_isRaceStarted)    
         {
-            RunHorse();
+            if(_isRunning)
+            {
+                RunHorse();
+            }
         }
     }
 
+
     /// <summary>
-    /// Show StartButton when toggle is false.
+    /// Show StartButton when <paramref name="isOn"/> is false.
+    /// <param name="isOn"> Toggle state </param> 
     /// </summary>
     private void ToggleStartButtonVisibility(bool isOn)
     {
-        _startButton.gameObject.SetActive(isOn);
+        _startStopButton.gameObject.SetActive(isOn);
     }
+
 
     /// <summary>
     /// Start the race.
     /// </summary>
-    private void StartRace()
+    private void StartStopRace()
     {
-        if(_isRaceStarted)
+        // Initialize horses and set `_isRaceStarted` true.
+        // This is done only once.
+        if(!_isRaceStarted)
         {
+            horses = FindObjectsOfType<Horse>();
+            if(horses == null)
+            {
+                CustomLogger.Print(this, "_horse is null.");
+            }
+            // Debug log
+            int horseNum = 1;
+            foreach(Horse horse in horses)
+            {
+                CustomLogger.Print(this, $"horse {horseNum} : {horse}");
+            }
+            _isRaceStarted = true;
+            _isRunning = true;
+
             return;
         }
 
-        // Assign available Horse(s) to `horses` array
-        _racetrack = _arPlaneController.SpawnedRacetrack;
-//        _horse = _horseSpawner.SpawnedHorse;
-        horses = FindObjectsOfType<Horse>();
-
-        if(_racetrack == null)
+        // Stop horse when StartStop button is tapped while horses are running.
+        if(_isRunning)
         {
-            CustomLogger.Print(this, "_racetrack is null.");
+            StopHorse();
         }
-        else if(horses == null)
+        else
         {
-            CustomLogger.Print(this, "_horse is null.");
+            RunHorse();
         }
-        // Debug log
-        int horseNum = 1;
-        foreach(Horse horse in horses)
-        {
-            CustomLogger.Print(this, $"horse {horseNum} : {horse}");
-        }
-        _isRaceStarted = true;
     }
 
 
@@ -109,14 +112,21 @@ public class RunningHorseController : MonoBehaviour
     /// </summary>
     private void RunHorse()
     {
-//        Vector3 incremental= new Vector3(0.01f, 0, 0);
-//        Vector3 newLocalPosition = _horse.transform.localPosition + incremental;
-//        Vector3 newWorldPosition = _racetrack.transform.TransformPoint(newLocalPosition);
-//        _horse.transform.position = newWorldPosition;
+        _isRunning = true;
+
         for(int i = 0; i < horses.Length; i++)
         {
             Horse horse = horses[i];
             horse.Run();
         }
+    }
+
+
+    /// <summary>
+    /// Stop running horses.
+    /// </summary>
+    void StopHorse()
+    {
+        _isRunning = false;
     }
 }

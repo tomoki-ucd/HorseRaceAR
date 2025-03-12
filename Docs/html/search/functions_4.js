@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['spawnhorse_0',['SpawnHorse',['../class_horse_spawner.html#a35dced955bae575f744a614d0194cd7a',1,'HorseSpawner']]]
+  ['togglestartbuttonvisibility_0',['ToggleStartButtonVisibility',['../class_race_controller.html#a84b1221fb5fc0ce635534d3b71f5b338',1,'RaceController']]]
 ];

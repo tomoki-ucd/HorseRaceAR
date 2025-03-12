@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['verticalshiftcontroller_0',['VerticalShiftController',['../class_vertical_shift_controller.html',1,'']]]
+  ['togglestartbuttonvisibility_0',['ToggleStartButtonVisibility',['../class_race_controller.html#a84b1221fb5fc0ce635534d3b71f5b338',1,'RaceController']]]
 ];

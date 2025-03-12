@@ -16,7 +16,7 @@ public class HorseSpawner: MonoBehaviour
     GameObject _slider;
 
     private const float START_LINE = 0.2f;
-    private const float GROUND_HEIGHT = 0.07f;
+    private const float GROUND_HEIGHT = 0.06f;
 
     private GameObject _spawnedHorse = null;
     public float racetrackMeshHeight;
@@ -57,9 +57,7 @@ public class HorseSpawner: MonoBehaviour
     /// <summary>
     /// Spawn horse objects when Toggle is checked.
     /// </summary>
-    /// <param name="isOn">
-    /// Toggle state
-    /// </param>
+    /// <param name="isOn"> Toggle state </param>
     /// <remarks>
     /// Calls SpawnHorse()
     /// </remakrs>
@@ -100,17 +98,22 @@ public class HorseSpawner: MonoBehaviour
 //            racetrackMeshHeight = meshSize.y;
 
             // Calculate the start line
-            float startLineOffset = (-1) * ((meshSize.x / 2) - START_LINE);
+//            float startLineOffset = (-1) * ((meshSize.x / 2) - START_LINE);
+            float startLineOffset = (meshSize.x / 2) - START_LINE;
             
             // Compute the spawned object's world position
             Vector3 localPosition = new Vector3(startLineOffset, GROUND_HEIGHT, 0.0f);
             Vector3 worldPosition = racetrack.transform.TransformPoint(localPosition);
 
             CustomLogger.Print(this, $"racetrack.transform.rotation : {racetrack.transform.rotation}");
-//            GameObject spawnedHorse = Instantiate(horsePrefab, worldPosition, Quaternion.identity, racetrack.transform);
             Vector3 eulerAngles = racetrack.transform.eulerAngles;
-            eulerAngles.y += 90;
+            eulerAngles.y -= 90;
             Quaternion newRotation = Quaternion.Euler(eulerAngles);
+
+//            for (int i = 0; i < Horse.NUM_OF_HORSES; i++)
+//            {
+//
+//            }
             GameObject spawnedHorse = Instantiate(horsePrefab, worldPosition, newRotation, racetrack.transform);
 
             return spawnedHorse;
@@ -119,9 +122,7 @@ public class HorseSpawner: MonoBehaviour
     /// <summary>
     /// Controls UI visibility in accordance with the toggle state.
     /// </summary>
-    /// <param name="isOn">
-    /// Toggle state
-    /// </param>
+    /// <param name="isOn"> Toggle state </param>
     /// <remarks>
     /// When toggle is checked, hide UI elements.
     /// </remarks>

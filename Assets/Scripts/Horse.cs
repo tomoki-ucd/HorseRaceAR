@@ -10,7 +10,8 @@ public class Horse : MonoBehaviour
 {
     // Static fields
     // TO DO : Consider to add `Horse[] horses` property
-    readonly static Vector3 incremental = new Vector3(0.01f, 0, 0);
+    readonly static Vector3 _advanceAmount = new Vector3(-0.01f, 0, 0);
+    public const int NUM_OF_HORSES = 4;
 
     // Instance fields
     float _distance = 0; // The distance that the horse has run.
@@ -36,9 +37,9 @@ public class Horse : MonoBehaviour
     public void Run()
     {
         // TO DO : If it finish the goal, it slows down.
-        Vector3 newLocalPosition = transform.localPosition + incremental;
+        Vector3 newLocalPosition = transform.localPosition + _advanceAmount;
         Vector3 newWorldPosition = _arPlaneController.SpawnedRacetrack.transform.TransformPoint(newLocalPosition);
         transform.position = newWorldPosition;
-        _distance += incremental.x;
+        _distance += _advanceAmount.x;
     }
 }

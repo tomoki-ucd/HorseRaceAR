@@ -102,7 +102,6 @@ public class HorseSpawner: MonoBehaviour
         for(int i = 0; i < zPositions.Length; i++)
         {
             zPositions[i] = meshSize.z * (-(1.0f / 2) + ((1.0f / zPositions.Length) * (i + 1) + Z_POS_ADJUST));
-            CustomLogger.Print(this, $"zPosition[{i}] : {zPositions[i]}");
         }
 
         GameObject[] horses = new GameObject[Horse.NUM_OF_HORSES];

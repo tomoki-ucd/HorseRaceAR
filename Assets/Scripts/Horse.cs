@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 /// <summary>
@@ -15,7 +14,7 @@ public class Horse : MonoBehaviour
 
     // Instance fields
     float _distance = 0; // The distance that the horse has run.
-    public HorseSpeed speed = new HorseSpeed(1f, 1f, 1f);   // The speed at each stage of the race.
+    public HorseSpeed speed = new HorseSpeed();   // The speed at each stage of the race.
     // TO DO : Repace _arPlaneController with Racetrack object after Racetrack class is added.
     ARPlaneController _arPlaneController;
 

@@ -1,19 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
+using UnityEditor.Rendering;
 
-public struct HorseSpeed
+public class HorseSpeed
 {
-    public float EarlyStageSpeed{get; set;}
-    public float MidStageSpeed{get; set;}
-    public float FinalStageSpeed{get; set;}
+    // Static fields
+    const int MIN_SPEED = 8;
+    const int MAX_SPEED = 12;
+
+    // Instant fields
+    public float EarlyStageSpeed{get;}
+    public float MidStageSpeed{get;}
+    public float FinalStageSpeed{get;}
 
     // Constructor
-    public HorseSpeed(float earlyStageSpeed, float midStageSpeed, float finalStageSpeed)
+    public HorseSpeed()
     {
-        EarlyStageSpeed = earlyStageSpeed;
-        MidStageSpeed = midStageSpeed;
-        FinalStageSpeed = finalStageSpeed;
+        float[] speeds = {EarlyStageSpeed, MidStageSpeed, FinalStageSpeed};
+
+        for(int i = 0; i < speeds.Length; i++) 
+        {
+            speeds[i] = SetSpeedRandomly();
+        }
+    }
+
+    /// <summary>
+    /// Set speed.
+    /// </summary>
+    /// <remarks>
+    /// Randomly set speed within the MIN-MAX range at each stage (early,mid,final).
+    /// </remarks>
+    float SetSpeedRandomly()
+    {
+        int min = MIN_SPEED;
+        int max = MAX_SPEED;
+        Random rand = new Random();
+        float speed = rand.Next(min, max)/10.0f;
+        CustomLogger.Print(this, $"speed : {speed}");
+        return speed;
     }
 
 }

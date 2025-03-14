@@ -10,14 +10,15 @@ public class Horse : MonoBehaviour
     // TO DO : Consider to add `Horse[] horses` property
     public const int NUM_OF_HORSES = 3;
     const int NUM_OF_SPEED_STAGE = 3;
-    const float MIN_SPEED = 0.8f;
-    const float MAX_SPEED = 1.2f;
+    const float MIN_SPEED = 0.5f;
+    const float MAX_SPEED = 1.5f;
     readonly static Vector3 _baseAmount = new Vector3(-0.01f, 0, 0);
 
     // Instance fields
     // TO DO : Repace _arPlaneController with Racetrack object after Racetrack class is added.
     ARPlaneController _arPlaneController;
     float[] _speeds = new float[NUM_OF_SPEED_STAGE];
+    float _currentSpeed = 0;
     float _runDistance = 0; // The distance that the horse has run.
 
 
@@ -52,24 +53,28 @@ public class Horse : MonoBehaviour
         Vector3 newWorldPosition;
         Vector3 advancedAmount;
 
-        if(_runDistance < Racetrack.distance * (1/3))   // 1st one-third of the race.
+        if(_runDistance < Racetrack.distance * (1.0f/3.0f))   // 1st one-third of the race.
         {
-            advancedAmount = _baseAmount * _speeds[0];
+//            CustomLogger.Print(this, $"_runDistance < Racetrack.distance * (1/3) : {Racetrack.distance * (1.0f/3.0f)}");
+            _currentSpeed = _speeds[0];
         }
-        else if(_runDistance < Racetrack.distance * (2/3))  // 2nd one-thrid of the race.
+        else if(_runDistance < Racetrack.distance * (2.0f/3.0f))  // 2nd one-thrid of the race.
         {
-            advancedAmount = _baseAmount * _speeds[1];
+//            CustomLogger.Print(this, $"_runDistance < Racetrack.distance * (2/3) : {Racetrack.distance * (2.0f/3.0f)}");
+            _currentSpeed = _speeds[1];
         }
-        else if(_runDistance < Racetrack.distance * (3/3))  // 3rd one-third of the race.
+        else if(_runDistance < Racetrack.distance * (3.0f/3.0f))  // 3rd one-third of the race.
         {
-            advancedAmount = _baseAmount * _speeds[2];
+//            CustomLogger.Print(this, $"_runDistance < Racetrack.distance * (3/3) : {Racetrack.distance * (3/3)}");
+            _currentSpeed = _speeds[2];
         }
         else
         {
-            advancedAmount = new Vector3(0, 0, 0);
+            _currentSpeed = 0;
         }
 
-            newLocalPosition += advancedAmount;
+        advancedAmount = _baseAmount * _currentSpeed;
+        newLocalPosition += advancedAmount;
 
         // TO DO : If it finish the goal, it slows down.
         newWorldPosition = _arPlaneController.SpawnedRacetrack.transform.TransformPoint(newLocalPosition);
@@ -94,7 +99,7 @@ public class Horse : MonoBehaviour
     {
         while (true)
         {
-            CustomLogger.Print(this, $"name, _runDistance : {this.name}, {_runDistance}");
+            CustomLogger.Print(this, $"{this.name}, _runDistance : {_runDistance}, speed at {_currentSpeed}");
             yield return new WaitForSeconds(1);
         }
     }

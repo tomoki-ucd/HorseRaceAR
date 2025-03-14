@@ -82,12 +82,6 @@ public class RaceController : MonoBehaviour
             {
                 CustomLogger.Print(this, "_horse is null.");
             }
-            // Debug log
-            int horseNum = 1;
-            foreach(Horse horse in horses)
-            {
-                CustomLogger.Print(this, $"horse {horseNum} : {horse}");
-            }
             _isRaceStarted = true;
             _isRunning = true;
 

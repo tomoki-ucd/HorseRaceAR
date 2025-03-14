@@ -7,18 +7,16 @@ using UnityEngine.UI;
 /// <summary>
 /// Provides the functionality of detecting and selecting ARplanes.
 /// </summary>
-public class ARPlaneController: MonoBehaviour
+public class RacetrackSpawner: MonoBehaviour
 {
+    // Instant fields
+    public GameObject racetrackPrefab;
     private ARPlaneManager _planeManager;
     private ARPlane _lockedPlane = null;    // Nullable
-
-    [SerializeField] private ARRaycastManager _raycastManager;    // ARRaycastManager is attached to XROrign.
     private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();
+    [SerializeField] private ARRaycastManager _raycastManager;    // ARRaycastManager is attached to XROrign.
+    [SerializeField] private Button _setHorseButton;
 
-    [SerializeField] public GameObject racetrackPrefab;
-//    [SerializeField] public Transform _targetObject;  // Setting gameObject to this field is supopsed to work
-
-    private GameObject _spawnedRacetrack;
     public GameObject SpawnedRacetrack{get; set;}
 
 
@@ -37,30 +35,12 @@ public class ARPlaneController: MonoBehaviour
 
         // Get ARRaycastManager
         _raycastManager ??= FindObjectOfType<ARRaycastManager>();   // ??= means assigning only when the destination variable is null
-                                                                    // Why ??= only for raycastManager? It's because raycastManager is a [SerializedField].
-                                                                    // and it could be already assigned in the Inspector.
 
         // Check ARRaycastManager
         if(_raycastManager != null)
             CustomLogger.Print(this, "ARRaycastManager successfully asssigned.") ;
         else
             CustomLogger.Print(this, "ARCastManager is still null.");
-
-
-        // Subscribe to plane detection event
-        // My Note: "+=" can be used for C# standard event system, not UnityEvent type.
-        _planeManager.planesChanged += OnPlanesChanged;
-
-    }
-
-
-    // The default of OnDestroy() method is empty.
-    void OnDestroy()
-    {
-        if (_planeManager != null)
-        {
-            _planeManager.planesChanged -= OnPlanesChanged;
-        }
     }
 
 
@@ -100,6 +80,8 @@ public class ARPlaneController: MonoBehaviour
             {
                 CustomLogger.Print(this, $"Hit plane detected: {hitPlane.trackableId}");
                 KeepOnlyThisPlane(hitPlane);
+                SpawnRacetrack(hitPlane);
+                DisplaySetHorseButton();
             }
             else
             {
@@ -111,13 +93,7 @@ public class ARPlaneController: MonoBehaviour
 
     private void SpawnRacetrack(ARPlane plane)
     {
-//        Renderer renderer = racetrackPrefab.GetComponent<Renderer>();
-//        Vector3 objectSize = renderer.bounds.size;
-//        float height = objectSize.y;
-//        CustomLogger.Print(this, $"Cube height : {height}");
-//        float heightAdjustment = height / 2;
         Vector3 position = plane.transform.position;
-//        position.y = position.y + heightAdjustment;
         SpawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
     }
 
@@ -142,15 +118,11 @@ public class ARPlaneController: MonoBehaviour
 
         _planeManager.enabled = false;
 
-        SpawnRacetrack(planeToKeep);
+//        SpawnRacetrack(planeToKeep);
     }
 
-
-    // The method to stop detecting new planes
-    void OnPlanesChanged(ARPlanesChangedEventArgs args)
+    private void DisplaySetHorseButton()
     {
-        // Immediately return if the _lockedPlane already exists
-        if(_lockedPlane != null) return;
-//        CustomLogger.Print(this, $"_planeManager.trackables.count : {_planeManager.trackables.count}");
+        _setHorseButton.gameObject.SetActive(true);
     }
 }

@@ -15,7 +15,7 @@ public class ScaleController: MonoBehaviour
     private const float SCALE_MAX = 2.0f;
 
     // instant members
-    private ARPlaneController _arPlaneController = null;
+    private RacetrackSpawner _racetrackSpawner = null;
     private float? _initialPinchDistance;
 
 
@@ -29,7 +29,7 @@ public class ScaleController: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _arPlaneController = FindObjectOfType<ARPlaneController>();
+        _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
     }
 
 
@@ -37,7 +37,7 @@ public class ScaleController: MonoBehaviour
     void Update()
     {
         // Has the racetrack already been spawned?
-        GameObject spawnedRacetrack = _arPlaneController.SpawnedRacetrack;
+        GameObject spawnedRacetrack = _racetrackSpawner.SpawnedRacetrack;
         if(spawnedRacetrack == null)
         {
             return;

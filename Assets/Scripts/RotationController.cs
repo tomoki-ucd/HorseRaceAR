@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +7,7 @@ using UnityEngine.UI;
 public class RotationController : MonoBehaviour
 {
     [SerializeField] private Slider _YAxisRotationSlider;
-    [SerializeField] private ARPlaneController _arPlaneController;
+    [SerializeField] private RacetrackSpawner _racetrackSpawner;
 
     // Start is called before the first frame update
     void Start()
@@ -40,11 +38,9 @@ public class RotationController : MonoBehaviour
     /// Rotate the racetrackPrefab according to the input from the slider.
     /// The slider ranges from -180 to 180. The default value is 0.
     /// </summary>
-    /// <param name="angle">
-    /// Degree to rotate. It ranges from -180d to 180d.
-    /// </param>
+    /// <param name="angle"> Degree to rotate. It ranges from -180d to 180d. </param>
     private void RotateObject(float angle)
     {
-        _arPlaneController.SpawnedRacetrack.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
+        _racetrackSpawner.SpawnedRacetrack.transform.rotation = Quaternion.Euler(0f, angle, 0f);   // Euler(x, y, z)
     }
 }

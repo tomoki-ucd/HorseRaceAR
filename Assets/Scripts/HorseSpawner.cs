@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +7,9 @@ using UnityEngine.UI;
 public class HorseSpawner: MonoBehaviour
 {
     // Instant fields
-    [SerializeField] private ARPlaneController _arPlaneController;
     [SerializeField] private GameObject _horsePrefab;
-    [SerializeField] private Toggle _toggle;
+//    [SerializeField] private Toggle _setHorseButton;
+    [SerializeField] private Button _setHorseButton;
     GameObject _upButton;
     GameObject _downButton;
     GameObject _slider;
@@ -25,7 +22,7 @@ public class HorseSpawner: MonoBehaviour
         _upButton = GameObject.Find("UpButton");
         _downButton = GameObject.Find("DownButton");
         _slider = GameObject.Find("Slider");
-        _toggle.onValueChanged.AddListener(OnToggleValueChanged);
+        _setHorseButton.onClick.AddListener(OnSetHorseButtonClicked);
     }
 
     // Update is called once per frame
@@ -34,10 +31,9 @@ public class HorseSpawner: MonoBehaviour
         
     }
 
-    private void OnToggleValueChanged(bool isOn)
+    private void OnSetHorseButtonClicked()
     {
-        ControlUIVisibility(isOn);   // If ControlUIVisibility() is executed after AddHorsesOnRacetarck(), it does not disable the UIs.
-        SpawnHorsesWhenToggleIsOn(isOn);
+        SpawnHorsesOnClicked();
     }
 
     /// <summary>
@@ -47,21 +43,19 @@ public class HorseSpawner: MonoBehaviour
     /// <remarks>
     /// Calls SpawnHorses()
     /// </remakrs>
-    private void SpawnHorsesWhenToggleIsOn(bool isOn)
+    private void SpawnHorsesOnClicked()
     {
-        if(isOn)
-        {
-            if (_arPlaneController == null)
-            {
-                CustomLogger.Print(this, "_arPlaneController is null");
-                return;
-            }
             if (SpawnedHorses != null)
             {
                 return;
             }
+            Racetrack racetrack = FindObjectOfType<Racetrack>();
+            if (racetrack == null)
+            {
+                CustomLogger.Print(this, $"racetrack is null!!");
+                return;
+            }
             SpawnedHorses = SpawnHorses(_horsePrefab);
-        }
     }
 
     /// <summary>
@@ -77,11 +71,11 @@ public class HorseSpawner: MonoBehaviour
     private GameObject[] SpawnHorses(GameObject horsePrefab)
     {
         Racetrack racetrack = FindObjectOfType<Racetrack>();
-        if(racetrack == null)
+        if (racetrack == null)
         {
             CustomLogger.Print(this, $"racetrack is null!!");
+            return null;
         }
-
         // Determine the horse's rotation to rotate them toward the goal.
         Vector3 eulerAngles = racetrack.transform.eulerAngles;
         eulerAngles.y -= 90;
@@ -108,7 +102,6 @@ public class HorseSpawner: MonoBehaviour
         {
             // First, make a local position relative to the racetrack
             Vector3 posRelativeToRacetrack = new Vector3(xPosition, yPosition, zPosition[i]);
-//            CustomLogger.Print(this, $"{posRelativeToRacetrack}");
 
             // Then, convert the local position to the world position
             Vector3 worldPosition = racetrack.transform.TransformPoint(posRelativeToRacetrack);
@@ -119,19 +112,4 @@ public class HorseSpawner: MonoBehaviour
 
         return horses;
     }
-
-
-    /// <summary>
-    /// Controls UI visibility in accordance with the toggle state.
-    /// </summary>
-    /// <param name="isOn"> Toggle state </param>
-    /// <remarks>
-    /// When toggle is checked, hide UI elements.
-    /// </remarks>
-    private void ControlUIVisibility(bool isOn)
-    {
-        _upButton.SetActive(!isOn);
-        _downButton.SetActive(!isOn);
-        _slider.SetActive(!isOn);
-    }                             
 }

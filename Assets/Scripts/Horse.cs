@@ -15,8 +15,8 @@ public class Horse : MonoBehaviour
     readonly static Vector3 _baseAmount = new Vector3(-0.01f, 0, 0);
 
     // Instance fields
-    // TO DO : Repace _arPlaneController with Racetrack object after Racetrack class is added.
-    ARPlaneController _arPlaneController;
+    // TO DO : Repace _racetrackSpawner with Racetrack object after Racetrack class is added.
+    RacetrackSpawner _racetrackSpawner;
     float[] _speeds = new float[NUM_OF_SPEED_STAGE];
     float _currentSpeed = 0;
     float _runDistance = 0; // The.COURSE_DISTANCE that the horse has run.
@@ -34,7 +34,7 @@ public class Horse : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _arPlaneController = FindObjectOfType<ARPlaneController>();
+        _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
         StartCoroutine(LogEverySecondCoroutine());  // Debug
     }
 
@@ -74,7 +74,7 @@ public class Horse : MonoBehaviour
         newLocalPosition += advancedAmount;
 
         // TO DO : If it finish the goal, it slows down.
-        newWorldPosition = _arPlaneController.SpawnedRacetrack.transform.TransformPoint(newLocalPosition);
+        newWorldPosition = _racetrackSpawner.SpawnedRacetrack.transform.TransformPoint(newLocalPosition);
         transform.position = newWorldPosition;
         _runDistance += System.Math.Abs(advancedAmount.x);
     }

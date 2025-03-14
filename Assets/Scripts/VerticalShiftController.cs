@@ -11,13 +11,13 @@ public class VerticalShiftController: MonoBehaviour
 {
     [SerializeField] private Button _upButton;
     [SerializeField] private Button _downButton;
-    private ARPlaneController _arPlaneController;
+    private RacetrackSpawner _racetrackSpawner;
 
     // Start is called before the first frame update
     void Start()
     {
         // Initialize objects
-        _arPlaneController = FindObjectOfType<ARPlaneController>();
+        _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
 
         // Register methods to events
         _upButton.onClick.AddListener(RaiseRacetrack);
@@ -38,7 +38,7 @@ public class VerticalShiftController: MonoBehaviour
     /// <returns></return>
     private void RaiseRacetrack()
     {
-        GameObject racetrack = _arPlaneController.SpawnedRacetrack;
+        GameObject racetrack = _racetrackSpawner.SpawnedRacetrack;
 
         if(racetrack == null)
         {
@@ -58,7 +58,7 @@ public class VerticalShiftController: MonoBehaviour
     /// <returns></return>
     private void LowerRacetrack()
     {
-        GameObject racetrack = _arPlaneController.SpawnedRacetrack;
+        GameObject racetrack = _racetrackSpawner.SpawnedRacetrack;
 
         if(racetrack == null)
         {

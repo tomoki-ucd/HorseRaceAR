@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +7,9 @@ using UnityEngine.UI;
 // TO DO : Change the naming to RaceController 
 public class RaceController : MonoBehaviour
 {
-    public ARPlaneController _arPlaneController;
-    [SerializeField] private Toggle _toggle;
+    public RacetrackSpawner _racetrackSpawner;
+//    [SerializeField] private Toggle _setHorseButton;
+    [SerializeField] private Button _setHorseButton;
     [SerializeField] private Button _startStopButton;
     [SerializeField] Horse[] horses;
     private bool _isRaceStarted = false;
@@ -20,9 +19,9 @@ public class RaceController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(_arPlaneController == null)
+        if(_racetrackSpawner == null)
         {
-            CustomLogger.Print(this, $"_arPlaneController is null.");
+            CustomLogger.Print(this, $"_racetrackSpawner is null.");
         }
 
         if(_startStopButton == null)
@@ -35,12 +34,12 @@ public class RaceController : MonoBehaviour
         }
 
         // Subscribe to Start Button
-        if(_toggle == null)
+        if(_setHorseButton == null)
         {
-            CustomLogger.Print(this, $"_toggle is null.");
+            CustomLogger.Print(this, $"_setHorseButton is null.");
         }
         else{
-            _toggle.onValueChanged.AddListener(ToggleStartButtonVisibility);
+            _setHorseButton.onClick.AddListener(DisplayStartButton);
         }
     }
 
@@ -62,9 +61,9 @@ public class RaceController : MonoBehaviour
     /// Show StartButton when <paramref name="isOn"/> is false.
     /// <param name="isOn"> Toggle state </param> 
     /// </summary>
-    private void ToggleStartButtonVisibility(bool isOn)
+    private void DisplayStartButton()
     {
-        _startStopButton.gameObject.SetActive(isOn);
+        _startStopButton.gameObject.SetActive(true);
     }
 
 

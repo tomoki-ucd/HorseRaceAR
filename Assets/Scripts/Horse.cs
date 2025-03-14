@@ -19,7 +19,7 @@ public class Horse : MonoBehaviour
     ARPlaneController _arPlaneController;
     float[] _speeds = new float[NUM_OF_SPEED_STAGE];
     float _currentSpeed = 0;
-    float _runDistance = 0; // The distance that the horse has run.
+    float _runDistance = 0; // The.COURSE_DISTANCE that the horse has run.
 
 
     void Awake()
@@ -53,19 +53,16 @@ public class Horse : MonoBehaviour
         Vector3 newWorldPosition;
         Vector3 advancedAmount;
 
-        if(_runDistance < Racetrack.distance * (1.0f/3.0f))   // 1st one-third of the race.
+        if(_runDistance < Racetrack.COURSE_DISTANCE * (1.0f/3.0f))   // 1st one-third of the race.
         {
-//            CustomLogger.Print(this, $"_runDistance < Racetrack.distance * (1/3) : {Racetrack.distance * (1.0f/3.0f)}");
             _currentSpeed = _speeds[0];
         }
-        else if(_runDistance < Racetrack.distance * (2.0f/3.0f))  // 2nd one-thrid of the race.
+        else if(_runDistance < Racetrack.COURSE_DISTANCE * (2.0f/3.0f))  // 2nd one-thrid of the race.
         {
-//            CustomLogger.Print(this, $"_runDistance < Racetrack.distance * (2/3) : {Racetrack.distance * (2.0f/3.0f)}");
             _currentSpeed = _speeds[1];
         }
-        else if(_runDistance < Racetrack.distance * (3.0f/3.0f))  // 3rd one-third of the race.
+        else if(_runDistance < Racetrack.COURSE_DISTANCE * (3.0f/3.0f))  // 3rd one-third of the race.
         {
-//            CustomLogger.Print(this, $"_runDistance < Racetrack.distance * (3/3) : {Racetrack.distance * (3/3)}");
             _currentSpeed = _speeds[2];
         }
         else

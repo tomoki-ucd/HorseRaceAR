@@ -42,3 +42,6 @@ Assets/Version_2_31*
 
 # VS code
 .vs
+
+# Doxygen Documents
+Docs/

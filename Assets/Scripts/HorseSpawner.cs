@@ -9,11 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class HorseSpawner: MonoBehaviour
 {
-    // Static fields
-    private const float START_LINE = 0.2f;
-    private const float GROUND_HEIGHT = 0.06f;
-    private const float Z_POS_ADJUST = 0.0f;
-
     // Instant fields
     [SerializeField] private ARPlaneController _arPlaneController;
     [SerializeField] private GameObject _horsePrefab;
@@ -75,40 +70,44 @@ public class HorseSpawner: MonoBehaviour
     /// <param name="horsePrefab"> Horse Prefab </param>
     /// <returns> Spawned Horse </returns>
     /// <remarks>
-    ///  To place the object on the racetrack, add the height of the ractrack to the object's position
-    ///  as the pivot of the racetrack is at its bottom.
+    ///  To place horses on the racetrack correctly, 
+    ///  it needs to add the height of the racetrack `GROUND_HEIGHT`
+    ///  to the horses as the pivot of the racetrack is at its bottom.
     /// </remarks>
     private GameObject[] SpawnHorses(GameObject horsePrefab)
     {
         Racetrack racetrack = FindObjectOfType<Racetrack>();
+        if(racetrack == null)
+        {
+            CustomLogger.Print(this, $"racetrack is null!!");
+        }
 
-        // Determine the horse's rotation to direct forward alongside the race course.
+        // Determine the horse's rotation to rotate them toward the goal.
         Vector3 eulerAngles = racetrack.transform.eulerAngles;
         eulerAngles.y -= 90;
         Quaternion rotation = Quaternion.Euler(eulerAngles);
 
-        // Determine the horse's position
-        Mesh mesh = racetrack.GetComponent<MeshFilter>().mesh;
-        Vector3 meshSize = mesh.bounds.size;
+        Vector3 meshSize = racetrack.MeshSize;
 
         // x position (at the start line)
-        float xPosition = (meshSize.x / 2) - START_LINE;
+        float xPosition = (meshSize.x / 2) - Racetrack.START_LINE;
         
         // y position
-        float yPosition = GROUND_HEIGHT;
+        float yPosition = Racetrack.GROUND_HEIGHT;
 
-        // z position (Devides the width of the racetrack by the number of horses)
-        float[] zPositions = new float[Horse.NUM_OF_HORSES];
-        for(int i = 0; i < zPositions.Length; i++)
+        // z position (z position exits for each horse)
+        float[] zPosition = new float[Horse.NUM_OF_HORSES];
+        float widthPerHorse = racetrack.Width / Horse.NUM_OF_HORSES;
+        for(int i = 0; i < zPosition.Length; i++)
         {
-            zPositions[i] = meshSize.z * (-(1.0f / 2) + ((1.0f / zPositions.Length) * (i + 1) + Z_POS_ADJUST));
+            zPosition[i] = racetrack.ZOffset + (widthPerHorse * (i + 1));
         }
 
         GameObject[] horses = new GameObject[Horse.NUM_OF_HORSES];
         for (int i = 0; i < horses.Length; i++)
         {
             // First, make a local position relative to the racetrack
-            Vector3 posRelativeToRacetrack = new Vector3(xPosition, yPosition, zPositions[i]);
+            Vector3 posRelativeToRacetrack = new Vector3(xPosition, yPosition, zPosition[i]);
 //            CustomLogger.Print(this, $"{posRelativeToRacetrack}");
 
             // Then, convert the local position to the world position

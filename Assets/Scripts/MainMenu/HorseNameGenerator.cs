@@ -4,16 +4,18 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class HorseNameGenerator : MonoBehaviour
 {
     // Instant fields
     private readonly HttpClient _httpClient = new HttpClient();
-    private const string XAI_API_KEY = "xai-eW1UuspgMn5J3V1C8oxHvSHGNKxo6vgfLtwEANHFrVqiRUblIdznOnC5KEWDtaNphLBSGgQdzFjsORGV";
+    // TO DO : Encrypt the API key.
+    private const string XAI_API_KEY = "";
     private const string BASE_URL = "https://api.x.ai/v1";  // grok url
     [SerializeField] private Button _startToPlayButton;
-    private bool isRunning = false;
+//    private bool isRunning = false;
 
 
 
@@ -26,32 +28,53 @@ public class HorseNameGenerator : MonoBehaviour
         {
             // TO DO: Consider using UnitTask library
             CustomLogger.Print(this, "Add RequestHorseName()");
-            _startToPlayButton.onClick.AddListener(async () => 
-            {
-                if(!isRunning)
-                {
-                    isRunning = true;
-                    await RequestHorseNames();
-                    isRunning = false;
-                }
-            });
+//            _startToPlayButton.onClick.AddListener(StartSendRequest);
+            _startToPlayButton.onClick.AddListener(() => {StartCoroutine(SendRequest());});
+
+//            _startToPlayButton.onClick.AddListener(async () => 
+//            {
+//                if(!isRunning)
+//                {
+//                    isRunning = true;
+//                    StartCoroutine(SendRequest());
+//                    isRunning = false;
+//                }
+//            });
         }
     }
 
-    // Update is called once per frame
-    void Update()
+//    public async Task<string> RequestHorseNames()
+//    {
+//        HttpResponseMessage response = await _httpClient.GetAsync(url);
+//        response.EnsureSuccessStatusCode();
+//        string responseString = await response.Content.ReadAsStringAsync();
+//        CustomLogger.Print(this, responseString);
+//        return responseString;
+//    }
+
+    private void StartSendRequest()
     {
-        
+        StartCoroutine(SendRequest());
     }
 
-    public async Task<string> RequestHorseNames()
+    IEnumerator SendRequest()
     {
-        CustomLogger.Print(this, "RequestHorseName() is called.");
-        string url = BASE_URL;
-        HttpResponseMessage response = await _httpClient.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-        string responseString = await response.Content.ReadAsStringAsync();
-        CustomLogger.Print(this, responseString);
-        return responseString;
+        CustomLogger.Print(this, $"StartToPlayButton is clicked.");
+        string url = BASE_URL + "/models";
+        string apiKey = XAI_API_KEY;
+        UnityWebRequest request = UnityWebRequest.Get(url);
+        request.SetRequestHeader("Authorization", $"Bearer {apiKey}");
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if(request.result == UnityWebRequest.Result.Success)
+        {
+            CustomLogger.Print(this, $"Response : {request.downloadHandler.text}");
+        }
+        else
+        {
+            CustomLogger.Print(this, $"Response : {request.error}");
+        }
     }
 }

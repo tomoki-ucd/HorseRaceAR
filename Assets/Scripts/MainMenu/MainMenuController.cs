@@ -5,6 +5,6 @@ public class MainMenuController : MonoBehaviour
 {
     public void OnClickPlay()
     {
-        SceneManager.LoadScene("Race");
+//        SceneManager.LoadScene("Race");
     }
 }

@@ -8,11 +8,12 @@ public class Horse : MonoBehaviour
 {
     // Static fields
     // TO DO : Consider to add `Horse[] horses` property
-    public const int NUM_OF_HORSES = 3;
-    const int NUM_OF_SPEED_STAGE = 3;
     const float MIN_SPEED = 0.5f;
     const float MAX_SPEED = 1.5f;
-    readonly static Vector3 _baseAmount = new Vector3(-0.01f, 0, 0);
+    public const int NUM_OF_HORSES = 3;
+    const int NUM_OF_SPEED_STAGE = 3;   // A horse's speed changes at each stage.
+                                        // The value = 3 means it runs at 3 different speed in a race.
+    readonly static Vector3 _runDistancePerFrame = new Vector3(-0.01f, 0, 0);
 
     // Instance fields
     // TO DO : Repace _racetrackSpawner with Racetrack object after Racetrack class is added.
@@ -70,7 +71,7 @@ public class Horse : MonoBehaviour
             _currentSpeed = 0;
         }
 
-        advancedAmount = _baseAmount * _currentSpeed;
+        advancedAmount = _runDistancePerFrame * _currentSpeed;
         newLocalPosition += advancedAmount;
 
         // TO DO : If it finish the goal, it slows down.

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEditor.ShaderGraph.Serialization;
@@ -6,6 +7,8 @@ using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;  // Need for json serialization/deserialization for complex JSON.
 
 /// <summary>
 /// Provides the functionality to generate horse names using generative AI.
@@ -28,6 +31,7 @@ public class HorseNameGenerator : MonoBehaviour
     private sealed class Data
     {
         public Message[] messages {get; set;} = new Message[2];
+//        public List<Message> messages {get; set;}
         public string model;
         public bool stream;
         public int temperature;
@@ -64,11 +68,25 @@ public class HorseNameGenerator : MonoBehaviour
                                         role = "user", 
                                         content = "競走馬の名前を3つ、カタカナで考えて下さい。以下のフォーマットに従い回答して。 {\"名前1\", \"名前2\", \"名前3\"}。"
                                         } ;
+//        data.messages = new List<Message>()
+//        {
+//            new Message()
+//            {
+//                role = "system", 
+//                content = "あなたは独創的な名付け親です。"
+//            }, 
+//            new Message()
+//            {
+//                role = "user", 
+//                content = "競走馬の名前を3つ、カタカナで考えて下さい。以下のフォーマットに従い回答して。 {\"名前1\", \"名前2\", \"名前3\"}。"
+//            }
+//        } ;
         data.model = "grok-2-latest";
         data.stream = false;
         data.temperature = 0;
         CustomLogger.Print(this, $"data\n{data}");
-        string json = JsonUtility.ToJson(data);
+//        string json = JsonUtility.ToJson(data);
+        string json = JsonConvert.SerializeObject(data, Formatting.Indented);
         CustomLogger.Print(this, $"json\n{json}");
         byte[] body = System.Text.Encoding.UTF8.GetBytes(json);
         CustomLogger.Print(this, $"body\n{body}");
@@ -83,6 +101,11 @@ public class HorseNameGenerator : MonoBehaviour
         if(request.result == UnityWebRequest.Result.Success)
         {
             CustomLogger.Print(this, $"Response : {request.downloadHandler.text}");
+            string response = request.downloadHandler.text;
+            JObject jsonObject = JObject.Parse(response);
+            CustomLogger.Print(this, $"jsonObject: {jsonObject.ToString()}");
+            string horseNames = jsonObject["choices"]?[0]?["message"]?["content"]?.ToString();
+            CustomLogger.Print(this, $"horseNames: {horseNames}");
         }
         else
         {

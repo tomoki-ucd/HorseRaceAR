@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: c46ee928d5dac4ca9adccd29093708b0
   - enabled: 1
+    path: Assets/Scenes/SelectHorse.unity
+    guid: 89f17c0e917cd4aad9b3f93ac36c3c91
+  - enabled: 1
     path: Assets/Scenes/Race.unity
     guid: 60ab49cd1a67d4a5e8de244605bd9b02
   m_configObjects:

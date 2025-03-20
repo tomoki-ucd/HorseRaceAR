@@ -4,12 +4,6 @@ using UnityEngine;
 using System;
 using System.IO;    // For File class
 
-[Serializable]
-public class AppData
-{
-    public string storedData;
-}
-
 
 public class AppDataManager: MonoBehaviour
 {
@@ -26,10 +20,6 @@ public class AppDataManager: MonoBehaviour
         LoadData();
     }
 
-    void OnApplicationQuit()    // OnAppplicationQuit() is not called for iOS because they normally suspend, not quit.
-    {
-        SaveData();
-    }
 
     void OnDestroy()
     {
@@ -37,21 +27,14 @@ public class AppDataManager: MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     private void LoadData()
     {
         if(File.Exists(dataPath))
         {
-            string jsonData = File.ReadAllText(dataPath);
-            AppData appData = JsonUtility.FromJson<AppData>(jsonData);
-            CustomLogger.Print(this, $"appData: {appData}");
-            CustomLogger.Print(this, $"appData.storedData : {appData.storedData}");
+            CustomLogger.Print(this, $"{dataPath} exists.");
+            AppData.HorseName = File.ReadAllText(dataPath);
+            string horseName = AppData.HorseName;
+            CustomLogger.Print(this, $"(Previous) horseName : {horseName}");
         }
         else
         {
@@ -61,11 +44,7 @@ public class AppDataManager: MonoBehaviour
 
     private void SaveData()
     {
-        AppData appData = new AppData();
-        int i = 0;
-        appData.storedData = $"{++i} times saved.";
-        string jsonData = JsonUtility.ToJson(appData);
-        File.WriteAllText(dataPath, jsonData);
-        CustomLogger.Print(this, "appData is saved.");
+        File.WriteAllText(dataPath, AppData.HorseName);
+        CustomLogger.Print(this, $"{AppData.HorseName} is saved.");
     }
 }

@@ -10,6 +10,11 @@ using Newtonsoft.Json.Linq;  // For JObject
 
 public class MainMenuController : MonoBehaviour
 {
+    private class HorseName
+    {
+        public string value{get; set;}
+    }
+
     // Static fields
     // TO DO : Encrypt the API key
     private const string XAI_API_KEY = "xai-eW1UuspgMn5J3V1C8oxHvSHGNKxo6vgfLtwEANHFrVqiRUblIdznOnC5KEWDtaNphLBSGgQdzFjsORGV";
@@ -17,11 +22,8 @@ public class MainMenuController : MonoBehaviour
 
     // Instant fields
     [SerializeField] private Button _startToPlayButton;
+    private HorseName _horseName = new HorseName();
 
-    internal class HorseNames
-    {
-        public string value{get; set;}
-    }
 
     void Awake()
     {
@@ -37,12 +39,11 @@ public class MainMenuController : MonoBehaviour
 
     private void GetHorseName()
     {
-        HorseNames horseNames = new HorseNames();
-        StartCoroutine(SendRequest(horseNames));
+        StartCoroutine(SendRequest(_horseName));
     }
 
 
-    IEnumerator SendRequest(HorseNames horseNames)
+    IEnumerator SendRequest(HorseName horseName)
     {
         string url = BASE_URL + "/chat/completions";
         string apiKey = XAI_API_KEY;
@@ -61,8 +62,7 @@ public class MainMenuController : MonoBehaviour
             string response = request.downloadHandler.text;
             JObject jsonObject = JObject.Parse(response);
             CustomLogger.Print(this, $"jsonObject: {jsonObject.ToString()}");
-            horseNames.value = jsonObject["choices"]?[0]?["message"]?["content"]?.ToString();
-            CustomLogger.Print(this, $"horseNames.value: {horseNames.value}");
+            horseName.value = jsonObject["choices"]?[0]?["message"]?["content"]?.ToString();
         }
         else
         {
@@ -79,24 +79,26 @@ public class MainMenuController : MonoBehaviour
             new Message()
             {
                 role = "system", 
-                content = "あなたは独創的な名付け親です。"
+                content = $"あなたは独創的な名付け親です。"
             }, 
             new Message()
             {
                 role = "user", 
-                content = "競走馬の名前を3つ、カタカナで考えて下さい。以下のフォーマットに従い回答して。 {\"名前1\", \"名前2\", \"名前3\"}。"
+                content = $"競走馬の名前を3つカタカナで考えて。\"[\"名前1\", \"名前2\", \"名前3\"]\"の形式で回答して。{AppData.HorseName}の名前以外にして。"
             }
         } ;
         jsonData.model = "grok-2-latest";
         jsonData.stream = false;
-        jsonData.temperature = 0;
+        jsonData.temperature = 0.9f;
         string json = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
 
         return json;
     }
 
+
     private void OnClicked()
     {
-        SceneManager.LoadScene("Race");
+        AppData.HorseName = _horseName.value;
+        SceneManager.LoadScene("SelectHorse");
     }
 }

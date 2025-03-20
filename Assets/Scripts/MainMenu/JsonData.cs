@@ -8,7 +8,7 @@ public sealed class JsonData
     public List<Message> messages;
     public string model;
     public bool stream;
-    public int temperature;
+    public float temperature;
 }
 
 

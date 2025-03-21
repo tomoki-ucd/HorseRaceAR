@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Newtonsoft.Json;  // For JsonConvert
 using UnityEngine.Networking;
-using System.Threading;
-using Newtonsoft.Json.Linq;  // For JObject
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using System;  // For JObject
 
 public class MainMenuController : MonoBehaviour
 {
@@ -37,13 +38,14 @@ public class MainMenuController : MonoBehaviour
     }
 
 
+//    private void GetHorseName()
     private void GetHorseName()
     {
-        StartCoroutine(SendRequest(_horseName));
+        StartCoroutine(SendRequest(_horseName, SetInteractive));
     }
 
 
-    IEnumerator SendRequest(HorseName horseName)
+    IEnumerator SendRequest(HorseName horseName, Action callback)
     {
         string url = BASE_URL + "/chat/completions";
         string apiKey = XAI_API_KEY;
@@ -63,6 +65,8 @@ public class MainMenuController : MonoBehaviour
             JObject jsonObject = JObject.Parse(response);
             CustomLogger.Print(this, $"jsonObject: {jsonObject.ToString()}");
             horseName.value = jsonObject["choices"]?[0]?["message"]?["content"]?.ToString();
+
+            callback?.Invoke();
         }
         else
         {
@@ -93,6 +97,12 @@ public class MainMenuController : MonoBehaviour
         string json = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
 
         return json;
+    }
+
+
+    private void SetInteractive()
+    {
+        _startToPlayButton.interactable = true;
     }
 
 

@@ -108,6 +108,7 @@ public class HorseSpawner: MonoBehaviour
 
             horses[i] = Instantiate(horsePrefab, worldPosition, rotation, racetrack.transform);
             horses[i].name = $"HorseNo{i}";
+            CustomLogger.Print(this, $"horses[{i}].name = {horses[i].name}");
         }
 
         return horses;

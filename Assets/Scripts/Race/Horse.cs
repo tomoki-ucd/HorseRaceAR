@@ -16,29 +16,15 @@ public class Horse : MonoBehaviour
     const int NUM_OF_SPEED_STAGE = 3;   // A horse's speed changes at each stage.
                                         // The value = 3 means it runs at 3 different speed in a race.
     readonly static Vector3 _runDistancePerFrame = new Vector3(-0.01f, 0, 0);
-    private static string[] _orderOfFinish;
-    public static string[] orderOfFinish
-    {
-        get{
-            return _orderOfFinish;
-        }
-        set{
-            for(int i = 0; i < _orderOfFinish.Length; i++)
-            {
-                if(_orderOfFinish[i] != null)
-                {
-                    // Implement
-                }
-            }
-        }
-    }
 
     // Instance fields
     // TO DO : Repace _racetrackSpawner with Racetrack object after Racetrack class is added.
-    RacetrackSpawner _racetrackSpawner;
+    [SerializeField] private RacetrackSpawner _racetrackSpawner;
+    [SerializeField] private RaceResultManager _raceResultManager;
     float[] _speeds = new float[NUM_OF_SPEED_STAGE];
     float _currentSpeed = 0;
     float _runDistance = 0; // The.COURSE_DISTANCE that the horse has run.
+    private bool _isFinished{get; set;} = false;
 
 
     void Awake()
@@ -46,7 +32,7 @@ public class Horse : MonoBehaviour
         for(int i = 0; i < _speeds.Length; i++)
         {
             _speeds[i] = SetSpeedRandomly();
-            CustomLogger.Print(this, $"_horseSpeed.speeds[{i}] : {_speeds[i]}");
+//            CustomLogger.Print(this, $"_horseSpeed.speeds[{i}] : {_speeds[i]}");
         }
     }
 
@@ -54,8 +40,9 @@ public class Horse : MonoBehaviour
     void Start()
     {
         _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
+        _raceResultManager = FindObjectOfType<RaceResultManager>();
 
-//        StartCoroutine(LogEverySecondCoroutine());  // Debug
+        StartCoroutine(LogEverySecondCoroutine());  // Debug
     }
 
     // Update is called once per frame
@@ -69,6 +56,11 @@ public class Horse : MonoBehaviour
     /// </summary>
     public void Run()
     {
+        if(_isFinished)
+        {
+            return;
+        }
+
         Vector3 newLocalPosition = transform.localPosition;
         Vector3 newWorldPosition;
         Vector3 advancedAmount;
@@ -87,7 +79,8 @@ public class Horse : MonoBehaviour
         }
         else
         {
-            _currentSpeed = 0;
+//            _currentSpeed = 0;
+            FinishGoal();
         }
 
         advancedAmount = _runDistancePerFrame * _currentSpeed;
@@ -116,8 +109,35 @@ public class Horse : MonoBehaviour
     {
         while (true)
         {
-            CustomLogger.Print(this, $"{this.name}, _runDistance : {_runDistance}, speed at {_currentSpeed}");
+            CustomLogger.Print(this, $"{name}, _runDistance : {_runDistance}, speed at {_currentSpeed}");
             yield return new WaitForSeconds(1);
+        }
+    }
+
+
+    /// <summary>
+    /// Finish Goal and stop running by setting `_isFinished` flag to true.
+    /// Also register the finished horse to the order of finish.
+    /// </summary>
+    private void FinishGoal()
+    {
+        string[] order = _raceResultManager.orderOfFinish;
+        string[] tmp = new string[3];
+        for(int i = 0; i < order.Length; i++)
+        {
+            if(order[i] != null)    // If other horses have finished the goal earlier, go to the next order of finish.
+            {
+                tmp[i] = order[i];
+                continue;
+            }
+            else    // Register the finished horse in the order of finish and exit the loop.
+            {
+                tmp[i] = gameObject.name;
+                _raceResultManager.orderOfFinish = tmp;
+                CustomLogger.Print(this, $"order[{i}] = {gameObject.name}");
+                _isFinished = true;
+                break;
+            }
         }
     }
 }

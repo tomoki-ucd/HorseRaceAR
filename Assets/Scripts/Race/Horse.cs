@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Concurrent;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation.VisualScripting;
 
 /// <summary>
 /// Represents a horse.
@@ -14,6 +16,22 @@ public class Horse : MonoBehaviour
     const int NUM_OF_SPEED_STAGE = 3;   // A horse's speed changes at each stage.
                                         // The value = 3 means it runs at 3 different speed in a race.
     readonly static Vector3 _runDistancePerFrame = new Vector3(-0.01f, 0, 0);
+    private static string[] _orderOfFinish;
+    public static string[] orderOfFinish
+    {
+        get{
+            return _orderOfFinish;
+        }
+        set{
+            for(int i = 0; i < _orderOfFinish.Length; i++)
+            {
+                if(_orderOfFinish[i] != null)
+                {
+                    // Implement
+                }
+            }
+        }
+    }
 
     // Instance fields
     // TO DO : Repace _racetrackSpawner with Racetrack object after Racetrack class is added.
@@ -36,7 +54,8 @@ public class Horse : MonoBehaviour
     void Start()
     {
         _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
-        StartCoroutine(LogEverySecondCoroutine());  // Debug
+
+//        StartCoroutine(LogEverySecondCoroutine());  // Debug
     }
 
     // Update is called once per frame

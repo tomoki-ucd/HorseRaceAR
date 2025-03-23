@@ -121,23 +121,17 @@ public class Horse : MonoBehaviour
     /// </summary>
     private void FinishGoal()
     {
-        string[] order = _raceResultManager.orderOfFinish;
-        string[] tmp = new string[3];
-        for(int i = 0; i < order.Length; i++)
+        string[] tmp = (string[])_raceResultManager.orderOfFinish.Clone();
+        for(int i = 0; i < tmp.Length; i++)
         {
-            if(order[i] != null)    // If other horses have finished the goal earlier, go to the next order of finish.
-            {
-                tmp[i] = order[i];
-                continue;
-            }
-            else    // Register the finished horse in the order of finish and exit the loop.
+            if(tmp[i] == null)
             {
                 tmp[i] = gameObject.name;
                 _raceResultManager.orderOfFinish = tmp;
                 CustomLogger.Print(this, $"order[{i}] = {gameObject.name}");
-                _isFinished = true;
                 break;
             }
         }
+        _isFinished = true;
     }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using TMPro;
 using UnityEngine;
 
 public class RaceResultManager : MonoBehaviour
@@ -30,6 +32,7 @@ public class RaceResultManager : MonoBehaviour
 
     // Instant Field
     [SerializeField] private GameObject _orderOfFinishTable;
+//    [SerializeField] private GameObject _orderOfFinishTableContent;
 
 
     void Awake()
@@ -53,6 +56,11 @@ public class RaceResultManager : MonoBehaviour
 //    private static void DisplayRaceResult()
     private void DisplayRaceResult()
     {
+        Transform content = _orderOfFinishTable.transform.Find("Scroll View/Viewport/Content");
+        for(int i = 0; i < Horse.NUM_OF_HORSES; i++)
+        {
+            content.GetChild(i).Find("Horse").GetComponent<TextMeshProUGUI>().text = _orderOfFinish[i];
+        }
         _orderOfFinishTable.SetActive(true);
     }
 }

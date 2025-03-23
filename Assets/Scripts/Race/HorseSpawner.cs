@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Provides the functionality of spawning horse objects (and disabling/enabling UI elements).
@@ -107,10 +108,20 @@ public class HorseSpawner: MonoBehaviour
             Vector3 worldPosition = racetrack.transform.TransformPoint(posRelativeToRacetrack);
 
             horses[i] = Instantiate(horsePrefab, worldPosition, rotation, racetrack.transform);
-            horses[i].name = $"HorseNo{i}";
+            horses[i].name = InitializeHorseName(i);
             CustomLogger.Print(this, $"horses[{i}].name = {horses[i].name}");
         }
 
         return horses;
+    }
+
+    /// <summary>
+    /// Initialize the horses' names with the names acquired by grok.
+    /// </summary>
+    /// <param name="i"> int i as index for string[] horse names. </param>
+    private string InitializeHorseName(int i)
+    {
+        string[] names = JsonConvert.DeserializeObject<string[]>(AppData.HorseName);
+        return names[i];
     }
 }

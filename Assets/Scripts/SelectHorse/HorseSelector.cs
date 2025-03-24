@@ -10,9 +10,13 @@ using TMPro;    // For TextMeshProUGUI type
 public class HorseSelector : MonoBehaviour
 {
     // Instant fields
-    private string _selectedHorse;
     private string[] _horseNames = new string[Horse.NUM_OF_HORSES];
-    private GameObject _selectedButtonObj = null;
+    private static GameObject _currentlySelectedHorse = null;
+    public static string selectedHorse{
+        get{
+            return _currentlySelectedHorse.GetComponent<TextMeshProUGUI>().text;
+        }
+    }
     [SerializeField] private Button[] _selectHorseButtons = new Button[Horse.NUM_OF_HORSES];
     [SerializeField] private Button _fixSelectButton;
 //    [SerializeField] private TextMeshProUGUI testText;
@@ -66,20 +70,20 @@ public class HorseSelector : MonoBehaviour
     /// <summary>
     /// Select a horse to bet.
     /// </summary>
-    /// <param name="buttonObj"></param>/// 
-    private void SelectHorse(GameObject buttonObj)
+    /// <param name="newlySelectedHorse"></param>/// 
+    private void SelectHorse(GameObject newlySelectedHorse)
     {
-        if(_selectedButtonObj == null)  // If there was no selected button
+        if(_currentlySelectedHorse == null)  // If there was no selected button
         {
-            SetButtonOutlineActive(buttonObj, true);    // Display the outline for the selected button
+            SetButtonOutlineActive(newlySelectedHorse, true);    // Display the outline for the selected button
             SetFixSelectButtonActive();                 // Activate "Select" button
         }
-        else if(_selectedButtonObj != buttonObj)    // If the clicked button is not the one already selected
+        else if(_currentlySelectedHorse != newlySelectedHorse)    // If the clicked button is not the one already selected
         {
-            SetButtonOutlineActive(buttonObj, true);
-            SetButtonOutlineActive(_selectedButtonObj, false);
+            SetButtonOutlineActive(newlySelectedHorse, true);
+            SetButtonOutlineActive(_currentlySelectedHorse, false);
         }
-        _selectedButtonObj = buttonObj;
+        _currentlySelectedHorse = newlySelectedHorse;
     }
 
 

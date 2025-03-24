@@ -32,7 +32,6 @@ public class RaceResultManager : MonoBehaviour
 
     // Instant Field
     [SerializeField] private GameObject _orderOfFinishTable;
-//    [SerializeField] private GameObject _orderOfFinishTableContent;
 
 
     void Awake()
@@ -62,5 +61,14 @@ public class RaceResultManager : MonoBehaviour
             content.GetChild(i).Find("Horse").GetComponent<TextMeshProUGUI>().text = _orderOfFinish[i];
         }
         _orderOfFinishTable.SetActive(true);
+
+        if(_orderOfFinish[0] == HorseSelector.selectedHorse)
+        {
+            CustomLogger.Print(this, "You win the bet!");
+        }
+        else
+        {
+            CustomLogger.Print(this, "You lose the bet.");
+        }
     }
 }

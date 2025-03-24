@@ -2,7 +2,9 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;    // For TextMeshProUGUI type
+using TMPro;
+using Unity.VisualScripting;
+using Unity.XR.CoreUtils;    // For TextMeshProUGUI type
 
 /// <summary>
 /// Provides the functionality to select a horse to bet.
@@ -11,15 +13,11 @@ public class HorseSelector : MonoBehaviour
 {
     // Instant fields
     private string[] _horseNames = new string[Horse.NUM_OF_HORSES];
-    private static GameObject _currentlySelectedHorse = null;
-    public static string selectedHorse{
-        get{
-            return _currentlySelectedHorse.GetComponent<TextMeshProUGUI>().text;
-        }
-    }
+    private GameObject _selectedHorse = null;
+    public static string selectedHorseName = null;
     [SerializeField] private Button[] _selectHorseButtons = new Button[Horse.NUM_OF_HORSES];
     [SerializeField] private Button _fixSelectButton;
-//    [SerializeField] private TextMeshProUGUI testText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +37,7 @@ public class HorseSelector : MonoBehaviour
         {
             if(_selectHorseButtons[i] == null)
             {
-                Debug.Log("_selectHorseButtons is null!!");
+                CustomLogger.Print(this, "_selectHorseButtons is null!!");
             }
             _selectHorseButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _horseNames[i];
         }
@@ -73,17 +71,18 @@ public class HorseSelector : MonoBehaviour
     /// <param name="newlySelectedHorse"></param>/// 
     private void SelectHorse(GameObject newlySelectedHorse)
     {
-        if(_currentlySelectedHorse == null)  // If there was no selected button
+        if(_selectedHorse == null)  // If there was no selected button
         {
             SetButtonOutlineActive(newlySelectedHorse, true);    // Display the outline for the selected button
             SetFixSelectButtonActive();                 // Activate "Select" button
         }
-        else if(_currentlySelectedHorse != newlySelectedHorse)    // If the clicked button is not the one already selected
+        else if(_selectedHorse != newlySelectedHorse)    // If the clicked button is not the one already selected
         {
             SetButtonOutlineActive(newlySelectedHorse, true);
-            SetButtonOutlineActive(_currentlySelectedHorse, false);
+            SetButtonOutlineActive(_selectedHorse, false);
         }
-        _currentlySelectedHorse = newlySelectedHorse;
+        _selectedHorse = newlySelectedHorse;
+        selectedHorseName = _selectedHorse.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
     }
 
 

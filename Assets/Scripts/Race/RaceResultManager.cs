@@ -20,9 +20,7 @@ public class RaceResultManager : MonoBehaviour
         }
         set
         {
-            CustomLogger.Print(this, $"orderOfFinish{{set;}} is called. value is {value}");
             _orderOfFinish = value;
-            CustomLogger.Print(this, $"_orderOfFinish : {_orderOfFinish}");
             if(_orderOfFinish[Horse.NUM_OF_HORSES-1] != null)
             {
                 DisplayRaceResult();
@@ -62,7 +60,7 @@ public class RaceResultManager : MonoBehaviour
         }
         _orderOfFinishTable.SetActive(true);
 
-        if(_orderOfFinish[0] == HorseSelector.selectedHorse)
+        if(_orderOfFinish[0] == HorseSelector.selectedHorseName)
         {
             CustomLogger.Print(this, "You win the bet!");
         }

@@ -8,8 +8,7 @@ using Newtonsoft.Json;
 public class HorseSpawner: MonoBehaviour
 {
     // Instant fields
-    [SerializeField] private GameObject _horsePrefab;
-//    [SerializeField] private Toggle _setHorseButton;
+    [SerializeField] private GameObject[] _horsePrefabs = new GameObject[3];
     [SerializeField] private Button _setHorseButton;
     GameObject _upButton;
     GameObject _downButton;
@@ -56,7 +55,7 @@ public class HorseSpawner: MonoBehaviour
                 CustomLogger.Print(this, $"racetrack is null!!");
                 return;
             }
-            SpawnedHorses = SpawnHorses(_horsePrefab);
+            SpawnedHorses = SpawnHorses(_horsePrefabs);
     }
 
     /// <summary>
@@ -69,7 +68,7 @@ public class HorseSpawner: MonoBehaviour
     ///  it needs to add the height of the racetrack `GROUND_HEIGHT`
     ///  to the horses as the pivot of the racetrack is at its bottom.
     /// </remarks>
-    private GameObject[] SpawnHorses(GameObject horsePrefab)
+    private GameObject[] SpawnHorses(GameObject[] horsePrefabs)
     {
         Racetrack racetrack = FindObjectOfType<Racetrack>();
         if (racetrack == null)
@@ -107,7 +106,8 @@ public class HorseSpawner: MonoBehaviour
             // Then, convert the local position to the world position
             Vector3 worldPosition = racetrack.transform.TransformPoint(posRelativeToRacetrack);
 
-            horses[i] = Instantiate(horsePrefab, worldPosition, rotation, racetrack.transform);
+            horses[i] = Instantiate(horsePrefabs[i], worldPosition, rotation, racetrack.transform);
+            horses[i].GetComponent<Horse>().horseNumber = i + 1;    // Start from #1 by adding 1 to 0
             horses[i].name = InitializeHorseName(i);
             CustomLogger.Print(this, $"horses[{i}].name = {horses[i].name}");
         }

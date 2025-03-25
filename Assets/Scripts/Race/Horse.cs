@@ -25,6 +25,7 @@ public class Horse : MonoBehaviour
     float _currentSpeed = 0;
     float _runDistance = 0; // The.COURSE_DISTANCE that the horse has run.
     private bool _isFinished{get; set;} = false;
+    public int horseNumber{get; set;}
 
 
     void Awake()
@@ -121,12 +122,13 @@ public class Horse : MonoBehaviour
     /// </summary>
     private void FinishGoal()
     {
-        string[] tmp = (string[])_raceResultManager.orderOfFinish.Clone();
+        string[,] tmp = (string[,])_raceResultManager.orderOfFinish.Clone();
         for(int i = 0; i < tmp.Length; i++)
         {
-            if(tmp[i] == null)
+            if(tmp[i, 0] == null)
             {
-                tmp[i] = gameObject.name;
+                tmp[i, 0] = "#" + horseNumber.ToString();
+                tmp[i, 1] = gameObject.name;
                 _raceResultManager.orderOfFinish = tmp;
                 CustomLogger.Print(this, $"order[{i}] = {gameObject.name}");
                 break;

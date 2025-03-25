@@ -9,10 +9,11 @@ public class RaceResultManager : MonoBehaviour
 {
     // Static Field
     public static RaceResultManager Instance{get; private set;}
+    private const int NUM_OF_COLUMN = 2;    // Horse Number column, Horse Name column
     
     // Instant Field
-    private string[] _orderOfFinish = new string[Horse.NUM_OF_HORSES];
-    public string[] orderOfFinish
+    private string[,] _orderOfFinish = new string[Horse.NUM_OF_HORSES, NUM_OF_COLUMN];
+    public string[,] orderOfFinish
     {
         get
         {
@@ -21,7 +22,7 @@ public class RaceResultManager : MonoBehaviour
         set
         {
             _orderOfFinish = value;
-            if(_orderOfFinish[Horse.NUM_OF_HORSES-1] != null)
+            if(_orderOfFinish[Horse.NUM_OF_HORSES-1,0] != null)
             {
                 DisplayRaceResult();
             }
@@ -56,11 +57,11 @@ public class RaceResultManager : MonoBehaviour
         Transform content = _orderOfFinishTable.transform.Find("Scroll View/Viewport/Content");
         for(int i = 0; i < Horse.NUM_OF_HORSES; i++)
         {
-            content.GetChild(i).Find("Horse").GetComponent<TextMeshProUGUI>().text = _orderOfFinish[i];
+            content.GetChild(i).Find("Horse").GetComponent<TextMeshProUGUI>().text = orderOfFinish[i, 0] + " " + orderOfFinish[i, 1];
         }
         _orderOfFinishTable.SetActive(true);
 
-        if(_orderOfFinish[0] == HorseSelector.selectedHorseName)
+        if(_orderOfFinish[0, 1] == HorseSelector.selectedHorseName)
         {
             CustomLogger.Print(this, "You win the bet!");
             _youWin.SetActive(true);

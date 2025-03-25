@@ -39,7 +39,7 @@ public class HorseSelector : MonoBehaviour
             {
                 CustomLogger.Print(this, "_selectHorseButtons is null!!");
             }
-            _selectHorseButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _horseNames[i];
+            _selectHorseButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"#{i+1} " + _horseNames[i];
         }
     }
 

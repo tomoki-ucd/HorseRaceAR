@@ -28,9 +28,9 @@ public class RaceResultManager : MonoBehaviour
         }
     }
 
-    // Instant Field
     [SerializeField] private GameObject _orderOfFinishTable;
-
+    [SerializeField] private GameObject _youWin;
+    [SerializeField] private GameObject _youLose;
 
     void Awake()
     {
@@ -63,10 +63,12 @@ public class RaceResultManager : MonoBehaviour
         if(_orderOfFinish[0] == HorseSelector.selectedHorseName)
         {
             CustomLogger.Print(this, "You win the bet!");
+            _youWin.SetActive(true);
         }
         else
         {
             CustomLogger.Print(this, "You lose the bet.");
+            _youLose.SetActive(true);
         }
     }
 }

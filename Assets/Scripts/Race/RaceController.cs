@@ -2,9 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Make horses run.
+/// Provides the functionality to run and stop horses.
 /// </summary>
-// TO DO : Change the naming to RaceController 
 public class RaceController : MonoBehaviour
 {
     public RacetrackSpawner _racetrackSpawner;

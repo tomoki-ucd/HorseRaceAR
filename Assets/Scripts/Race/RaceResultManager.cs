@@ -44,12 +44,6 @@ public class RaceResultManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Application.targetFrameRate = 1;
-    }
-
 
 //    private static void DisplayRaceResult()
     private void DisplayRaceResult()

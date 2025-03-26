@@ -8,7 +8,8 @@ public class Racetrack : MonoBehaviour
     // Static fields
     public const float COURSE_DISTANCE = 6.0f;
     public const float START_LINE = 0.2f;
-    public const float GROUND_HEIGHT = 0.06f;
+//    public const float GROUND_HEIGHT = 0.06f;
+    public const float GROUND_HEIGHT = 0.1f;
     public const float RAIL_WIDTH = 0.1f;
 
     // Instant fields

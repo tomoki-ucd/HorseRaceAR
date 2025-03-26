@@ -32,6 +32,7 @@ public class RaceResultManager : MonoBehaviour
     [SerializeField] private GameObject _orderOfFinishTable;
     [SerializeField] private GameObject _youWin;
     [SerializeField] private GameObject _youLose;
+    [SerializeField] private GameObject _playAgainButton;
 
     void Awake()
     {
@@ -65,5 +66,7 @@ public class RaceResultManager : MonoBehaviour
             CustomLogger.Print(this, "You lose the bet.");
             _youLose.SetActive(true);
         }
+
+        _playAgainButton.SetActive(true);
     }
 }

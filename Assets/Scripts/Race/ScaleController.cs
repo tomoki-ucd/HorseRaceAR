@@ -92,17 +92,12 @@ public class ScaleController: MonoBehaviour
     {
         Vector3 currentScale = racetrack.transform.localScale;
         {
-            var newScale = new Vector3(currentScale.x * newScaleRatio, 1f, currentScale.z * newScaleRatio);
+            var newScale = new Vector3(currentScale.x * newScaleRatio, currentScale.y * newScaleRatio, currentScale.z * newScaleRatio);
             if(newScale.x < SCALE_MIN || newScale.x > SCALE_MAX)
             {
                 return;
             }
             racetrack.transform.localScale = newScale;
-
-            // Scale horses also in Y direction.
-            GameObject horse = racetrack.transform.GetChild(0).gameObject;
-            Vector3 horseScale = horse.transform.localScale;
-            horse.transform.localScale = new Vector3(horseScale.x, horseScale.y * newScaleRatio, horseScale.z);
         }
     }
 }

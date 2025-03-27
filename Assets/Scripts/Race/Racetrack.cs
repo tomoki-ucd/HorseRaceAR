@@ -6,7 +6,7 @@ using UnityEngine;
 public class Racetrack : MonoBehaviour
 {
     // Static fields
-    public const float COURSE_DISTANCE = 6.0f;
+    public const float COURSE_DISTANCE = 5.7f;  // Shorten the course distance from 6.0f to fit the race
     public const float START_LINE = 0.2f;
     public const float GROUND_HEIGHT = 0.1f;
     public const float RAIL_WIDTH = 0.1f;

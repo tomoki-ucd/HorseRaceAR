@@ -9,27 +9,39 @@ using UnityEngine.UI;
 /// </summary>
 public class VerticalShiftController: MonoBehaviour
 {
+    [SerializeField] private RacetrackSpawner _racetrackSpawner;
     [SerializeField] private Button _upButton;
     [SerializeField] private Button _downButton;
-    private RacetrackSpawner _racetrackSpawner;
+    private GameObject _racetrack;
 
     // Start is called before the first frame update
     void Start()
     {
         // Initialize objects
-        _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
+//        _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
 
         // Register methods to events
         _upButton.onClick.AddListener(RaiseRacetrack);
         _downButton.onClick.AddListener(LowerRacetrack);
+        _racetrackSpawner.OnRacetrackSpawned += HandleSpawnedRacetrack;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void OnDestroy()
     {
-        
+        _upButton.onClick.RemoveListener(RaiseRacetrack);
+        _downButton.onClick.RemoveListener(LowerRacetrack);
+        _racetrackSpawner.OnRacetrackSpawned -= HandleSpawnedRacetrack;
     }
 
+    /// <summary>
+    /// Set the spawned racetrack to _racetrack member.
+    /// </summary>
+    private void HandleSpawnedRacetrack(GameObject spawnedRacetrack)
+    {
+        CustomLogger.Print(this, "HandleSpawnedRacetrack is called");
+        _racetrack = spawnedRacetrack;
+    }
 
     /// <summary>
     /// Raise the position of the objects.
@@ -38,16 +50,14 @@ public class VerticalShiftController: MonoBehaviour
     /// <returns></return>
     private void RaiseRacetrack()
     {
-        GameObject racetrack = _racetrackSpawner.SpawnedRacetrack;
-
-        if(racetrack == null)
+        if(_racetrack == null)
         {
-            CustomLogger.Print(this, "racetrack is null.");
+            CustomLogger.Print(this, "_racetrack is null.");
             return;
         }
-        Vector3 racetrackPos = racetrack.transform.position;
-        racetrackPos.y += 0.1f;
-        racetrack.transform.position = racetrackPos;
+        Vector3 _racetrackPos = _racetrack.transform.position;
+        _racetrackPos.y += 0.1f;
+        _racetrack.transform.position = _racetrackPos;
     }
 
 
@@ -58,15 +68,13 @@ public class VerticalShiftController: MonoBehaviour
     /// <returns></return>
     private void LowerRacetrack()
     {
-        GameObject racetrack = _racetrackSpawner.SpawnedRacetrack;
-
-        if(racetrack == null)
+        if(_racetrack == null)
         {
-            CustomLogger.Print(this, "racetrack is null.");
+            CustomLogger.Print(this, "_racetrack is null.");
             return;
         }
-        Vector3 racetrackPos = racetrack.transform.position;
-        racetrackPos.y -= 0.1f;
-        racetrack.transform.position = racetrackPos;
+        Vector3 _racetrackPos = _racetrack.transform.position;
+        _racetrackPos.y -= 0.1f;
+        _racetrack.transform.position = _racetrackPos;
     }
 }

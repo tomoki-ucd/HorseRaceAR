@@ -3,6 +3,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;  // Defins TrackableType
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// Provides the functionality of detecting and selecting ARplanes.
@@ -14,10 +15,12 @@ public class RacetrackSpawner: MonoBehaviour
     private ARPlaneManager _planeManager;
     private ARPlane _lockedPlane = null;    // Nullable
     private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();
+    public GameObject SpawnedRacetrack{get; private set;}
     [SerializeField] private ARRaycastManager _raycastManager;    // ARRaycastManager is attached to XROrign.
     [SerializeField] private Button _setHorseButton;
 
-    public GameObject SpawnedRacetrack{get; set;}
+    // Event to notify when the racetrack is spawned
+    public event Action<GameObject> OnRacetrackSpawned;
 
 
     // Start is called before the first frame update
@@ -95,6 +98,8 @@ public class RacetrackSpawner: MonoBehaviour
     {
         Vector3 position = plane.transform.position;
         SpawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
+        CustomLogger.Print(this, OnRacetrackSpawned != null? "OnRacetrackSpawned NOT null": "OnRacetrackSpawned IS NULL");
+        OnRacetrackSpawned?.Invoke(SpawnedRacetrack);   // Notify listeners of the spawned racetrack
     }
 
 

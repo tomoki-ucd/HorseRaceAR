@@ -6,7 +6,6 @@ using UnityEngine.UI;
 /// </summary>
 public class RaceController : MonoBehaviour
 {
-    [SerializeField] private Button _setHorseButton;
     [SerializeField] private Button _startStopButton;
     [SerializeField] Horse[] horses;
     /// <summary>
@@ -26,15 +25,6 @@ public class RaceController : MonoBehaviour
         else
         {
             _startStopButton.onClick.AddListener(StartStopRace);
-        }
-
-        // Subscribe to Start Button
-        if(_setHorseButton == null)
-        {
-            CustomLogger.Print(this, $"_setHorseButton is null.");
-        }
-        else{
-            _setHorseButton.onClick.AddListener(DisplayStartButton);
         }
     }
 

@@ -10,7 +10,7 @@ public class RaceController : MonoBehaviour
     [SerializeField] private Button _startStopButton;
     [SerializeField] Horse[] horses;
     /// <summary>
-    /// _isRaceStarted is used to prevent repetitive initialization of horses variable.
+    /// _isRaceStarted is used to prevent repetitive initialization of horses field.
     /// </summary>
     private bool _isRaceStarted = false;
     bool _isRunning = false;

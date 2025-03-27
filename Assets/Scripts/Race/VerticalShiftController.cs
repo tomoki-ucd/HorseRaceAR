@@ -17,9 +17,6 @@ public class VerticalShiftController: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize objects
-//        _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
-
         // Register methods to events
         _upButton.onClick.AddListener(RaiseRacetrack);
         _downButton.onClick.AddListener(LowerRacetrack);

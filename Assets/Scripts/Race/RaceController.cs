@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class RaceController : MonoBehaviour
 {
     // Instant Fields
-    [SerializeField] private Button _startStopButton;
+    [SerializeField] private GameObject _startStopButton;
+    [SerializeField] private RacetrackSpawner _racetrackSpawner;
     private Horse[] horses;
     /// <summary>
     /// _isRaceStarted is used to prevent repetitive initialization of horses field.
@@ -20,14 +21,7 @@ public class RaceController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(_startStopButton == null)
-        {
-            CustomLogger.Print(this, $"_startButto is null.");
-        }
-        else
-        {
-            _startStopButton.onClick.AddListener(StartStopRace);
-        }
+        Initialize();
     }
 
 
@@ -40,6 +34,29 @@ public class RaceController : MonoBehaviour
             {
                 RunHorse();
             }
+        }
+    }
+
+    private void Initialize()
+    {
+        // Subscribe to Start/Stop Button event
+        if(_startStopButton == null)
+        {
+            CustomLogger.Print(this, $"_startButton is null.");
+        }
+        else
+        {
+            _startStopButton.GetComponent<Button>().onClick.AddListener(StartStopRace);
+        }
+
+        // Subscribe to OnRacetrackSpanwned event
+        if(_racetrackSpawner == null)
+        {
+            CustomLogger.Print(this, $"_racetrackSpawner is null.");
+        }
+        else
+        {
+            _racetrackSpawner.OnRacetrackSpawned += HandleSpawnedRacetrack;
         }
     }
 
@@ -91,18 +108,25 @@ public class RaceController : MonoBehaviour
     /// <summary>
     /// Set _isRunning flag to true, meaning horses run.
     /// </summary>
-    void StartHorse()
+    private void StartHorse()
     {
         _isRunning = true;
-        _startStopButton.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "STOP";
+        _startStopButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "STOP";
     }
 
     /// <summary>
     /// Set _isRunning flag to false, meaning stop horses.
     /// </summary>
-    void StopHorse()
+    private void StopHorse()
     {
         _isRunning = false;
-        _startStopButton.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "START";
+        _startStopButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "START";
+    }
+
+
+    private void HandleSpawnedRacetrack(GameObject spawnedRacetrack)
+    {
+        CustomLogger.Print(this, "HandleSpawnedRacetrack() is called.");    // Debug
+        _startStopButton.SetActive(true);
     }
 }

@@ -130,7 +130,7 @@ public class Horse : MonoBehaviour
                 tmp[i, 0] = "#" + horseNumber.ToString();
                 tmp[i, 1] = gameObject.name;
                 _raceResultManager.orderOfFinish = tmp;
-                CustomLogger.Print(this, $"order[{i}] = {gameObject.name}");
+//                CustomLogger.Print(this, $"order[{i}] = {gameObject.name}");
                 break;
             }
         }

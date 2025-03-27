@@ -9,67 +9,48 @@ public class HorseSpawner: MonoBehaviour
 {
     // Instant fields
     [SerializeField] private GameObject[] _horsePrefabs = new GameObject[3];
-    [SerializeField] private Button _setHorseButton;
+    [SerializeField] private RacetrackSpawner _racetrackSpawner;
 
     public GameObject[] SpawnedHorses{ get; set;}
 
     // Start is called before the first frame update
     void Start()
     {
-        _setHorseButton.onClick.AddListener(OnSetHorseButtonClicked);
+        _racetrackSpawner.OnRacetrackSpawned += HandleSpawnedRacetrack;
     }
 
-
-    private void OnSetHorseButtonClicked()
+    void OnDestroy()
     {
-        SpawnHorsesOnClicked();
+        _racetrackSpawner.OnRacetrackSpawned -= HandleSpawnedRacetrack;
     }
 
-    /// <summary>
-    /// Spawn horse objects when Toggle is checked.
-    /// </summary>
-    /// <param name="isOn"> Toggle state </param>
-    /// <remarks>
-    /// Calls SpawnHorses()
-    /// </remakrs>
-    private void SpawnHorsesOnClicked()
+
+    private void HandleSpawnedRacetrack(GameObject spawnedRacetrack)
     {
-            if (SpawnedHorses != null)
-            {
-                return;
-            }
-            Racetrack racetrack = FindObjectOfType<Racetrack>();
-            if (racetrack == null)
-            {
-                CustomLogger.Print(this, $"racetrack is null!!");
-                return;
-            }
-            SpawnedHorses = SpawnHorses(_horsePrefabs);
+        CustomLogger.Print(this, "HandleSpawnedRacetrack is called");
+        SpawnedHorses = SpawnHorses(_horsePrefabs, spawnedRacetrack);
     }
+
 
     /// <summary>
     ///  Spawn horses on the racetrack.
     /// </summary>
     /// <param name="horsePrefab"> Horse Prefab </param>
+    /// <param name="racetrackObj"> Spawned Racetrack </param>
     /// <returns> Spawned Horse </returns>
     /// <remarks>
     ///  To place horses on the racetrack correctly, 
     ///  it needs to add the height of the racetrack `GROUND_HEIGHT`
     ///  to the horses as the pivot of the racetrack is at its bottom.
     /// </remarks>
-    private GameObject[] SpawnHorses(GameObject[] horsePrefabs)
+    private GameObject[] SpawnHorses(GameObject[] horsePrefabs, GameObject spawnedRacetrack)
     {
-        Racetrack racetrack = FindObjectOfType<Racetrack>();
-        if (racetrack == null)
-        {
-            CustomLogger.Print(this, $"racetrack is null!!");
-            return null;
-        }
         // Determine the horse's rotation to rotate them toward the goal.
-        Vector3 eulerAngles = racetrack.transform.eulerAngles;
+        Vector3 eulerAngles = spawnedRacetrack.transform.eulerAngles;
         eulerAngles.y -= 90;
         Quaternion rotation = Quaternion.Euler(eulerAngles);
 
+        Racetrack racetrack = spawnedRacetrack.GetComponent<Racetrack>();
         Vector3 meshSize = racetrack.MeshSize;
 
         // x position (at the start line)

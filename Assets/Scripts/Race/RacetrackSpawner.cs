@@ -122,8 +122,6 @@ public class RacetrackSpawner: MonoBehaviour
         CustomLogger.Print(this, $"Kept plane: {planeToKeep.trackableId}");
 
         _planeManager.enabled = false;
-
-//        SpawnRacetrack(planeToKeep);
     }
 
     private void DisplaySetHorseButton()

@@ -9,7 +9,7 @@ public class RaceController : MonoBehaviour
 {
     // Instant Fields
     [SerializeField] private Button _startStopButton;
-    [SerializeField] Horse[] horses;
+    private Horse[] horses;
     /// <summary>
     /// _isRaceStarted is used to prevent repetitive initialization of horses field.
     /// </summary>

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 public class RaceController : MonoBehaviour
 {
+    // Instant Fields
     [SerializeField] private Button _startStopButton;
     [SerializeField] Horse[] horses;
     /// <summary>
@@ -66,8 +68,8 @@ public class RaceController : MonoBehaviour
             {
                 CustomLogger.Print(this, "_horse is null.");
             }
+            StartHorse();
             _isRaceStarted = true;
-            _isRunning = true;
 
             return;
         }
@@ -76,10 +78,12 @@ public class RaceController : MonoBehaviour
         if(_isRunning)
         {
             StopHorse();
+            _startStopButton.GetComponent<TextMeshProUGUI>().text = "START";
         }
         else
         {
-            RunHorse();
+            StartHorse();
+            _startStopButton.GetComponent<TextMeshProUGUI>().text = "STOP";
         }
     }
 
@@ -89,8 +93,6 @@ public class RaceController : MonoBehaviour
     /// </summary>
     private void RunHorse()
     {
-        _isRunning = true;
-
         for(int i = 0; i < horses.Length; i++)
         {
             Horse horse = horses[i];
@@ -98,9 +100,16 @@ public class RaceController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set _isRunning flag to true, meaning horses run.
+    /// </summary>
+    void StartHorse()
+    {
+        _isRunning = true;
+    }
 
     /// <summary>
-    /// Stop running horses.
+    /// Set _isRunning flag to false, meaning stop horses.
     /// </summary>
     void StopHorse()
     {

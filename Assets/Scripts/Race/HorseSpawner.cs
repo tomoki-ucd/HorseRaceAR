@@ -10,8 +10,6 @@ public class HorseSpawner: MonoBehaviour
     // Instant fields
     [SerializeField] private GameObject[] _horsePrefabs = new GameObject[3];
     [SerializeField] private Button _setHorseButton;
-    GameObject _upButton;
-    GameObject _downButton;
     GameObject _slider;
 
     public GameObject[] SpawnedHorses{ get; set;}
@@ -19,8 +17,6 @@ public class HorseSpawner: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _upButton = GameObject.Find("UpButton");
-        _downButton = GameObject.Find("DownButton");
         _slider = GameObject.Find("Slider");
         _setHorseButton.onClick.AddListener(OnSetHorseButtonClicked);
     }

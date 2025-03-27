@@ -45,16 +45,6 @@ public class RaceController : MonoBehaviour
 
 
     /// <summary>
-    /// Show StartButton when <paramref name="isOn"/> is false.
-    /// <param name="isOn"> Toggle state </param> 
-    /// </summary>
-    private void DisplayStartButton()
-    {
-        _startStopButton.gameObject.SetActive(true);
-    }
-
-
-    /// <summary>
     /// Start the race.
     /// </summary>
     private void StartStopRace()

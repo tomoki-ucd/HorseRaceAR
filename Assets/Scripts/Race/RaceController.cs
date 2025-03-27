@@ -68,12 +68,10 @@ public class RaceController : MonoBehaviour
         if(_isRunning)
         {
             StopHorse();
-            _startStopButton.GetComponent<TextMeshProUGUI>().text = "START";
         }
         else
         {
             StartHorse();
-            _startStopButton.GetComponent<TextMeshProUGUI>().text = "STOP";
         }
     }
 
@@ -96,6 +94,7 @@ public class RaceController : MonoBehaviour
     void StartHorse()
     {
         _isRunning = true;
+        _startStopButton.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "STOP";
     }
 
     /// <summary>
@@ -104,5 +103,6 @@ public class RaceController : MonoBehaviour
     void StopHorse()
     {
         _isRunning = false;
+        _startStopButton.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "START";
     }
 }

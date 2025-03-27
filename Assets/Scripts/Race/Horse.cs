@@ -43,7 +43,7 @@ public class Horse : MonoBehaviour
         _racetrackSpawner = FindObjectOfType<RacetrackSpawner>();
         _raceResultManager = FindObjectOfType<RaceResultManager>();
 
-        StartCoroutine(LogEverySecondCoroutine());  // Debug
+//        StartCoroutine(LogEverySecondCoroutine());  // Debug
     }
 
     // Update is called once per frame

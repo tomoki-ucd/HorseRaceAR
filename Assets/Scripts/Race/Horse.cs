@@ -80,7 +80,6 @@ public class Horse : MonoBehaviour
         }
         else
         {
-//            _currentSpeed = 0;
             FinishGoal();
         }
 
@@ -130,7 +129,6 @@ public class Horse : MonoBehaviour
                 tmp[i, 0] = "#" + horseNumber.ToString();
                 tmp[i, 1] = gameObject.name;
                 _raceResultManager.orderOfFinish = tmp;
-//                CustomLogger.Print(this, $"order[{i}] = {gameObject.name}");
                 break;
             }
         }

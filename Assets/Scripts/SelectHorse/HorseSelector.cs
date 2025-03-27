@@ -83,6 +83,7 @@ public class HorseSelector : MonoBehaviour
         }
         _selectedHorse = newlySelectedHorse;
         selectedHorseName = _selectedHorse.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+        selectedHorseName = selectedHorseName.Remove(0, 3);    // Remove "#n " from the name
     }
 
 

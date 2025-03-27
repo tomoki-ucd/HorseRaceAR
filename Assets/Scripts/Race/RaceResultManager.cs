@@ -46,7 +46,9 @@ public class RaceResultManager : MonoBehaviour
     }
 
 
-//    private static void DisplayRaceResult()
+    /// <summary>
+    /// Display the finish order and if the player wins or loses.
+    /// </summary>
     private void DisplayRaceResult()
     {
         Transform content = _orderOfFinishTable.transform.Find("Scroll View/Viewport/Content");
@@ -56,6 +58,7 @@ public class RaceResultManager : MonoBehaviour
         }
         _orderOfFinishTable.SetActive(true);
 
+        CustomLogger.Print(this, $"_orderOfFinish[0, 1] == HorseSelector.selectedHorseName : {_orderOfFinish[0, 1]} == {HorseSelector.selectedHorseName}");
         if(_orderOfFinish[0, 1] == HorseSelector.selectedHorseName)
         {
             CustomLogger.Print(this, "You win the bet!");

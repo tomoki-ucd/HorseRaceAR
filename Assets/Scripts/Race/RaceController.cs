@@ -6,8 +6,6 @@ using UnityEngine.UI;
 /// </summary>
 public class RaceController : MonoBehaviour
 {
-    public RacetrackSpawner _racetrackSpawner;
-//    [SerializeField] private Toggle _setHorseButton;
     [SerializeField] private Button _setHorseButton;
     [SerializeField] private Button _startStopButton;
     [SerializeField] Horse[] horses;
@@ -21,11 +19,6 @@ public class RaceController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(_racetrackSpawner == null)
-        {
-            CustomLogger.Print(this, $"_racetrackSpawner is null.");
-        }
-
         if(_startStopButton == null)
         {
             CustomLogger.Print(this, $"_startButto is null.");

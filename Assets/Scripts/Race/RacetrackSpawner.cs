@@ -98,7 +98,6 @@ public class RacetrackSpawner: MonoBehaviour
     {
         Vector3 position = plane.transform.position;
         SpawnedRacetrack = Instantiate(racetrackPrefab, position, Quaternion.identity);
-        CustomLogger.Print(this, OnRacetrackSpawned != null? "OnRacetrackSpawned NOT null": "OnRacetrackSpawned IS NULL");
         OnRacetrackSpawned?.Invoke(SpawnedRacetrack);   // Notify listeners of the spawned racetrack
     }
 

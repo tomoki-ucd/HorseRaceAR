@@ -17,7 +17,6 @@ public class RacetrackSpawner: MonoBehaviour
     private readonly List<ARRaycastHit> _raycastHits = new List<ARRaycastHit>();
     public GameObject SpawnedRacetrack{get; private set;}
     [SerializeField] private ARRaycastManager _raycastManager;    // ARRaycastManager is attached to XROrign.
-    [SerializeField] private Button _setHorseButton;
 
     // Event to notify when the racetrack is spawned
     public event Action<GameObject> OnRacetrackSpawned;
@@ -82,9 +81,8 @@ public class RacetrackSpawner: MonoBehaviour
             if(hitPlane != null)
             {
                 CustomLogger.Print(this, $"Hit plane detected: {hitPlane.trackableId}");
-                KeepOnlyThisPlane(hitPlane);
+                LockPlane(hitPlane);
                 SpawnRacetrack(hitPlane);
-                DisplaySetHorseButton();
             }
             else
             {
@@ -102,29 +100,20 @@ public class RacetrackSpawner: MonoBehaviour
     }
 
 
-    private void KeepOnlyThisPlane(ARPlane planeToKeep)
+    private void LockPlane(ARPlane planeToKeep)
     {
+        CustomLogger.Print(this, $"Kept plane: {planeToKeep.trackableId}");
         _lockedPlane = planeToKeep;
 
-        // Disable all other planes
+        // Disable all planes
         // The following code does not work as TrackableCollection<ARPlane> does not support LINQ methods.
 //        foreach (var plane in _planeManager!.trackables.Where(plane => plane != planeToKeep))    // The exclamation mark at the end of _planeManager tells the compiler
 //                                                                                                 // that it won't be null and supress the warning message.
         foreach (var plane in _planeManager.trackables)
         {
-            if (plane != planeToKeep)
-            {
-                plane.gameObject.SetActive(false);
-            }
+            plane.gameObject.SetActive(false);
         }
 
-        CustomLogger.Print(this, $"Kept plane: {planeToKeep.trackableId}");
-
         _planeManager.enabled = false;
-    }
-
-    private void DisplaySetHorseButton()
-    {
-        _setHorseButton.gameObject.SetActive(true);
     }
 }

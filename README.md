@@ -1,7 +1,7 @@
 # HorseRaceAR
 - Bet on a horse.
-- Create a VR racecourse on a detected AR plane.
-- Adjust the course position and rotation.
+- Create a AR racecourse on a detected AR plane.
+- Adjust the course size, position and rotation.
 - Start the race and hope your horse wins!
 
 ## Demo

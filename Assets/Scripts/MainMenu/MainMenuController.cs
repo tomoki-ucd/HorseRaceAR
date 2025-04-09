@@ -17,8 +17,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     // Static fields
-    // TO DO : Encrypt the API key
-    private const string XAI_API_KEY = "xai-eW1UuspgMn5J3V1C8oxHvSHGNKxo6vgfLtwEANHFrVqiRUblIdznOnC5KEWDtaNphLBSGgQdzFjsORGV";
+    private const string XAI_API_KEY = "YOUR_API_KEY";
     private const string BASE_URL = "https://api.x.ai/v1";  // grok url
 
     // Instant fields
